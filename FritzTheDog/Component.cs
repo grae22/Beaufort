@@ -11,6 +11,8 @@ namespace FritzTheDog
 
     IComponent TargetComponent;
     Color NormalBackColour;
+    Point MouseClickPosition;
+    bool IsMoving;
 
     //-------------------------------------------------------------------------
 
@@ -81,8 +83,41 @@ namespace FritzTheDog
 
         Location =
           new Point(
-            Location.X + e.X,
-            Location.Y + e.Y );
+            Location.X + e.X - MouseClickPosition.X,
+            Location.Y + e.Y - MouseClickPosition.Y );
+      }
+      catch( Exception ex )
+      {
+        MainForm.ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void Component_MouseDown( object sender, MouseEventArgs e )
+    {
+      try
+      {
+        if( IsMoving == false )
+        {
+          MouseClickPosition = e.Location;
+        }
+
+        IsMoving = true;
+      }
+      catch( Exception ex )
+      {
+        MainForm.ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void Component_MouseUp( object sender, MouseEventArgs e )
+    {
+      try
+      {
+        IsMoving = false;
       }
       catch( Exception ex )
       {
