@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Beaufort;
 
@@ -28,8 +29,8 @@ namespace Beaufort_Test
         Assembly.GetExecutingAssembly(),
         out components );
 
-      Assert.True( components.ContainsKey( typeof( TestComponent1 ).FullName ) );
-      Assert.True( components.ContainsKey( typeof( TestComponent2 ).FullName ) );
+      Assert.True( components.ContainsKey( typeof( TestComponent1 ).AssemblyQualifiedName ) );
+      Assert.True( components.ContainsKey( typeof( TestComponent2 ).AssemblyQualifiedName ) );
     }
 
     //-------------------------------------------------------------------------
@@ -43,7 +44,13 @@ namespace Beaufort_Test
         Assembly.GetExecutingAssembly(),
         out components );
 
-      Assert.AreEqual( 2, components.Count );
+      components.ToList().ForEach(
+        x =>
+        {
+          Assert.True( x.Value.IsClass );
+          Assert.False( x.Value.IsAbstract );
+          Assert.False( x.Value.IsInterface );
+        } );
     }
 
     //-------------------------------------------------------------------------

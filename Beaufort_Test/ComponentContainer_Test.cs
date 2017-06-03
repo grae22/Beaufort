@@ -9,6 +9,10 @@ namespace Beaufort_Test
   {
     //-------------------------------------------------------------------------
 
+    public class TestComponent : IComponent { }
+
+    //-------------------------------------------------------------------------
+
     ComponentContainer TestObject;
 
     //-------------------------------------------------------------------------
@@ -16,7 +20,7 @@ namespace Beaufort_Test
     [SetUp]
     public void SetUp()
     {
-      TestObject = new ComponentContainer();
+      TestObject = new ComponentContainer( "TestObject" );
     }
     
 
@@ -25,7 +29,15 @@ namespace Beaufort_Test
     [Test]
     public void AddComponent()
     {
+      TestObject.AddComponent(
+        typeof( TestComponent ).AssemblyQualifiedName,
+        "TestComponent" );
 
+      Assert.True( TestObject.Contains( "TestComponent" ) );
+
+      Assert.AreEqual(
+        typeof( TestComponent ),
+        TestObject[ "TestComponent" ].GetType() );
     }
 
     //-------------------------------------------------------------------------

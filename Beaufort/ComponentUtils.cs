@@ -24,7 +24,7 @@ namespace Beaufort
 
       foreach( Type type in foundComponentTypes )
       {
-        components.Add( type.FullName, type );
+        components.Add( type.AssemblyQualifiedName, type );
       }
     }
 
