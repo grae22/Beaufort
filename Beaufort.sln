@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beaufort_Test", "Beaufort_T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FritzTheDog", "FritzTheDog\FritzTheDog.csproj", "{8DA4DC66-D3D7-4599-ABC4-C8B63AC8D1FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Components\Components.csproj", "{9723C06A-69D9-4385-9587-C0099360DB73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8DA4DC66-D3D7-4599-ABC4-C8B63AC8D1FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DA4DC66-D3D7-4599-ABC4-C8B63AC8D1FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DA4DC66-D3D7-4599-ABC4-C8B63AC8D1FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9723C06A-69D9-4385-9587-C0099360DB73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9723C06A-69D9-4385-9587-C0099360DB73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9723C06A-69D9-4385-9587-C0099360DB73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9723C06A-69D9-4385-9587-C0099360DB73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
