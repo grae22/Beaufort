@@ -28,12 +28,33 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.components = new System.ComponentModel.Container();
+      this.uiComponentTypes = new System.Windows.Forms.ListBox();
+      this.SuspendLayout();
+      // 
+      // uiComponentTypes
+      // 
+      this.uiComponentTypes.FormattingEnabled = true;
+      this.uiComponentTypes.Location = new System.Drawing.Point(12, 12);
+      this.uiComponentTypes.Name = "uiComponentTypes";
+      this.uiComponentTypes.Size = new System.Drawing.Size(232, 95);
+      this.uiComponentTypes.TabIndex = 0;
+      // 
+      // MainForm
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Text = "Form1";
+      this.ClientSize = new System.Drawing.Size(728, 538);
+      this.Controls.Add(this.uiComponentTypes);
+      this.Name = "MainForm";
+      this.Text = "Fritz The Dog";
+      this.Load += new System.EventHandler(this.MainForm_Load);
+      this.ResumeLayout(false);
+
     }
 
     #endregion
+
+    private System.Windows.Forms.ListBox uiComponentTypes;
   }
 }
 
