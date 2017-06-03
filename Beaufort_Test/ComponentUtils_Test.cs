@@ -14,11 +14,13 @@ namespace Beaufort_Test
 
     class TestComponent1 : IComponent { }
     class TestComponent2 : IComponent { }
+    interface TestInterface : IComponent { }
+    struct TestStruct : IComponent { }
 
     //-------------------------------------------------------------------------
 
     [Test]
-    public void GetComponentsFromAssembly()
+    public void GetComponentsFromAssemblyReturnsComponentTypes()
     {
       Dictionary<string, Type> components;
 
@@ -28,6 +30,20 @@ namespace Beaufort_Test
 
       Assert.True( components.ContainsKey( typeof( TestComponent1 ).FullName ) );
       Assert.True( components.ContainsKey( typeof( TestComponent2 ).FullName ) );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void GetComponentsFromAssemblyReturnsOnlyComponentTypes()
+    {
+      Dictionary<string, Type> components;
+
+      ComponentUtils.GetComponents(
+        Assembly.GetExecutingAssembly(),
+        out components );
+
+      Assert.AreEqual( 2, components.Count );
     }
 
     //-------------------------------------------------------------------------

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Beaufort
 {
-  class ComponentUtils
+  public class ComponentUtils
   {
     //-------------------------------------------------------------------------
 
@@ -16,7 +16,10 @@ namespace Beaufort
 
       IEnumerable<Type> foundComponentTypes =
         assembly.GetTypes()
-          .Where( x => x.GetType().IsInstanceOfType( typeof( IComponent ) ) )
+          .Where( x =>
+            typeof( IComponent ).IsAssignableFrom( x ) &&
+            x.IsClass &&
+            x.IsAbstract == false )
           .ToList();
 
       foreach( Type type in foundComponentTypes )
