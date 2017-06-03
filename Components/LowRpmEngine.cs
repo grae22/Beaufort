@@ -2,7 +2,7 @@
 
 namespace Components
 {
-  class LowRpmEngine : IComponent, IEngine
+  class LowRpmEngine : BaseComponent, IEngine
   {
     public int Speed { get; private set; } = 1500;
   }

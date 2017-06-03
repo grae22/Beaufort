@@ -2,7 +2,7 @@
 
 namespace Components
 {
-  class Car : IComponent
+  class Car : BaseComponent
   {
     public Car( IEngine engine ) { }
   }

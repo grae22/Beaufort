@@ -1,14 +1,24 @@
 ﻿namespace Beaufort
 {
-  public interface IComponent
+  public class BaseComponent : IComponent
   {
     //-------------------------------------------------------------------------
 
-    string Name { get; }
+    public string Name { get; private set; }
 
     //-------------------------------------------------------------------------
 
-    bool SetName( string name );
+    public bool SetName( string name )
+    {
+      if( name.Length > 0 )
+      {
+        Name = name;
+
+        return true;
+      }
+
+      return false;
+    }
 
     //-------------------------------------------------------------------------
   }

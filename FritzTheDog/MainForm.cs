@@ -76,7 +76,63 @@ namespace FritzTheDog
           out componentTypes );
 
         componentTypes.ToList().ForEach(
-          x => uiComponentTypes.Items.Add( x.Key ) );
+          x => uiComponentTypes.Items.Add( x.Value.Name ) );
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void uiComponentTypes_MouseDown( object sender, MouseEventArgs e )
+    {
+      try
+      {
+        if( uiComponentTypes.Items.Count == 0 )
+        {
+          return;
+        }
+
+        int index = uiComponentTypes.IndexFromPoint( e.X, e.Y );
+        string componentTypeName = uiComponentTypes.Items[ index ].ToString();
+
+        DragDropEffects effects = DoDragDrop( componentTypeName, DragDropEffects.Copy );
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiCanvas_DragOver( object sender, DragEventArgs e )
+    {
+      try
+      {
+        e.Effect = DragDropEffects.Copy;
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiCanvas_DragDrop( object sender, DragEventArgs e )
+    {
+      try
+      {
+        if( e.Data.GetDataPresent( DataFormats.StringFormat ) )
+        {
+          string componentTypeName = 
+            (string)e.Data.GetData( DataFormats.StringFormat );
+
+          
+        }
       }
       catch( Exception ex )
       {

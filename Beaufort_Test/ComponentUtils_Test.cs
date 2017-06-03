@@ -13,10 +13,15 @@ namespace Beaufort_Test
   {
     //-------------------------------------------------------------------------
 
-    class TestComponent1 : IComponent { }
-    class TestComponent2 : IComponent { }
+    class TestComponent1 : BaseComponent { }
+    class TestComponent2 : BaseComponent { }
     interface TestInterface : IComponent { }
-    struct TestStruct : IComponent { }
+
+    struct TestStruct : IComponent
+    {
+      public string Name { get; }
+      public bool SetName( string name ) { return true; }
+    }
 
     //-------------------------------------------------------------------------
 

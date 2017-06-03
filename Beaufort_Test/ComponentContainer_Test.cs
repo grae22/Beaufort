@@ -9,7 +9,7 @@ namespace Beaufort_Test
   {
     //-------------------------------------------------------------------------
 
-    public class TestComponent : IComponent { }
+    public class TestComponent : BaseComponent { }
 
     //-------------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Beaufort
@@ -15,18 +16,13 @@ namespace Beaufort
     {
       get
       {
-        if( Components.ContainsKey( componentName ) )
-        {
-          return Components[ componentName ];
-        }
-
-        return null;
+        return Components.FirstOrDefault( x => x.Name == componentName );
       }
     }
 
     //-------------------------------------------------------------------------
 
-    Dictionary<string, IComponent> Components = new Dictionary<string, IComponent>();
+    List<IComponent> Components = new List<IComponent>();
 
     //-------------------------------------------------------------------------
 
@@ -40,16 +36,6 @@ namespace Beaufort
     public void AddComponent( string fullTypeName,
                               string instanceName )
     {
-      if( Components.ContainsKey( instanceName ) )
-      {
-        throw new ArgumentException(
-          string.Format(
-            "Component already exists in container \"{0}\" with name \"{1}\".",
-            Name,
-            instanceName ),
-          nameof( instanceName ) );
-      }
-
       IComponent newComponent = InstantiateComponent( fullTypeName, instanceName );
 
       if( newComponent == null )
@@ -61,14 +47,26 @@ namespace Beaufort
             instanceName ) );
       }
 
-      Components.Add( instanceName, newComponent );
+      bool namedOk = newComponent.SetName( instanceName );
+
+      if( namedOk == false )
+      {
+        throw new ArgumentException(
+          string.Format(
+            "Failed to name object of type \"{0}\" with name \"{1}\".",
+            fullTypeName,
+            instanceName ),
+          nameof( instanceName ) );
+      }
+
+      Components.Add( newComponent );
     }
 
     //-------------------------------------------------------------------------
 
     public bool Contains( string componentInstanceName )
     {
-      return Components.ContainsKey( componentInstanceName );
+      return this[ componentInstanceName ] != null;
     }
 
     //-------------------------------------------------------------------------
