@@ -30,19 +30,23 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    public static Type[] GetDependencies( Type componentType )
+    public static void GetDependencies( Type componentType,
+                                        out Dictionary<string, Type> dependencyTypesByName )
     {
-      List<Type> dependencies = new List<Type>();
+      dependencyTypesByName = new Dictionary<string, Type>();
 
-      componentType.GetProperties().Where(
-        prop =>
-          typeof( IComponent ).IsAssignableFrom( prop.PropertyType ) &&
-          prop.GetSetMethod() != null &&
-          prop.GetGetMethod() != null )
-        .ToList()
-        .ForEach( x => dependencies.Add( x.PropertyType ) );
+      List<PropertyInfo> dependencyProperties =
+        componentType.GetProperties().Where(
+          prop =>
+            typeof( IComponent ).IsAssignableFrom( prop.PropertyType ) &&
+            prop.GetSetMethod() != null &&
+            prop.GetGetMethod() != null )
+          .ToList();
 
-      return dependencies.ToArray();
+      foreach( PropertyInfo info in dependencyProperties )
+      {
+        dependencyTypesByName.Add( info.Name, info.PropertyType );
+      }
     }
 
     //-------------------------------------------------------------------------

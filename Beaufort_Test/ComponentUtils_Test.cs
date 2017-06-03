@@ -68,14 +68,21 @@ namespace Beaufort_Test
     [Test]
     public void Dependencies()
     {
-      Type[] dependencies =
-        ComponentUtils.GetDependencies( typeof( TestComponent2 ) );
+      Dictionary<string, Type> dependencyTypesByName;
 
-      Assert.AreEqual( 1, dependencies.Length );
+      ComponentUtils.GetDependencies(
+        typeof( TestComponent2 ),
+        out dependencyTypesByName );
+
+      Assert.AreEqual( 1, dependencyTypesByName.Count );
+
+      Assert.AreEqual(
+        nameof( TestComponent2.Dependency ),
+        dependencyTypesByName.Keys.First() );
 
       Assert.AreEqual(
         typeof( TestComponent1 ),
-        dependencies[ 0 ] );
+        dependencyTypesByName.Values.First() );
     }
 
     //-------------------------------------------------------------------------
