@@ -31,12 +31,14 @@
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.label1 = new System.Windows.Forms.Label();
       this.uiName = new System.Windows.Forms.TextBox();
+      this.uiType = new System.Windows.Forms.Label();
       this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBox1
       // 
       this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+      this.groupBox1.Controls.Add(this.uiType);
       this.groupBox1.Controls.Add(this.label1);
       this.groupBox1.Controls.Add(this.uiName);
       this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -49,7 +51,7 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(5, 18);
+      this.label1.Location = new System.Drawing.Point(5, 36);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(38, 13);
       this.label1.TabIndex = 3;
@@ -57,11 +59,22 @@
       // 
       // uiName
       // 
-      this.uiName.Location = new System.Drawing.Point(49, 15);
+      this.uiName.Location = new System.Drawing.Point(49, 33);
       this.uiName.Name = "uiName";
       this.uiName.Size = new System.Drawing.Size(133, 20);
       this.uiName.TabIndex = 2;
       this.uiName.TextChanged += new System.EventHandler(this.uiName_TextChanged);
+      // 
+      // uiType
+      // 
+      this.uiType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.uiType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.uiType.Location = new System.Drawing.Point(8, 14);
+      this.uiType.Name = "uiType";
+      this.uiType.Size = new System.Drawing.Size(176, 13);
+      this.uiType.TabIndex = 4;
+      this.uiType.Text = "<set in code>";
+      this.uiType.TextAlign = System.Drawing.ContentAlignment.TopRight;
       // 
       // Component
       // 
@@ -85,5 +98,6 @@
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox uiName;
+    private System.Windows.Forms.Label uiType;
   }
 }

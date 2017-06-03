@@ -36,6 +36,7 @@ namespace FritzTheDog
     {
       try
       {
+        uiType.Text = TargetComponent.GetType().Name;
         uiName.Text = TargetComponent.Name;
       }
       catch( Exception ex )
