@@ -40,6 +40,9 @@ namespace FritzTheDog
       {
         uiType.Text = TargetComponent.GetType().Name;
         uiName.Text = TargetComponent.Name;
+
+        uiName.Focus();
+        uiName.SelectAll();
       }
       catch( Exception ex )
       {
@@ -104,6 +107,8 @@ namespace FritzTheDog
         }
 
         IsMoving = true;
+
+        Cursor.Current = Cursors.SizeAll;
       }
       catch( Exception ex )
       {
@@ -118,6 +123,8 @@ namespace FritzTheDog
       try
       {
         IsMoving = false;
+
+        Cursor.Current = Cursors.Default;
       }
       catch( Exception ex )
       {
