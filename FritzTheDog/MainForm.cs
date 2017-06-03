@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
+using System.Drawing;
 using Beaufort;
 
 namespace FritzTheDog
@@ -162,6 +163,8 @@ namespace FritzTheDog
           {
             return;
           }
+
+          componentUi.Location = uiCanvas.PointToClient( new Point( e.X, e.Y ) );
 
           uiCanvas.Controls.Add( componentUi );
         }
