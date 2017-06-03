@@ -46,6 +46,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseComponent_Test.cs" />
     <Compile Include="ComponentContainer_Test.cs" />
     <Compile Include="ComponentUtils_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

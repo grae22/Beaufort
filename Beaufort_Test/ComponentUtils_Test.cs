@@ -14,7 +14,12 @@ namespace Beaufort_Test
     //-------------------------------------------------------------------------
 
     class TestComponent1 : BaseComponent { }
-    class TestComponent2 : BaseComponent { }
+
+    class TestComponent2 : BaseComponent
+    {
+      public TestComponent1 Dependency { get; set; }
+    }
+
     interface TestInterface : IComponent { }
 
     struct TestStruct : IComponent
@@ -56,6 +61,21 @@ namespace Beaufort_Test
           Assert.False( x.Value.IsAbstract );
           Assert.False( x.Value.IsInterface );
         } );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void Dependencies()
+    {
+      Type[] dependencies =
+        ComponentUtils.GetDependencies( typeof( TestComponent2 ) );
+
+      Assert.AreEqual( 1, dependencies.Length );
+
+      Assert.AreEqual(
+        typeof( TestComponent1 ),
+        dependencies[ 0 ] );
     }
 
     //-------------------------------------------------------------------------

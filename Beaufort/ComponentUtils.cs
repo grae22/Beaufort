@@ -29,5 +29,22 @@ namespace Beaufort
     }
 
     //-------------------------------------------------------------------------
+
+    public static Type[] GetDependencies( Type componentType )
+    {
+      List<Type> dependencies = new List<Type>();
+
+      componentType.GetProperties().Where(
+        prop =>
+          typeof( IComponent ).IsAssignableFrom( prop.PropertyType ) &&
+          prop.GetSetMethod() != null &&
+          prop.GetGetMethod() != null )
+        .ToList()
+        .ForEach( x => dependencies.Add( x.PropertyType ) );
+
+      return dependencies.ToArray();
+    }
+
+    //-------------------------------------------------------------------------
   }
 }
