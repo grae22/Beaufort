@@ -33,8 +33,8 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    public void AddComponent( string fullTypeName,
-                              string instanceName )
+    public IComponent AddComponent( string fullTypeName,
+                                    string instanceName )
     {
       IComponent newComponent = InstantiateComponent( fullTypeName, instanceName );
 
@@ -60,6 +60,8 @@ namespace Beaufort
       }
 
       Components.Add( newComponent );
+
+      return newComponent;
     }
 
     //-------------------------------------------------------------------------

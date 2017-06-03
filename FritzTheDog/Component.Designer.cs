@@ -36,12 +36,13 @@
       // 
       // groupBox1
       // 
+      this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
       this.groupBox1.Controls.Add(this.label1);
       this.groupBox1.Controls.Add(this.uiName);
       this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox1.Location = new System.Drawing.Point(0, 0);
+      this.groupBox1.Location = new System.Drawing.Point(0, 10);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(188, 150);
+      this.groupBox1.Size = new System.Drawing.Size(188, 140);
       this.groupBox1.TabIndex = 0;
       this.groupBox1.TabStop = false;
       // 
@@ -60,15 +61,19 @@
       this.uiName.Name = "uiName";
       this.uiName.Size = new System.Drawing.Size(133, 20);
       this.uiName.TabIndex = 2;
+      this.uiName.TextChanged += new System.EventHandler(this.uiName_TextChanged);
       // 
       // Component
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
       this.Controls.Add(this.groupBox1);
       this.Name = "Component";
+      this.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
       this.Size = new System.Drawing.Size(188, 150);
       this.Load += new System.EventHandler(this.Component_Load);
+      this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Component_MouseMove);
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
       this.ResumeLayout(false);

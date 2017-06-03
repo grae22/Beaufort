@@ -29,9 +29,12 @@ namespace Beaufort_Test
     [Test]
     public void AddComponent()
     {
-      TestObject.AddComponent(
-        typeof( TestComponent ).AssemblyQualifiedName,
-        "TestComponent" );
+      IComponent component =
+        TestObject.AddComponent(
+          typeof( TestComponent ).AssemblyQualifiedName,
+          "TestComponent" );
+
+      Assert.NotNull( component );
 
       Assert.True( TestObject.Contains( "TestComponent" ) );
 

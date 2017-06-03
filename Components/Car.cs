@@ -4,6 +4,6 @@ namespace Components
 {
   class Car : BaseComponent
   {
-    public Car( IEngine engine ) { }
+    public IEngine Engine { get; private set; }
   }
 }

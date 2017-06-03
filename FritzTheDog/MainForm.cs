@@ -12,24 +12,11 @@ namespace FritzTheDog
   {
     //-------------------------------------------------------------------------
 
-    public MainForm()
-    {
-      try
-      {
-        InitializeComponent();
-      }
-      catch( Exception ex )
-      {
-        ErrorMsg( ex );
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
-    void ErrorMsg( Exception ex )
+    public static void ErrorMsg( Exception ex )
     {
       string callingMethodName = "Unknown";
-      StackTrace trace = new StackTrace();
+      var trace = new StackTrace();
+
       if( trace.GetFrame( 1 ) != null )
       {
         callingMethodName = trace.GetFrame( 1 ).GetMethod().Name;
@@ -45,6 +32,37 @@ namespace FritzTheDog
         "Error",
         MessageBoxButtons.OK,
         MessageBoxIcon.Error );
+    }
+
+    //-------------------------------------------------------------------------
+
+    struct ComponentInfo
+    {
+      public string FriendlyName;
+      public string FullTypeName;
+
+      public override string ToString()
+      {
+        return FriendlyName;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    ComponentContainer Components = new ComponentContainer( "Default" );
+
+    //-------------------------------------------------------------------------
+
+    public MainForm()
+    {
+      try
+      {
+        InitializeComponent();
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -76,7 +94,16 @@ namespace FritzTheDog
           out componentTypes );
 
         componentTypes.ToList().ForEach(
-          x => uiComponentTypes.Items.Add( x.Value.Name ) );
+          x =>
+          {
+            var info = new ComponentInfo
+            {
+              FriendlyName = x.Value.Name,
+              FullTypeName = x.Value.AssemblyQualifiedName
+            };
+
+            uiComponentTypes.Items.Add( info );
+          } );
       }
       catch( Exception ex )
       {
@@ -108,7 +135,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    private void uiCanvas_DragOver( object sender, DragEventArgs e )
+    void uiCanvas_DragOver( object sender, DragEventArgs e )
     {
       try
       {
@@ -122,22 +149,45 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    private void uiCanvas_DragDrop( object sender, DragEventArgs e )
+    void uiCanvas_DragDrop( object sender, DragEventArgs e )
     {
       try
       {
         if( e.Data.GetDataPresent( DataFormats.StringFormat ) )
         {
-          string componentTypeName = 
-            (string)e.Data.GetData( DataFormats.StringFormat );
+          ComponentInfo info = (ComponentInfo)uiComponentTypes.SelectedItem;
+          Component componentUi = CreateComponent( info.FullTypeName );
 
-          
+          if( componentUi == null )
+          {
+            return;
+          }
+
+          uiCanvas.Controls.Add( componentUi );
         }
       }
       catch( Exception ex )
       {
         ErrorMsg( ex );
       }
+    }
+
+    //-------------------------------------------------------------------------
+
+    Component CreateComponent( string typeName )
+    {
+      try
+      {
+        IComponent newComponent = Components.AddComponent( typeName, "New Component" );
+
+        return new Component( newComponent );
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+
+      return null;
     }
 
     //-------------------------------------------------------------------------
