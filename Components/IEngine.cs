@@ -1,6 +1,8 @@
-﻿namespace Components
+﻿using Beaufort;
+
+namespace Components
 {
-  interface IEngine
+  interface IEngine : IComponent
   {
     int Speed { get; }
   }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
 using Beaufort;
 
 namespace FritzTheDog
@@ -41,8 +43,40 @@ namespace FritzTheDog
         uiType.Text = TargetComponent.GetType().Name;
         uiName.Text = TargetComponent.Name;
 
+        PopulateDependencies();
+
         uiName.Focus();
         uiName.SelectAll();
+      }
+      catch( Exception ex )
+      {
+        MainForm.ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void PopulateDependencies()
+    {
+      try
+      {
+        Dictionary<string, Type> dependencies;
+
+        ComponentUtils.GetDependencies(
+          TargetComponent.GetType(),
+          out dependencies );
+
+        dependencies.ToList().ForEach(
+          x =>
+          {
+            uiDependenciesContainer.Controls.Add(
+              new Label
+              {
+                Text = x.Key,
+                AutoSize = true,
+                Font = new Font( Font, FontStyle.Bold )
+              } );
+          } );
       }
       catch( Exception ex )
       {

@@ -55,19 +55,19 @@
       // 
       // uiDependenciesContainer
       // 
-      this.uiDependenciesContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
       this.uiDependenciesContainer.AutoSize = true;
       this.uiDependenciesContainer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.uiDependenciesContainer.BackColor = System.Drawing.SystemColors.Control;
       this.uiDependenciesContainer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-      this.uiDependenciesContainer.Location = new System.Drawing.Point(8, 60);
+      this.uiDependenciesContainer.Location = new System.Drawing.Point(5, 60);
       this.uiDependenciesContainer.Name = "uiDependenciesContainer";
       this.uiDependenciesContainer.Size = new System.Drawing.Size(0, 0);
       this.uiDependenciesContainer.TabIndex = 5;
       // 
       // uiType
       // 
-      this.uiType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.uiType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.uiType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.uiType.Location = new System.Drawing.Point(8, 6);
       this.uiType.Name = "uiType";
@@ -103,7 +103,7 @@
       this.Controls.Add(this.panel1);
       this.Name = "Component";
       this.Padding = new System.Windows.Forms.Padding(0, 14, 0, 0);
-      this.Size = new System.Drawing.Size(188, 66);
+      this.Size = new System.Drawing.Size(188, 77);
       this.Load += new System.EventHandler(this.Component_Load);
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Component_MouseDown);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Component_MouseMove);
