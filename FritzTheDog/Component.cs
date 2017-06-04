@@ -97,7 +97,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    private void Component_MouseDown( object sender, MouseEventArgs e )
+    void Component_MouseDown( object sender, MouseEventArgs e )
     {
       try
       {
@@ -118,7 +118,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    private void Component_MouseUp( object sender, MouseEventArgs e )
+    void Component_MouseUp( object sender, MouseEventArgs e )
     {
       try
       {
