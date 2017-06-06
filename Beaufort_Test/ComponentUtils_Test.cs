@@ -17,7 +17,7 @@ namespace Beaufort_Test
 
     class TestComponent2 : BaseComponent
     {
-      public TestComponent1 Dependency { get; set; }
+      public TestComponent1 Dependency { private get; set; }
     }
 
     interface TestInterface : IComponent { }

@@ -39,8 +39,7 @@ namespace Beaufort
         componentType.GetProperties().Where(
           prop =>
             typeof( IComponent ).IsAssignableFrom( prop.PropertyType ) &&
-            prop.GetSetMethod() != null &&
-            prop.GetGetMethod() != null )
+            prop.GetSetMethod() != null )
           .ToList();
 
       foreach( PropertyInfo info in dependencyProperties )
