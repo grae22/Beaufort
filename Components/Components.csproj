@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="Car.cs" />
     <Compile Include="HighRpmEngine.cs" />
+    <Compile Include="ICar.cs" />
     <Compile Include="IEngine.cs" />
     <Compile Include="LowRpmEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
