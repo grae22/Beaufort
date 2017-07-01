@@ -1,10 +1,10 @@
 ﻿namespace Beaufort
 {
-  public class BaseComponent : IComponent
+  public abstract class BaseComponent : IComponent
   {
     //-------------------------------------------------------------------------
 
-    public string Name { get; private set; }
+    public string Name { get; private set; } = "Unnamed Component";
 
     //-------------------------------------------------------------------------
 
