@@ -15,11 +15,12 @@ namespace Beaufort
       components = new Dictionary<string, Type>();
 
       IEnumerable<Type> foundComponentTypes =
-        assembly.GetTypes()
-          .Where( x =>
-            typeof( IComponent ).IsAssignableFrom( x ) &&
-            x.IsClass &&
-            x.IsAbstract == false )
+        assembly
+          .GetTypes()
+            .Where( x =>
+              typeof( IComponent ).IsAssignableFrom( x ) &&
+              x.IsClass &&
+              x.IsAbstract == false )
           .ToList();
 
       foreach( Type type in foundComponentTypes )
@@ -36,10 +37,12 @@ namespace Beaufort
       dependencyTypesByName = new Dictionary<string, Type>();
 
       List<PropertyInfo> dependencyProperties =
-        componentType.GetProperties().Where(
-          prop =>
-            typeof( IComponent ).IsAssignableFrom( prop.PropertyType ) &&
-            prop.GetSetMethod() != null )
+        componentType
+          .GetProperties()
+          .Where(
+            prop =>
+              typeof( IComponent ).IsAssignableFrom( prop.PropertyType ) &&
+              prop.GetSetMethod() != null )
           .ToList();
 
       foreach( PropertyInfo info in dependencyProperties )
