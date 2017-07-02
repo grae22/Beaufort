@@ -156,17 +156,17 @@ namespace FritzTheDog
       {
         if( e.Data.GetDataPresent( DataFormats.StringFormat ) )
         {
-          ComponentInfo info = (ComponentInfo)uiComponentTypes.SelectedItem;
-          Component componentUi = CreateComponent( info.FullTypeName );
+          var info = (ComponentInfo)uiComponentTypes.SelectedItem;
+          ComponentControl componentControl = CreateComponent( info.FullTypeName );
 
-          if( componentUi == null )
+          if( componentControl == null )
           {
             return;
           }
 
-          componentUi.Location = uiCanvas.PointToClient( new Point( e.X, e.Y ) );
+          componentControl.Location = uiCanvas.PointToClient( new Point( e.X, e.Y ) );
 
-          uiCanvas.Controls.Add( componentUi );
+          uiCanvas.Controls.Add( componentControl );
         }
       }
       catch( Exception ex )
@@ -177,13 +177,13 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    Component CreateComponent( string typeName )
+    ComponentControl CreateComponent( string typeName )
     {
       try
       {
         IComponent newComponent = Components.AddComponent( typeName, "New Component" );
 
-        return new Component( newComponent );
+        return new ComponentControl( newComponent );
       }
       catch( Exception ex )
       {

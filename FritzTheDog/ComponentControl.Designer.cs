@@ -1,6 +1,6 @@
 ﻿namespace FritzTheDog
 {
-  partial class Component
+  partial class ComponentControl
   {
     /// <summary> 
     /// Required designer variable.

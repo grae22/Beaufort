@@ -7,7 +7,7 @@ using Beaufort;
 
 namespace FritzTheDog
 {
-  public partial class Component : UserControl
+  public partial class ComponentControl : UserControl
   {
     //-------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    public Component( IComponent targetComponent )
+    public ComponentControl( IComponent targetComponent )
     {
       try
       {

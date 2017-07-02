@@ -67,7 +67,7 @@
       this.Controls.Add(this.uiComponentTypes);
       this.Name = "MainForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Text = "Fritz The Dog";
+      this.Text = "Fritz the Dog";
       this.Load += new System.EventHandler(this.MainForm_Load);
       this.ResumeLayout(false);
 

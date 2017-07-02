@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Component.cs">
+    <Compile Include="ComponentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Component.Designer.cs">
-      <DependentUpon>Component.cs</DependentUpon>
+    <Compile Include="ComponentControl.Designer.cs">
+      <DependentUpon>ComponentControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -55,8 +55,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Component.resx">
-      <DependentUpon>Component.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentControl.resx">
+      <DependentUpon>ComponentControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
