@@ -17,10 +17,10 @@ namespace Beaufort
       IEnumerable<Type> foundComponentTypes =
         assembly
           .GetTypes()
-            .Where( x =>
-              typeof( IComponent ).IsAssignableFrom( x ) &&
-              x.IsClass &&
-              x.IsAbstract == false )
+          .Where( type =>
+            typeof( IComponent ).IsAssignableFrom( type ) &&
+            type.IsClass &&
+            type.IsAbstract == false )
           .ToList();
 
       foreach( Type type in foundComponentTypes )
@@ -31,24 +31,49 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    public static void GetDependencies( Type componentType,
-                                        out Dictionary<string, Type> dependencyTypesByName )
+    public static void GetDependencyTypes( Type componentType,
+                                           out Dictionary<string, Type> dependencyTypesByName )
     {
       dependencyTypesByName = new Dictionary<string, Type>();
 
-      List<PropertyInfo> dependencyProperties =
-        componentType
-          .GetProperties()
-          .Where(
-            prop =>
-              typeof( IComponent ).IsAssignableFrom( prop.PropertyType ) &&
-              prop.GetSetMethod() != null )
-          .ToList();
+      IEnumerable<PropertyInfo> dependencyProperties =
+        GetDependenciesFromComponentProperties( componentType );
 
       foreach( PropertyInfo info in dependencyProperties )
       {
         dependencyTypesByName.Add( info.Name, info.PropertyType );
       }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public static void GetDependencyInstances( IComponent component,
+                                               out Dictionary<string, IComponent> dependenciesByName )
+    {
+      dependenciesByName = new Dictionary<string, IComponent>();
+
+      IEnumerable<PropertyInfo> dependencyProperties =
+        GetDependenciesFromComponentProperties( component.GetType() );
+
+      foreach( PropertyInfo info in dependencyProperties )
+      {
+        dependenciesByName.Add(
+          info.Name,
+          info.GetValue( component ) as IComponent );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    static IEnumerable<PropertyInfo> GetDependenciesFromComponentProperties( Type componentType )
+    {
+      return
+        componentType
+          .GetProperties()
+          .Where(
+            property =>
+              typeof( IComponent ).IsAssignableFrom( property.PropertyType ) &&
+              property.GetSetMethod() != null );
     }
 
     //-------------------------------------------------------------------------

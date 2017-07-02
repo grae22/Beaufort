@@ -60,17 +60,17 @@ namespace Beaufort_Test
           Assert.True( x.Value.IsClass );
           Assert.False( x.Value.IsAbstract );
           Assert.False( x.Value.IsInterface );
-        } );
+        });
     }
 
     //-------------------------------------------------------------------------
 
     [Test]
-    public void Dependencies()
+    public void DependencyTypes()
     {
       Dictionary<string, Type> dependencyTypesByName;
 
-      ComponentUtils.GetDependencies(
+      ComponentUtils.GetDependencyTypes(
         typeof( TestComponent2 ),
         out dependencyTypesByName );
 
@@ -83,6 +83,44 @@ namespace Beaufort_Test
       Assert.AreEqual(
         typeof( TestComponent1 ),
         dependencyTypesByName.Values.First() );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void DependencyInstanceNullWhenNotSet()
+    {
+      TestComponent2 component = new TestComponent2();
+      Dictionary<string, IComponent> dependenciesByName;
+
+      ComponentUtils.GetDependencyInstances(
+        component,
+        out dependenciesByName );
+
+      Assert.AreEqual( 1, dependenciesByName.Count );
+      Assert.IsNull( dependenciesByName.Values.First() );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void DependencyInstanceValue()
+    {
+      var dependency = new TestComponent1();
+
+      TestComponent2 component = new TestComponent2
+      {
+        Dependency = dependency
+      };
+
+      Dictionary<string, IComponent> dependenciesByName;
+
+      ComponentUtils.GetDependencyInstances(
+        component,
+        out dependenciesByName );
+
+      Assert.AreEqual( 1, dependenciesByName.Count );
+      Assert.AreSame( dependency, dependenciesByName.Values.First() );
     }
 
     //-------------------------------------------------------------------------
