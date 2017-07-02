@@ -60,36 +60,70 @@ namespace FritzTheDog
     {
       try
       {
-        Dictionary<string, IComponent> dependencies;
+        Dictionary<string, Type> dependencyTypesByName;
+        Dictionary<string, IComponent> dependenciesByName;
 
-        ComponentUtils.GetDependencyInstances(
+        ComponentUtils.GetDependencyDetails(
           TargetComponent,
-          out dependencies );
+          out dependencyTypesByName,
+          out dependenciesByName );
 
-        dependencies
+        dependenciesByName
           .ToList()
           .ForEach(
             dependency =>
-            {
-              uiDependenciesContainer.Controls.Add(
-                new Label
-                {
-                  Text = dependency.Key,
-                  AutoSize = true,
-                  Font = new Font( Font, FontStyle.Bold )
-                });
+              {
+                string dependencyName = dependency.Key;
+                IComponent dependencyComponentInstance = dependency.Value;
 
-              uiDependenciesContainer.Controls.Add(
-                new ComboBox
-                {
-                  Text = dependency.Value != null ? dependency.Value.Name : ""
-                });
-            } );
+                AddDependencyNameLabel( dependencyName );
+                AddDependencyDropdownList( dependencyComponentInstance );
+              }
+            );
       }
       catch( Exception ex )
       {
         MainForm.ErrorMsg( ex );
       }
+    }
+
+
+    //-------------------------------------------------------------------------
+
+    void AddDependencyNameLabel( string dependencyComponentName )
+    {
+      uiDependenciesContainer.Controls.Add(
+        new Label
+        {
+          Text = dependencyComponentName,
+          AutoSize = true,
+          Font = new Font( Font, FontStyle.Bold )
+        } );
+    }
+
+    //-------------------------------------------------------------------------
+
+    void AddDependencyDropdownList( IComponent dependencyComponentInstance )
+    {
+      var dropDownList =
+        new ComboBox
+        {
+          DisplayMember = "Name",
+          DropDownStyle = ComboBoxStyle.DropDownList,
+        };
+
+      if( dependencyComponentInstance != null )
+      {
+        dropDownList.Items.Add( dependencyComponentInstance );
+        dropDownList.SelectedItem = dependencyComponentInstance;
+      }
+
+      dropDownList.DropDown += ( object sender, EventArgs args ) =>
+      {
+
+      };
+
+      uiDependenciesContainer.Controls.Add( dropDownList );
     }
 
     //-------------------------------------------------------------------------

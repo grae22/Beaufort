@@ -65,6 +65,16 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
+    public static void GetDependencyDetails( IComponent component,
+                                             out Dictionary<string, Type> dependencyTypesByName,
+                                             out Dictionary<string, IComponent> dependenciesByName )
+    {
+      GetDependencyTypes( component.GetType(), out dependencyTypesByName );
+      GetDependencyInstances( component, out dependenciesByName );
+    }
+
+    //-------------------------------------------------------------------------
+
     static IEnumerable<PropertyInfo> GetDependenciesFromComponentProperties( Type componentType )
     {
       return

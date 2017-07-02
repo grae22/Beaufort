@@ -124,5 +124,33 @@ namespace Beaufort_Test
     }
 
     //-------------------------------------------------------------------------
+
+    [Test]
+    public void DependencyDetails()
+    {
+      var dependency = new TestComponent1();
+      dependency.SetName( "Dependency" );
+
+      TestComponent2 component = new TestComponent2
+      {
+        Dependency = dependency
+      };
+
+      Dictionary<string, Type> dependencyTypesByName;
+      Dictionary<string, IComponent> dependenciesByName;
+
+      ComponentUtils.GetDependencyDetails(
+        component,
+        out dependencyTypesByName,
+        out dependenciesByName );
+
+      Assert.AreEqual( 1, dependencyTypesByName.Count );
+      Assert.AreEqual( 1, dependenciesByName.Count );
+
+      Assert.AreSame( dependency.GetType(), dependencyTypesByName.Values.First() );
+      Assert.AreSame( dependency, dependenciesByName.Values.First() );
+    }
+
+    //-------------------------------------------------------------------------
   }
 }
