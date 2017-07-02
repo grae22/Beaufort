@@ -60,22 +60,21 @@ namespace FritzTheDog
     {
       try
       {
-        Dictionary<string, Type> dependencyTypes;
+        Dictionary<string, IComponent> dependencies;
 
-        ComponentUtils.GetDependencyTypes(
-          TargetComponent.GetType(),
-          out dependencyTypes );
+        ComponentUtils.GetDependencyInstances(
+          TargetComponent,
+          out dependencies );
 
-        dependencyTypes
-          .Keys
+        dependencies
           .ToList()
           .ForEach(
-            dependencyName =>
+            dependency =>
             {
               uiDependenciesContainer.Controls.Add(
                 new Label
                 {
-                  Text = dependencyName,
+                  Text = dependency.Key,
                   AutoSize = true,
                   Font = new Font( Font, FontStyle.Bold )
                 });
@@ -83,7 +82,7 @@ namespace FritzTheDog
               uiDependenciesContainer.Controls.Add(
                 new ComboBox
                 {
-                  // TODO
+                  Text = dependency.Value != null ? dependency.Value.Name : ""
                 });
             } );
       }
