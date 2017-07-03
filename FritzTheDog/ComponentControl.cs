@@ -1,4 +1,7 @@
-﻿using System;
+﻿// TODO:
+// x Dependency names (when selected in dropdown list) should update when component's name is changed.
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
