@@ -42,13 +42,6 @@ namespace Beaufort
       }
     }
 
-    //-------------------------------------------------------------------------
-
-    public IComponent GetComponent( string componentName )
-    {
-      return this[ componentName ];
-    }
-
     //=========================================================================
 
     public IComponent AddComponent( string fullTypeName,
