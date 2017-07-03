@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Beaufort
 {
-  public class ComponentContainer
+  public class ComponentContainer : IComponentContainerInfo
   {
     //-------------------------------------------------------------------------
 
@@ -16,13 +17,13 @@ namespace Beaufort
     {
       get
       {
-        return Components.FirstOrDefault( x => x.Name == componentName );
+        return _Components.FirstOrDefault( x => x.Name == componentName );
       }
     }
 
     //-------------------------------------------------------------------------
 
-    List<IComponent> Components = new List<IComponent>();
+    List<IComponent> _Components = new List<IComponent>();
 
     //-------------------------------------------------------------------------
 
@@ -31,7 +32,24 @@ namespace Beaufort
       Name = name;
     }
 
+    // IComponentContainerInfo ================================================
+
+    public IReadOnlyCollection<IComponent> Components
+    {
+      get
+      {
+        return _Components.AsReadOnly();
+      }
+    }
+
     //-------------------------------------------------------------------------
+
+    public IComponent GetComponent( string componentName )
+    {
+      return this[ componentName ];
+    }
+
+    //=========================================================================
 
     public IComponent AddComponent( string fullTypeName,
                                     string instanceName )
@@ -59,7 +77,7 @@ namespace Beaufort
           nameof( instanceName ) );
       }
 
-      Components.Add( newComponent );
+      _Components.Add( newComponent );
 
       return newComponent;
     }

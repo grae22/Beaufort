@@ -183,7 +183,7 @@ namespace FritzTheDog
       {
         IComponent newComponent = Components.AddComponent( typeName, "New Component" );
 
-        return new ComponentControl( newComponent );
+        return new ComponentControl( newComponent, Components );
       }
       catch( Exception ex )
       {

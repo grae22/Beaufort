@@ -75,6 +75,19 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
+    public static void GetComponentsAssignableToType( Type type,
+                                                      IReadOnlyCollection<IComponent> components,
+                                                      out List<IComponent> outputComponents )
+    {
+      outputComponents =
+        components
+          .ToList()
+          .Where( c => type.IsAssignableFrom( c.GetType() ) )
+          .ToList();
+    }
+
+    //-------------------------------------------------------------------------
+
     static IEnumerable<PropertyInfo> GetDependenciesFromComponentProperties( Type componentType )
     {
       return

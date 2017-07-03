@@ -20,14 +20,6 @@ namespace Beaufort_Test
       public TestComponent1 Dependency { private get; set; }
     }
 
-    interface TestInterface : IComponent { }
-
-    struct TestStruct : IComponent
-    {
-      public string Name { get; }
-      public bool SetName( string name ) { return true; }
-    }
-
     //-------------------------------------------------------------------------
 
     [Test]
@@ -149,6 +141,28 @@ namespace Beaufort_Test
 
       Assert.AreSame( dependency.GetType(), dependencyTypesByName.Values.First() );
       Assert.AreSame( dependency, dependenciesByName.Values.First() );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void GetComponentsAssignableToType()
+    {
+      List<IComponent> components = new List<IComponent>
+      {
+        new TestComponent1(),
+        new TestComponent2()
+      };
+
+      List<IComponent> outputComponents;
+
+      ComponentUtils.GetComponentsAssignableToType(
+        typeof( TestComponent1 ),
+        components,
+        out outputComponents );
+
+      Assert.AreEqual( 1, outputComponents.Count );
+      Assert.AreSame( components[ 0 ], outputComponents[ 0 ] );
     }
 
     //-------------------------------------------------------------------------

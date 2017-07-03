@@ -12,17 +12,20 @@ namespace FritzTheDog
     //-------------------------------------------------------------------------
 
     IComponent TargetComponent;
+    IComponentContainerInfo ComponentContainerInfo;
     Color NormalBackColour;
     Point MouseClickPosition;
     bool IsMoving;
 
     //-------------------------------------------------------------------------
 
-    public ComponentControl( IComponent targetComponent )
+    public ComponentControl( IComponent targetComponent,
+                             IComponentContainerInfo componentContainerInfo )
     {
       try
       {
         TargetComponent = targetComponent;
+        ComponentContainerInfo = componentContainerInfo;
 
         InitializeComponent();
 
@@ -77,7 +80,10 @@ namespace FritzTheDog
                 IComponent dependencyComponentInstance = dependency.Value;
 
                 AddDependencyNameLabel( dependencyName );
-                AddDependencyDropdownList( dependencyComponentInstance );
+
+                AddDependencyDropdownList(
+                  dependencyTypesByName[ dependencyName ],
+                  dependencyComponentInstance );
               }
             );
       }
@@ -103,7 +109,8 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    void AddDependencyDropdownList( IComponent dependencyComponentInstance )
+    void AddDependencyDropdownList( Type dependencyType,
+                                    IComponent dependencyComponentInstance )
     {
       var dropDownList =
         new ComboBox
@@ -118,12 +125,39 @@ namespace FritzTheDog
         dropDownList.SelectedItem = dependencyComponentInstance;
       }
 
-      dropDownList.DropDown += ( object sender, EventArgs args ) =>
-      {
-
-      };
+      PopulateDependencyDropdownList( dependencyType, dropDownList );
 
       uiDependenciesContainer.Controls.Add( dropDownList );
+    }
+
+    //-------------------------------------------------------------------------
+
+    void PopulateDependencyDropdownList( Type dependencyType,
+                                         ComboBox dropDownList )
+    {
+      dropDownList.DropDown += ( object sender, EventArgs args ) =>
+      {
+        var list = (ComboBox)sender;
+
+        object selected = list.SelectedItem;
+
+        List<IComponent> components;
+
+        ComponentUtils.GetComponentsAssignableToType(
+          dependencyType,
+          ComponentContainerInfo.Components,
+          out components );
+
+        list.Items.Clear();
+
+        components.ForEach( c => list.Items.Add( c ) );
+
+        if( selected != null &&
+            list.Items.Contains( selected ) )
+        {
+          list.SelectedItem = selected;
+        }
+      };
     }
 
     //-------------------------------------------------------------------------
