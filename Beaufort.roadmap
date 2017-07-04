@@ -4,34 +4,79 @@
       <Id>0</Id>
       <Title>Load &amp; Save component container to json</Title>
       <Description>Should persist components &amp; their relationships.</Description>
-      <Points>0</Points>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
     </Entity>
     <Entity type="Roadmapp.Entities.GoalEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Id>2</Id>
       <Title>Load &amp; Save components' state to json</Title>
       <Description>Should persist actual system state.</Description>
-      <Points>0</Points>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.GoalEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>6</Id>
+      <Title>Run the system</Title>
+      <Description>Components should process their logic and update output properties.</Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.GoalEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>7</Id>
+      <Title>Ability to manipulate input values</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
     </Entity>
     <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Id>3</Id>
       <Title>Json component serialisation (relationships)</Title>
       <Description>
       </Description>
-      <Points>0</Points>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
     </Entity>
     <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Id>5</Id>
       <Title>Json component serialisation (states)</Title>
       <Description>
       </Description>
-      <Points>0</Points>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>9</Id>
+      <Title>Components perform logic.</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
     </Entity>
     <Entity type="Roadmapp.Entities.StrategyEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Id>4</Id>
       <Title>Component serialisation</Title>
       <Description>
       </Description>
-      <Points>0</Points>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.StrategyEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>8</Id>
+      <Title>Component logic</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
     </Entity>
   </Entities>
   <EntityDependencies>
@@ -41,11 +86,21 @@
     <Entity id="2">
       <Dependency id="0" />
     </Entity>
+    <Entity id="6">
+      <Dependency id="8" />
+    </Entity>
+    <Entity id="7">
+      <Dependency id="6" />
+    </Entity>
     <Entity id="3" />
     <Entity id="5" />
+    <Entity id="9" />
     <Entity id="4">
       <Dependency id="3" />
       <Dependency id="5" />
+    </Entity>
+    <Entity id="8">
+      <Dependency id="9" />
     </Entity>
   </EntityDependencies>
 </Roadmap>
