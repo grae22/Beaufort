@@ -18,15 +18,7 @@
     </Entity>
     <Entity type="Roadmapp.Entities.GoalEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Id>6</Id>
-      <Title>Run the system</Title>
-      <Description>Components should process their logic and update output properties.</Description>
-      <ValuePoints>0</ValuePoints>
-      <EffortPoints>0</EffortPoints>
-      <PriorityPoints>0</PriorityPoints>
-    </Entity>
-    <Entity type="Roadmapp.Entities.GoalEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <Id>7</Id>
-      <Title>Ability to manipulate input values</Title>
+      <Title>Build, modify &amp; run the system</Title>
       <Description>
       </Description>
       <ValuePoints>0</ValuePoints>
@@ -60,6 +52,33 @@
       <EffortPoints>0</EffortPoints>
       <PriorityPoints>0</PriorityPoints>
     </Entity>
+    <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>10</Id>
+      <Title>Display component outputs</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>13</Id>
+      <Title>Add component</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>14</Id>
+      <Title>Remove component</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
     <Entity type="Roadmapp.Entities.StrategyEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Id>4</Id>
       <Title>Component serialisation</Title>
@@ -71,7 +90,25 @@
     </Entity>
     <Entity type="Roadmapp.Entities.StrategyEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Id>8</Id>
-      <Title>Component logic</Title>
+      <Title>Run the system</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.StrategyEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>11</Id>
+      <Title>Ability to manipulate input values</Title>
+      <Description>
+      </Description>
+      <ValuePoints>0</ValuePoints>
+      <EffortPoints>0</EffortPoints>
+      <PriorityPoints>0</PriorityPoints>
+    </Entity>
+    <Entity type="Roadmapp.Entities.StrategyEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>12</Id>
+      <Title>Add &amp; remove components</Title>
       <Description>
       </Description>
       <ValuePoints>0</ValuePoints>
@@ -88,19 +125,28 @@
     </Entity>
     <Entity id="6">
       <Dependency id="8" />
-    </Entity>
-    <Entity id="7">
-      <Dependency id="6" />
+      <Dependency id="11" />
+      <Dependency id="12" />
     </Entity>
     <Entity id="3" />
     <Entity id="5" />
     <Entity id="9" />
+    <Entity id="10" />
+    <Entity id="13" />
+    <Entity id="14" />
     <Entity id="4">
       <Dependency id="3" />
       <Dependency id="5" />
     </Entity>
     <Entity id="8">
       <Dependency id="9" />
+    </Entity>
+    <Entity id="11">
+      <Dependency id="10" />
+    </Entity>
+    <Entity id="12">
+      <Dependency id="13" />
+      <Dependency id="14" />
     </Entity>
   </EntityDependencies>
 </Roadmap>
