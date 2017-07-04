@@ -49,10 +49,38 @@ namespace FritzTheDog
         uiType.Text = TargetComponent.GetType().Name;
         uiName.Text = TargetComponent.Name;
 
+        PopulateOutputValues();
         PopulateDependencies();
 
         uiName.Focus();
         uiName.SelectAll();
+      }
+      catch( Exception ex )
+      {
+        MainForm.ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void PopulateOutputValues()
+    {
+      try
+      {
+        Dictionary<string, object> valuesByName;
+
+        ComponentUtils.GetOutputValues( TargetComponent, out valuesByName );
+
+        foreach( var output in valuesByName )
+        {
+          string name = output.Key;
+          object value = output.Value;
+
+          AddDependencyNameLabel(
+            string.Format( "{0}: {1}",
+              name,
+              value ) );
+        }
       }
       catch( Exception ex )
       {
