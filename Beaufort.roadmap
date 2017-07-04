@@ -1,0 +1,51 @@
+<Roadmap>
+  <Entities>
+    <Entity type="Roadmapp.Entities.GoalEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>0</Id>
+      <Title>Load &amp; Save component container to json</Title>
+      <Description>Should persist components &amp; their relationships.</Description>
+      <Points>0</Points>
+    </Entity>
+    <Entity type="Roadmapp.Entities.GoalEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>2</Id>
+      <Title>Load &amp; Save components' state to json</Title>
+      <Description>Should persist actual system state.</Description>
+      <Points>0</Points>
+    </Entity>
+    <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>3</Id>
+      <Title>Json component serialisation (relationships)</Title>
+      <Description>
+      </Description>
+      <Points>0</Points>
+    </Entity>
+    <Entity type="Roadmapp.Entities.RealisationEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>5</Id>
+      <Title>Json component serialisation (states)</Title>
+      <Description>
+      </Description>
+      <Points>0</Points>
+    </Entity>
+    <Entity type="Roadmapp.Entities.StrategyEntity, Roadmapp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Id>4</Id>
+      <Title>Component serialisation</Title>
+      <Description>
+      </Description>
+      <Points>0</Points>
+    </Entity>
+  </Entities>
+  <EntityDependencies>
+    <Entity id="0">
+      <Dependency id="4" />
+    </Entity>
+    <Entity id="2">
+      <Dependency id="0" />
+    </Entity>
+    <Entity id="3" />
+    <Entity id="5" />
+    <Entity id="4">
+      <Dependency id="3" />
+      <Dependency id="5" />
+    </Entity>
+  </EntityDependencies>
+</Roadmap>
