@@ -88,6 +88,26 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
+    public static void GetOutputValues( IComponent component,
+                                        out Dictionary<string, object> valuesByName )
+    {
+      valuesByName = new Dictionary<string, object>();
+
+      List<PropertyInfo> outputProperties =
+        component
+          .GetType()
+          .GetProperties()
+          .Where( p => p.GetGetMethod() != null )
+          .ToList();
+
+      foreach( PropertyInfo p in outputProperties )
+      {
+        valuesByName.Add( p.Name, p.GetValue( component ) );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
     static IEnumerable<PropertyInfo> GetDependenciesFromComponentProperties( Type componentType )
     {
       return
