@@ -96,8 +96,12 @@ namespace Beaufort
       List<PropertyInfo> outputProperties =
         component
           .GetType()
-          .GetProperties()
-          .Where( p => p.GetGetMethod() != null )
+          .GetProperties(
+            BindingFlags.Public |
+            BindingFlags.Instance )
+          .Where( p =>
+            p.GetValue( component ) != null &&
+            p.GetValue( component ).GetType().IsPrimitive )
           .ToList();
 
       foreach( PropertyInfo p in outputProperties )

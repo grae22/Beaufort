@@ -181,6 +181,7 @@ namespace Beaufort_Test
       ComponentUtils.GetOutputValues( component,
                                       out outputsByName );
 
+      Assert.AreEqual( 1, outputsByName.Count );
       Assert.True( outputsByName.ContainsKey( "Output" ) );
       Assert.AreEqual( typeof( double ), outputsByName[ "Output" ].GetType() );
       Assert.AreEqual( 1.23, outputsByName[ "Output" ] );

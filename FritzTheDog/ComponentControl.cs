@@ -76,10 +76,7 @@ namespace FritzTheDog
           string name = output.Key;
           object value = output.Value;
 
-          AddDependencyNameLabel(
-            string.Format( "{0}: {1}",
-              name,
-              value ) );
+          AddOutputValueLabels( name, value );
         }
       }
       catch( Exception ex )
@@ -124,6 +121,38 @@ namespace FritzTheDog
       }
     }
 
+
+    //-------------------------------------------------------------------------
+
+    void AddOutputValueLabels( string outputName,
+                               object value )
+    {
+      var layout =
+        new FlowLayoutPanel
+        {
+          FlowDirection = FlowDirection.LeftToRight,
+          AutoSize = true
+        };
+
+      layout.Controls.Add(
+        new Label
+        {
+          Text = outputName + ':',
+          AutoSize = true,
+          Font = new Font( Font, FontStyle.Bold )
+        }
+      );
+
+      layout.Controls.Add(
+        new Label
+        {
+          Text = value.ToString(),
+          AutoSize = true
+        }
+      );
+
+      uiDependenciesContainer.Controls.Add( layout );
+    }
 
     //-------------------------------------------------------------------------
 
