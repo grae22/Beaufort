@@ -157,7 +157,11 @@ namespace FritzTheDog
         if( e.Data.GetDataPresent( DataFormats.StringFormat ) )
         {
           var info = (ComponentInfo)uiComponentTypes.SelectedItem;
-          ComponentControl componentControl = CreateComponent( info.FullTypeName );
+
+          ComponentControl componentControl =
+            CreateComponent(
+              info.FullTypeName,
+              info.FriendlyName );
 
           if( componentControl == null )
           {
@@ -177,11 +181,11 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    ComponentControl CreateComponent( string typeName )
+    ComponentControl CreateComponent( string typeName, string name )
     {
       try
       {
-        IComponent newComponent = Components.AddComponent( typeName, "New Component" );
+        IComponent newComponent = Components.AddComponent( typeName, name );
 
         return new ComponentControl( newComponent, Components );
       }
