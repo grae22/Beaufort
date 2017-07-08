@@ -83,6 +83,13 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
+    public void Update( ushort deltaTimeMs )
+    {
+      _Components.ForEach( c => c.Update( deltaTimeMs ) );
+    }
+
+    //-------------------------------------------------------------------------
+
     IComponent InstantiateComponent( string fullTypeName,
                                      string instanceName )
     {

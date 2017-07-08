@@ -13,5 +13,11 @@
     bool SetName( string name );
 
     //-------------------------------------------------------------------------
+
+    // When called, the component should perform all necessary logic and update
+    // its internal state as well as any output properties.
+    void Update( ushort deltaTimeMs );
+
+    //-------------------------------------------------------------------------
   }
 }
