@@ -141,6 +141,7 @@ namespace FritzTheDog
       try
       {
         e.Effect = DragDropEffects.Copy;
+        Components.Update( 1 );
       }
       catch( Exception ex )
       {

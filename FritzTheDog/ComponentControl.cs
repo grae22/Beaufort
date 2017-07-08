@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
 using Beaufort;
+using System.Reflection;
 
 namespace FritzTheDog
 {
@@ -15,7 +16,7 @@ namespace FritzTheDog
     //-------------------------------------------------------------------------
 
     IComponent TargetComponent;
-    IComponentContainerInfo ComponentContainerInfo;
+    IComponentContainer ComponentContainer;
     Color NormalBackColour;
     Point MouseClickPosition;
     bool IsMoving;
@@ -23,12 +24,12 @@ namespace FritzTheDog
     //-------------------------------------------------------------------------
 
     public ComponentControl( IComponent targetComponent,
-                             IComponentContainerInfo componentContainerInfo )
+                             IComponentContainer componentContainerInfo )
     {
       try
       {
         TargetComponent = targetComponent;
-        ComponentContainerInfo = componentContainerInfo;
+        ComponentContainer = componentContainerInfo;
 
         InitializeComponent();
 
@@ -110,6 +111,7 @@ namespace FritzTheDog
                 AddDependencyNameLabel( dependencyName );
 
                 AddDependencyDropdownList(
+                  dependencyName,
                   dependencyTypesByName[ dependencyName ],
                   dependencyComponentInstance );
               }
@@ -169,7 +171,8 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    void AddDependencyDropdownList( Type dependencyType,
+    void AddDependencyDropdownList( string dependencyName,
+                                    Type dependencyType,
                                     IComponent dependencyComponentInstance )
     {
       var dropDownList =
@@ -177,6 +180,7 @@ namespace FritzTheDog
         {
           DisplayMember = "Name",
           DropDownStyle = ComboBoxStyle.DropDownList,
+          Tag = dependencyName
         };
 
       if( dependencyComponentInstance != null )
@@ -186,6 +190,15 @@ namespace FritzTheDog
       }
 
       PopulateDependencyDropdownList( dependencyType, dropDownList );
+
+      dropDownList.SelectedValueChanged += ( object sender, EventArgs args ) =>
+      {
+        ComboBox dropDownList2 = (ComboBox)sender;
+        string dependencyName2 = (string)dropDownList2.Tag;
+
+        PropertyInfo info = TargetComponent.GetType().GetProperty( dependencyName2 );
+        info.SetMethod.Invoke( TargetComponent, new object[] { dropDownList2.SelectedItem } );
+      };
 
       uiDependenciesContainer.Controls.Add( dropDownList );
     }
@@ -205,7 +218,7 @@ namespace FritzTheDog
 
         ComponentUtils.GetComponentsAssignableToType(
           dependencyType,
-          ComponentContainerInfo.Components,
+          ComponentContainer.Components,
           out components );
 
         list.Items.Clear();

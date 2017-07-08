@@ -2,7 +2,7 @@
 
 namespace Beaufort
 {
-  public interface IComponentContainerInfo
+  public interface IComponentContainer
   {
     IReadOnlyCollection<IComponent> Components { get; }
   }

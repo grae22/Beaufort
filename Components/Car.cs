@@ -1,5 +1,4 @@
-﻿using System;
-using Beaufort;
+﻿using Beaufort;
 
 namespace Components
 {

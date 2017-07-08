@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Beaufort
 {
-  public class ComponentContainer : IComponentContainerInfo
+  public class ComponentContainer : IComponentContainer
   {
     //-------------------------------------------------------------------------
 
