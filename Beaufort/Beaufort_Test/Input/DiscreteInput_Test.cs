@@ -22,8 +22,8 @@ namespace Beaufort_Test.Input
       TestObject.SetStates(
         new Tuple<byte, string>[]
         {
-          new Tuple<byte, string>( 1, "On" ),
-          new Tuple<byte, string>( 0, "Off" )
+          new Tuple<byte, string>( 0, "Off" ),
+          new Tuple<byte, string>( 1, "On" )
         }
       );
     }
@@ -31,8 +31,16 @@ namespace Beaufort_Test.Input
     //-------------------------------------------------------------------------
 
     [Test]
-    public void InitialValueIsFirstInCollectionPassedToConstructor()
+    public void InitialValueIsFirstInCollection()
     {
+      TestObject.SetStates(
+        new Tuple<byte, string>[]
+        {
+          new Tuple<byte, string>( 1, "On" ),
+          new Tuple<byte, string>( 0, "Off" )
+        }
+      );
+
       Assert.AreEqual( 1, TestObject.Value );
     }
 

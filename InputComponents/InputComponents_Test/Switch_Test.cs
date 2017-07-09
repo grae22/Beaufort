@@ -21,8 +21,8 @@ namespace InputComponents_Test
         new Switch(
           new Tuple<byte, string>[]
           {
-            new Tuple<byte, string>( 0, "On" ),
-            new Tuple<byte, string>( 1, "Off" ),
+            new Tuple<byte, string>( 0, "Off" ),
+            new Tuple<byte, string>( 1, "On" ),
           }
         );
     }
