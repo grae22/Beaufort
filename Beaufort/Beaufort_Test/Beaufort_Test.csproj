@@ -53,7 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Beaufort\Beaufort.csproj">
+    <ProjectReference Include="..\Beaufort.csproj">
       <Project>{dc2430cf-fbec-4493-b47a-f784b4e2eba0}</Project>
       <Name>Beaufort</Name>
     </ProjectReference>
