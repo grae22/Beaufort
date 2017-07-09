@@ -8,6 +8,10 @@ namespace Beaufort.Input
   {
     //-------------------------------------------------------------------------
 
+    const int MIN_STATE_COUNT = 2;
+
+    //-------------------------------------------------------------------------
+    
     public byte Value { get; private set; }
 
     public IReadOnlyDictionary<byte, string> StateNamesByValue { get; private set; }
@@ -44,7 +48,7 @@ namespace Beaufort.Input
 
     void ValidateSufficientStateCount( int count )
     {
-      if( count < 2 )
+      if( count < MIN_STATE_COUNT )
       {
         throw new ArgumentException(
           string.Format(
