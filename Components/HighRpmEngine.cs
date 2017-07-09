@@ -1,6 +1,6 @@
 ﻿using Beaufort;
 
-namespace Components
+namespace TestComponents
 {
   class HighRpmEngine : BaseComponent, IEngine
   {

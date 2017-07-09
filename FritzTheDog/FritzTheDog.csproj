@@ -88,9 +88,9 @@
       <Project>{dc2430cf-fbec-4493-b47a-f784b4e2eba0}</Project>
       <Name>Beaufort</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Components\Components.csproj">
+    <ProjectReference Include="..\Components\TestComponents.csproj">
       <Project>{9723c06a-69d9-4385-9587-c0099360db73}</Project>
-      <Name>Components</Name>
+      <Name>TestComponents</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,4 @@
-﻿namespace Components
+﻿namespace TestComponents
 {
   interface ICar
   {
