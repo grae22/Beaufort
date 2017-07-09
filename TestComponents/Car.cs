@@ -1,6 +1,5 @@
 ﻿using Beaufort;
 using Beaufort.Input;
-using InputComponents;
 
 namespace TestComponents
 {
