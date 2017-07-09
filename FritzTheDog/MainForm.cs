@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
 using System.Drawing;
+using System.Threading;
 using Beaufort;
 
 namespace FritzTheDog
@@ -51,6 +52,8 @@ namespace FritzTheDog
     //-------------------------------------------------------------------------
 
     ComponentContainer Components = new ComponentContainer( "Default" );
+    Thread UpdateThread;
+    bool UpdateThreadIsAlive;
 
     //-------------------------------------------------------------------------
 
@@ -68,11 +71,26 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    void MainForm_Load( object sender, System.EventArgs e )
+    void MainForm_Load( object sender, EventArgs e )
     {
       try
       {
         PopulateComponentTypesListBox();
+        InitialiseUpdateThread();
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void MainForm_FormClosing( object sender, FormClosingEventArgs e )
+    {
+      try
+      {
+        ShutdownUpdateThread();
       }
       catch( Exception ex )
       {
@@ -141,7 +159,6 @@ namespace FritzTheDog
       try
       {
         e.Effect = DragDropEffects.Copy;
-        Components.Update( 1 );
       }
       catch( Exception ex )
       {
@@ -196,6 +213,95 @@ namespace FritzTheDog
       }
 
       return null;
+    }
+
+    //-------------------------------------------------------------------------
+
+    void InitialiseUpdateThread()
+    {
+      try
+      {
+        var threadStart = new ThreadStart( UpdateLoop );
+        UpdateThread = new Thread( threadStart );
+        UpdateThread.Start();
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void ShutdownUpdateThread()
+    {
+      try
+      {
+        UpdateThreadIsAlive = false;
+        UpdateThread.Join( 1000 );
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void UpdateLoop()
+    {
+      try
+      {
+        UpdateThreadIsAlive = true;
+
+        var updateComponentControls =
+          new UpdateComponentControlsDelegate( UpdateComponentControls );
+
+        while( UpdateThreadIsAlive )
+        {
+          try
+          {
+            Components.Update( 100 );
+
+            updateComponentControls.Invoke();
+
+            Thread.Sleep( 100 );
+          }
+          catch( ThreadInterruptedException )
+          {
+            // Ignore.
+          }
+        }
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    delegate void UpdateComponentControlsDelegate();
+
+    void UpdateComponentControls()
+    {
+      try
+      {
+        foreach( Control control in uiCanvas.Controls )
+        {
+          if( control is ComponentControl == false )
+          {
+            continue;
+          }
+
+          var componentControl = (ComponentControl)control;
+          componentControl.DoUpdate();
+        }
+      }
+      catch( Exception ex )
+      {
+        ErrorMsg( ex );
+      }
     }
 
     //-------------------------------------------------------------------------

@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
-using Beaufort;
 using System.Reflection;
+using System.Threading;
+using Beaufort;
 
 namespace FritzTheDog
 {
@@ -20,6 +21,7 @@ namespace FritzTheDog
     Color NormalBackColour;
     Point MouseClickPosition;
     bool IsMoving;
+    Dictionary<string, Label> OutputLabelsByOutputName = new Dictionary<string, Label>();
 
     //-------------------------------------------------------------------------
 
@@ -34,6 +36,20 @@ namespace FritzTheDog
         InitializeComponent();
 
         NormalBackColour = uiName.BackColor;
+      }
+      catch( Exception ex )
+      {
+        MainForm.ErrorMsg( ex );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void DoUpdate()
+    {
+      try
+      {
+        UpdateOutputValues();
       }
       catch( Exception ex )
       {
@@ -123,9 +139,8 @@ namespace FritzTheDog
       }
     }
 
-
     //-------------------------------------------------------------------------
-
+    
     void AddOutputValueLabels( string outputName,
                                object value )
     {
@@ -145,14 +160,15 @@ namespace FritzTheDog
         }
       );
 
-      layout.Controls.Add(
+      var outputLabel =
         new Label
         {
           Text = value.ToString(),
           AutoSize = true
-        }
-      );
+        };
+      layout.Controls.Add( outputLabel );
 
+      OutputLabelsByOutputName.Add( outputName, outputLabel );
       uiDependenciesContainer.Controls.Add( layout );
     }
 
@@ -193,6 +209,8 @@ namespace FritzTheDog
 
       dropDownList.SelectedValueChanged += ( object sender, EventArgs args ) =>
       {
+        // Get the selected component and update the target component to now
+        // use the selected component.
         ComboBox dropDownList2 = (ComboBox)sender;
         string dependencyName2 = (string)dropDownList2.Tag;
 
@@ -315,6 +333,49 @@ namespace FritzTheDog
       }
     }
 
+    //-------------------------------------------------------------------------
+
+    void UpdateOutputValues()
+    {
+      try
+      {
+        foreach( var output in OutputLabelsByOutputName )
+        {
+          string text =
+            TargetComponent
+              .GetType()
+              .GetProperty( output.Key )
+              .GetGetMethod()
+              .Invoke( TargetComponent, new object[] { } )
+              .ToString();
+
+          if( output.Value.InvokeRequired )
+          {
+            output.Value.Invoke(
+              new UpdateLabelDelegate( UpdateLabel ),
+              new object[] { output.Value, text } );
+          }
+          else
+          {
+            UpdateLabel( output.Value, text );
+          }
+        }
+      }
+      catch( Exception )
+      {
+        // Ignore.
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    delegate void UpdateLabelDelegate( Label label, string text );
+    
+    void UpdateLabel( Label label, string text )
+    {
+      label.Text = text;
+    }
+    
     //-------------------------------------------------------------------------
   }
 }
