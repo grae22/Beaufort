@@ -11,17 +11,7 @@ namespace Beaufort
     public string Name { get; private set; }
 
     //-------------------------------------------------------------------------
-
-    public IComponent this[ string componentName ]
-    {
-      get
-      {
-        return _Components.FirstOrDefault( x => x.Name == componentName );
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
+    
     List<IComponent> _Components = new List<IComponent>();
 
     //-------------------------------------------------------------------------
@@ -46,15 +36,20 @@ namespace Beaufort
     public IComponent AddComponent( string fullTypeName,
                                     string instanceName )
     {
-      IComponent newComponent = InstantiateComponent( fullTypeName, instanceName );
-
-      if( newComponent == null )
+      IComponent newComponent;
+      
+      try
       {
-        throw new NullReferenceException(
+        newComponent = InstantiateComponent( fullTypeName, instanceName );
+      }
+      catch( ArgumentException ex )
+      {
+        throw new TypeLoadException(
           string.Format(
             "Failed to instantiate component of type \"{0}\" with name \"{1}\".",
             fullTypeName,
-            instanceName ) );
+            instanceName ),
+          ex );
       }
 
       bool namedOk = newComponent.SetName( instanceName );
@@ -75,14 +70,7 @@ namespace Beaufort
     }
 
     //-------------------------------------------------------------------------
-
-    public bool Contains( string componentInstanceName )
-    {
-      return this[ componentInstanceName ] != null;
-    }
-
-    //-------------------------------------------------------------------------
-
+    
     public void Update( ushort deltaTimeMs )
     {
       _Components.ForEach( c => c.Update( deltaTimeMs ) );
@@ -93,21 +81,26 @@ namespace Beaufort
     IComponent InstantiateComponent( string fullTypeName,
                                      string instanceName )
     {
-      Type type = Type.GetType( fullTypeName, true );
+      object newObject;
 
-      object newObject = Activator.CreateInstance( type );
+      try
+      {
+        Type type = Type.GetType( fullTypeName, true );
 
-      if( newObject == null )
+        newObject = Activator.CreateInstance( type );
+      }
+      catch( TypeLoadException ex )
       {
         throw new ArgumentException(
           string.Format(
             "Failed to instantiate object of type \"{0}\" with name \"{1}\".",
             fullTypeName,
             instanceName ),
-          nameof( fullTypeName ) );
+          nameof( fullTypeName ),
+          ex );
       }
 
-      IComponent newComponent = (IComponent)newObject;
+      IComponent newComponent = newObject as IComponent;
 
       if( newComponent == null )
       {

@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Linq;
+using NUnit.Framework;
 using Beaufort;
 
 namespace Beaufort_Test
@@ -46,11 +48,69 @@ namespace Beaufort_Test
 
       Assert.NotNull( component );
 
-      Assert.True( TestObject.Contains( "TestComponent" ) );
+      IComponent retrievedComponent =
+        TestObject
+          .Components
+          .FirstOrDefault( c => c.Name == "TestComponent" );
+
+      Assert.NotNull( retrievedComponent );
 
       Assert.AreEqual(
         typeof( TestComponent ),
-        TestObject[ "TestComponent" ].GetType() );
+        retrievedComponent.GetType() );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void TypeLoadExceptionWhenComponentFailsToInstantiate()
+    {
+      try
+      {
+        TestObject.AddComponent( "SomeNonExistentType", "Name" );
+      }
+      catch( TypeLoadException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void ArgumentExceptionOnInvalidComponentName()
+    {
+      try
+      {
+        TestObject.AddComponent(
+          typeof( TestComponent ).AssemblyQualifiedName,
+          "" );
+      }
+      catch( ArgumentException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void TypeLoadExceptionWhenComponentDoesntImplementIComponent()
+    {
+      try
+      {
+        TestObject.AddComponent( "System.Int32", "Name" );
+      }
+      catch( TypeLoadException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
     }
 
     //-------------------------------------------------------------------------
