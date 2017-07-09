@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using InputComponents;
 
 namespace InputComponents_Test
@@ -16,7 +17,14 @@ namespace InputComponents_Test
     [SetUp]
     public void SetUp()
     {
-      TestObject = new Switch();
+      TestObject =
+        new Switch(
+          new Tuple<byte, string>[]
+          {
+            new Tuple<byte, string>( 0, "On" ),
+            new Tuple<byte, string>( 1, "Off" ),
+          }
+        );
     }
     
     //-------------------------------------------------------------------------

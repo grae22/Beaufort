@@ -17,22 +17,91 @@ namespace Beaufort_Test.Input
     [SetUp]
     public void SetUp()
     {
-      TestObject =
-        new DiscreteInput(
-          new Tuple<byte, string>[]
-          {
-            new Tuple<byte, string>( 0, "Off" ),
-            new Tuple<byte, string>( 1, "On" )
-          }
-        );
+      TestObject = new DiscreteInput();
+
+      TestObject.SetStates(
+        new Tuple<byte, string>[]
+        {
+          new Tuple<byte, string>( 1, "On" ),
+          new Tuple<byte, string>( 0, "Off" )
+        }
+      );
     }
 
     //-------------------------------------------------------------------------
 
     [Test]
-    public void InitialValue()
+    public void InitialValueIsFirstInCollectionPassedToConstructor()
     {
-      Assert.AreEqual( 0, TestObject.Value );
+      Assert.AreEqual( 1, TestObject.Value );
+    }
+
+    //-------------------------------------------------------------------------
+    
+    [Test]
+    public void ExceptionWhenLessThanTwoStates()
+    {
+      try
+      {
+        TestObject.SetStates(
+          new Tuple<byte, string>[]
+          {
+            new Tuple<byte, string>( 0, "State1" )
+          }
+        );
+      }
+      catch( ArgumentException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void ExceptionWhenStateValuesNotUnique()
+    {
+      try
+      {
+        TestObject.SetStates(
+          new Tuple<byte, string>[]
+          {
+            new Tuple<byte, string>( 0, "State1" ),
+            new Tuple<byte, string>( 0, "State2" )
+          }
+        );
+      }
+      catch( ArgumentException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void ExceptionWhenStateNamesNotUnique()
+    {
+      try
+      {
+        TestObject.SetStates(
+          new Tuple<byte, string>[]
+          {
+            new Tuple<byte, string>( 0, "State" ),
+            new Tuple<byte, string>( 1, "State" )
+          }
+        );
+      }
+      catch( ArgumentException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
     }
 
     //-------------------------------------------------------------------------
