@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using Beaufort;
 
 namespace FritzTheDog

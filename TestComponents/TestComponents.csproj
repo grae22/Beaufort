@@ -46,6 +46,10 @@
       <Project>{dc2430cf-fbec-4493-b47a-f784b4e2eba0}</Project>
       <Name>Beaufort</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InputComponents\InputComponents.csproj">
+      <Project>{a2b1fadf-1061-463d-96e2-f76a0256236c}</Project>
+      <Name>InputComponents</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
