@@ -106,28 +106,36 @@ namespace FritzTheDog
       {
         uiComponentTypes.Items.Clear();
 
-        Dictionary<string, Type> componentTypes;
-
-        ComponentUtils.GetComponents(
-          Assembly.Load( "TestComponents" ),
-          out componentTypes );
-
-        componentTypes.ToList().ForEach(
-          x =>
-          {
-            var info = new ComponentInfo
-            {
-              FriendlyName = x.Value.Name,
-              FullTypeName = x.Value.AssemblyQualifiedName
-            };
-
-            uiComponentTypes.Items.Add( info );
-          } );
+        LoadComponentsFromAssembly( "InputComponents", uiComponentTypes );
+        LoadComponentsFromAssembly( "TestComponents", uiComponentTypes );
       }
       catch( Exception ex )
       {
         ErrorMsg( ex );
       }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void LoadComponentsFromAssembly( string assemblyName, ListBox listBox )
+    {
+      Dictionary<string, Type> componentTypes;
+
+      ComponentUtils.GetComponents(
+        Assembly.Load( assemblyName ),
+        out componentTypes );
+
+      componentTypes.ToList().ForEach(
+        x =>
+        {
+          var info = new ComponentInfo
+          {
+            FriendlyName = x.Value.Name,
+            FullTypeName = x.Value.AssemblyQualifiedName
+          };
+
+          listBox.Items.Add( info );
+        } );
     }
 
     //-------------------------------------------------------------------------
