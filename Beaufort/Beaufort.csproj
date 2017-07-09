@@ -39,6 +39,8 @@
     <Compile Include="ComponentUtils.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="IComponentContainer.cs" />
+    <Compile Include="Input\DiscreteInput.cs" />
+    <Compile Include="Input\IInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
