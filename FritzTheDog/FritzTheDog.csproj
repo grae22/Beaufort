@@ -88,6 +88,10 @@
       <Project>{dc2430cf-fbec-4493-b47a-f784b4e2eba0}</Project>
       <Name>Beaufort</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InputComponents\InputComponents.csproj">
+      <Project>{a2b1fadf-1061-463d-96e2-f76a0256236c}</Project>
+      <Name>InputComponents</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestComponents\TestComponents.csproj">
       <Project>{9723c06a-69d9-4385-9587-c0099360db73}</Project>
       <Name>TestComponents</Name>
