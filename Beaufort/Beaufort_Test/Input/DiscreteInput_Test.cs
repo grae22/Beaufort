@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Beaufort.Input;
 
 namespace Beaufort_Test.Input
@@ -16,7 +17,14 @@ namespace Beaufort_Test.Input
     [SetUp]
     public void SetUp()
     {
-      TestObject = new DiscreteInput();
+      TestObject =
+        new DiscreteInput(
+          new Tuple<byte, string>[]
+          {
+            new Tuple<byte, string>( 0, "Off" ),
+            new Tuple<byte, string>( 1, "On" )
+          }
+        );
     }
 
     //-------------------------------------------------------------------------
@@ -25,6 +33,18 @@ namespace Beaufort_Test.Input
     public void InitialValue()
     {
       Assert.AreEqual( 0, TestObject.Value );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void PossibleValuesAreCorrect()
+    {
+      Assert.True( TestObject.StateNamesByValue.ContainsKey( 0 ) );
+      Assert.AreEqual( "Off", TestObject.StateNamesByValue[ 0 ] );
+
+      Assert.True( TestObject.StateNamesByValue.ContainsKey( 1 ) );
+      Assert.AreEqual( "On", TestObject.StateNamesByValue[ 1 ] );
     }
 
     //-------------------------------------------------------------------------
