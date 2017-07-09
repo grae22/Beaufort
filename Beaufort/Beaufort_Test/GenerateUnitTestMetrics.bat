@@ -11,8 +11,8 @@ REM Build configuration.
 SET BUILD_CONFIGURATION=Debug
 
 REM Package path (packages are stored with the solution)
-SET MANAGER_PATH=..\
-SET PACKAGES_PATH=%MANAGER_PATH%packages\
+SET SOLUTION_PATH=..\..\
+SET PACKAGES_PATH=%SOLUTION_PATH%packages\
 
 REM Create a 'GeneratedReports' folder if it does not exist
 if not exist "%~dp0GeneratedReports" mkdir "%~dp0GeneratedReports"
