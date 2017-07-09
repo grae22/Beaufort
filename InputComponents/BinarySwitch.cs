@@ -3,13 +3,19 @@ using Beaufort.Input;
 
 namespace InputComponents
 {
-  public class Switch : DiscreteInput
+  public class BinarySwitch : DiscreteInput
   {
     //-------------------------------------------------------------------------
 
-    public Switch( Tuple<byte, string>[] stateNamesByValue )
+    public BinarySwitch()
     {
-      SetStates( stateNamesByValue );
+      SetStates(
+        new Tuple<byte, string>[]
+        {
+          new Tuple<byte, string>( 0, "Off" ),
+          new Tuple<byte, string>( 1, "On" )
+        }
+      );
     }
 
     //-------------------------------------------------------------------------

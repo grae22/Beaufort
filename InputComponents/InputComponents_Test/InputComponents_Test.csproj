@@ -46,13 +46,17 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Switch_Test.cs" />
+    <Compile Include="BinarySwitch_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Beaufort\Beaufort.csproj">
+      <Project>{dc2430cf-fbec-4493-b47a-f784b4e2eba0}</Project>
+      <Name>Beaufort</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InputComponents.csproj">
       <Project>{a2b1fadf-1061-463d-96e2-f76a0256236c}</Project>
       <Name>InputComponents</Name>

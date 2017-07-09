@@ -1,38 +1,31 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using InputComponents;
 
 namespace InputComponents_Test
 {
   [TestFixture]
-  [Category( "Switch" )]
-  public class Switch_Test
+  [Category( "BinarySwitch" )]
+  public class BinarySwitch_Test
   {
     //-------------------------------------------------------------------------
 
-    Switch TestObject;
+    BinarySwitch TestObject;
 
     //-------------------------------------------------------------------------
 
     [SetUp]
     public void SetUp()
     {
-      TestObject =
-        new Switch(
-          new Tuple<byte, string>[]
-          {
-            new Tuple<byte, string>( 0, "Off" ),
-            new Tuple<byte, string>( 1, "On" ),
-          }
-        );
+      TestObject = new BinarySwitch();
     }
     
     //-------------------------------------------------------------------------
 
     [Test]
-    public void Test123()
+    public void States()
     {
-
+      Assert.AreEqual( "Off", TestObject.StateNamesByValue[ 0 ] );
+      Assert.AreEqual( "On", TestObject.StateNamesByValue[ 1 ] );
     }
 
     //-------------------------------------------------------------------------
