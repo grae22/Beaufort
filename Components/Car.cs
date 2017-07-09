@@ -13,7 +13,7 @@ namespace Components
     {
       if( Engine != null )
       {
-        SpeedKph += deltaTimeMs * 0.001 * Engine.Speed;
+        SpeedKph += deltaTimeMs * 0.0001 * Engine.Speed;
       }
     }
   }
