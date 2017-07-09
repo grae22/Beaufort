@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beaufort_Test", "Beaufort_T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FritzTheDog", "FritzTheDog\FritzTheDog.csproj", "{8DA4DC66-D3D7-4599-ABC4-C8B63AC8D1FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestComponents", "Components\TestComponents.csproj", "{9723C06A-69D9-4385-9587-C0099360DB73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestComponents", "TestComponents\TestComponents.csproj", "{9723C06A-69D9-4385-9587-C0099360DB73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -109,7 +109,7 @@ namespace FritzTheDog
         Dictionary<string, Type> componentTypes;
 
         ComponentUtils.GetComponents(
-          Assembly.Load( "Components" ),
+          Assembly.Load( "TestComponents" ),
           out componentTypes );
 
         componentTypes.ToList().ForEach(

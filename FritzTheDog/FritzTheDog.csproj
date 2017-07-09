@@ -88,7 +88,7 @@
       <Project>{dc2430cf-fbec-4493-b47a-f784b4e2eba0}</Project>
       <Name>Beaufort</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Components\TestComponents.csproj">
+    <ProjectReference Include="..\TestComponents\TestComponents.csproj">
       <Project>{9723c06a-69d9-4385-9587-c0099360db73}</Project>
       <Name>TestComponents</Name>
     </ProjectReference>
