@@ -39,14 +39,14 @@ namespace Beaufort.Input
 
     void ValidateStates( Tuple<byte, string>[] stateNamesByValue )
     {
-      ValidateSufficientStateCount( stateNamesByValue.Length );
-      ValidateStatesValuesAreUnique( stateNamesByValue );
-      ValidateStatesNamesAreUnique( stateNamesByValue );
+      ValidateStateCount( stateNamesByValue.Length );
+      ValidateStateValuesAreUnique( stateNamesByValue );
+      ValidateStateNamesAreUnique( stateNamesByValue );
     }
 
     //-------------------------------------------------------------------------
 
-    void ValidateSufficientStateCount( int count )
+    void ValidateStateCount( int count )
     {
       if( count < MIN_STATE_COUNT )
       {
@@ -59,7 +59,7 @@ namespace Beaufort.Input
 
     //-------------------------------------------------------------------------
 
-    void ValidateStatesValuesAreUnique( Tuple<byte, string>[] stateNamesByValue )
+    void ValidateStateValuesAreUnique( Tuple<byte, string>[] stateNamesByValue )
     {
       var values = new List<byte>();
 
@@ -83,7 +83,7 @@ namespace Beaufort.Input
 
     //-------------------------------------------------------------------------
 
-    void ValidateStatesNamesAreUnique( Tuple<byte, string>[] stateNamesByValue )
+    void ValidateStateNamesAreUnique( Tuple<byte, string>[] stateNamesByValue )
     {
       var names = new List<string>();
 

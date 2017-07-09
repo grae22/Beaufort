@@ -73,7 +73,7 @@ namespace Beaufort
     
     public void Update( ushort deltaTimeMs )
     {
-      _Components.ForEach( c => c.Update( deltaTimeMs ) );
+      UpdateComponents( deltaTimeMs );
     }
 
     //-------------------------------------------------------------------------
@@ -114,6 +114,13 @@ namespace Beaufort
       }
 
       return newComponent;
+    }
+
+    //-------------------------------------------------------------------------
+
+    void UpdateComponents( ushort deltaTimeMs )
+    {
+      _Components.ForEach( c => c.Update( deltaTimeMs ) );
     }
 
     //-------------------------------------------------------------------------
