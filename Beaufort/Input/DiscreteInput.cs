@@ -28,6 +28,15 @@ namespace Beaufort.Input
 
     //-------------------------------------------------------------------------
 
+    public void UpdateValue( object value )
+    {
+      ValidateValue( value );
+
+      Value = (byte)value;
+    }
+
+    //-------------------------------------------------------------------------
+
     public void SetStates( Tuple<byte, string>[] stateNamesByValue )
     {
       ValidateStates( stateNamesByValue );
@@ -102,6 +111,34 @@ namespace Beaufort.Input
         }
 
         names.Add( name );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void ValidateValueType( object value )
+    {
+      if( value.GetType() != typeof( byte ) )
+      {
+        throw new ArgumentException(
+          string.Format(
+            "Value is of incorrect type '{0}'.",
+            value.GetType().FullName ) );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void ValidateValue( object value )
+    {
+      ValidateValueType( value );
+
+      if( StateNamesByValue.ContainsKey( (byte)value ) == false )
+      {
+        throw new ArgumentException(
+          string.Format(
+            "Value '{0}' does not represent a known state.",
+            value ) );
       }
     }
 

@@ -125,5 +125,39 @@ namespace Beaufort_Test.Input
     }
 
     //-------------------------------------------------------------------------
+
+    [Test]
+    public void ExceptionOnInvalidUpdateValueType()
+    {
+      try
+      {
+        TestObject.UpdateValue( "abc" );
+      }
+      catch( ArgumentException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void ExceptionOnInvalidUpdateValue()
+    {
+      try
+      {
+        TestObject.UpdateValue( (byte)2 );
+      }
+      catch( ArgumentException )
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
   }
 }

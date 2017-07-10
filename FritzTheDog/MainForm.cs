@@ -7,6 +7,7 @@ using System.Linq;
 using System.Drawing;
 using System.Threading;
 using Beaufort;
+using Beaufort.Input;
 
 namespace FritzTheDog
 {
@@ -213,7 +214,14 @@ namespace FritzTheDog
       {
         IComponent newComponent = Components.AddComponent( typeName, name );
 
-        return new ComponentControl( newComponent, Components );
+        if( typeof( IInput ).IsAssignableFrom( newComponent.GetType() ) )
+        {
+          return new InputComponentControl( newComponent, Components );
+        }
+        else
+        {
+          return new ComponentControl( newComponent, Components );
+        }
       }
       catch( Exception ex )
       {

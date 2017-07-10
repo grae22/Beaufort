@@ -15,8 +15,9 @@ namespace FritzTheDog
   {
     //-------------------------------------------------------------------------
 
-    IComponent TargetComponent;
-    IComponentContainer ComponentContainer;
+    protected IComponent TargetComponent;
+    protected IComponentContainer ComponentContainer;
+
     Color NormalBackColour;
     Point MouseClickPosition;
     bool IsMoving;
@@ -58,15 +59,15 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    void Component_Load( object sender, EventArgs e )
+    protected virtual void Component_Load( object sender, EventArgs e )
     {
       try
       {
         uiType.Text = TargetComponent.GetType().Name;
         uiName.Text = TargetComponent.Name;
 
-        PopulateOutputValues();
-        PopulateDependencies();
+        CreateOutputsUi( uiDependenciesContainer );
+        CreateDependenciesUi();
 
         uiName.Focus();
         uiName.SelectAll();
@@ -79,7 +80,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    void PopulateOutputValues()
+    protected virtual void CreateOutputsUi( Panel panel )
     {
       try
       {
@@ -92,7 +93,7 @@ namespace FritzTheDog
           string name = output.Key;
           object value = output.Value;
 
-          AddOutputValueLabels( name, value );
+          AddOutputValueLabels( name, value, panel );
         }
       }
       catch( Exception ex )
@@ -103,7 +104,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    void PopulateDependencies()
+    void CreateDependenciesUi()
     {
       try
       {
@@ -141,7 +142,8 @@ namespace FritzTheDog
     //-------------------------------------------------------------------------
     
     void AddOutputValueLabels( string outputName,
-                               object value )
+                               object value,
+                               Panel panel )
     {
       var layout =
         new FlowLayoutPanel
@@ -168,7 +170,7 @@ namespace FritzTheDog
       layout.Controls.Add( outputLabel );
 
       OutputLabelsByOutputName.Add( outputName, outputLabel );
-      uiDependenciesContainer.Controls.Add( layout );
+      panel.Controls.Add( layout );
     }
 
     //-------------------------------------------------------------------------

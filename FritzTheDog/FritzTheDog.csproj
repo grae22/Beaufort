@@ -47,6 +47,9 @@
     <Compile Include="ComponentControl.Designer.cs">
       <DependentUpon>ComponentControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="InputComponentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
