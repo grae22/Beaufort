@@ -159,5 +159,15 @@ namespace Beaufort_Test.Input
     }
 
     //-------------------------------------------------------------------------
+
+    [Test]
+    public void UpdateValue()
+    {
+      TestObject.UpdateValue( (byte)1 );
+
+      Assert.AreEqual( 1, TestObject.Value );
+    }
+
+    //-------------------------------------------------------------------------
   }
 }

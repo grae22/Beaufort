@@ -45,7 +45,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    public void DoUpdate()
+    public virtual void DoUpdate()
     {
       try
       {

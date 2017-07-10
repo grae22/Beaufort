@@ -5,7 +5,6 @@
 //       functionality InputComponentControl doesn't use).
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Beaufort;
@@ -17,11 +16,29 @@ namespace FritzTheDog
   {
     //-------------------------------------------------------------------------
 
+    Panel ButtonsPanel;
+
+    //-------------------------------------------------------------------------
+
     public InputComponentControl( IComponent targetComponent,
                                   IComponentContainer componentContainerInfo )
     :
       base( targetComponent, componentContainerInfo )
     {
+    }
+
+    //-------------------------------------------------------------------------
+
+    public override void DoUpdate()
+    {
+      try
+      {
+        UpdateButtonColours();
+      }
+      catch( Exception ex )
+      {
+        MainForm.ErrorMsg( ex );
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -39,6 +56,8 @@ namespace FritzTheDog
     {
       try
       {
+        ButtonsPanel = panel;
+
         // TODO: Support other iputs.
         var input = TargetComponent as DiscreteInput;
 
@@ -86,6 +105,31 @@ namespace FritzTheDog
       };
 
       panel.Controls.Add( button );
+    }
+
+    //-------------------------------------------------------------------------
+
+    void UpdateButtonColours()
+    {
+      if( TargetComponent is DiscreteInput == false )
+      {
+        return;
+      }
+
+      foreach( Control c in ButtonsPanel.Controls )
+      {
+        var button = c as Button;
+
+        if( button == null )
+        {
+          continue;
+        }
+
+        c.BackColor =
+          (byte)c.Tag == ((DiscreteInput)TargetComponent).Value
+          ?
+          Color.Green : Color.Transparent;
+      }
     }
 
     //-------------------------------------------------------------------------
