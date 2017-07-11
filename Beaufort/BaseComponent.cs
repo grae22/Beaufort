@@ -2,7 +2,7 @@
 
 namespace Beaufort
 {
-  public abstract class BaseComponent : IComponent, IConfiguredObject
+  public abstract class BaseComponent : ConfiguredObject, IComponent
   {
     // IComponent =============================================================
 
@@ -25,10 +25,6 @@ namespace Beaufort
     //-------------------------------------------------------------------------
 
     public virtual void Update( ushort deltaTimeMs ) { }
-
-    // IConfiguredObject =====================================================
-
-    public virtual void Configure( IValueStore valueStore ) { }
 
     //-------------------------------------------------------------------------
   }

@@ -37,6 +37,7 @@
     <Compile Include="BaseComponent.cs" />
     <Compile Include="ComponentContainer.cs" />
     <Compile Include="ComponentUtils.cs" />
+    <Compile Include="Configuration\ConfiguredObject.cs" />
     <Compile Include="Configuration\IConfiguredObject.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="IComponentContainer.cs" />
