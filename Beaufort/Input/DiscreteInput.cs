@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Beaufort.Configuration;
 
 namespace Beaufort.Input
 {
@@ -26,7 +27,19 @@ namespace Beaufort.Input
       StateNamesByValue = new ReadOnlyDictionary<byte, string>( _StateNamesByValue );
     }
 
-    //-------------------------------------------------------------------------
+    // BaseComponent ==========================================================
+
+    public override void Configure( IValueStore valueStore )
+    {
+      if( valueStore.Exists( "States" ) )
+      {
+        var states = valueStore.GetValue<Tuple<byte, string>[]>( "States" );
+
+        SetStates( states );
+      }
+    }
+
+    // IInput =================================================================
 
     public void UpdateValue( object value )
     {
@@ -35,7 +48,7 @@ namespace Beaufort.Input
       Value = (byte)value;
     }
 
-    //-------------------------------------------------------------------------
+    //=========================================================================
 
     public void SetStates( Tuple<byte, string>[] stateNamesByValue )
     {

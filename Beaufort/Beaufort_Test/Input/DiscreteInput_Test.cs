@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
+using Moq;
 using Beaufort.Input;
+using Beaufort.Configuration;
 
 namespace Beaufort_Test.Input
 {
@@ -169,5 +172,35 @@ namespace Beaufort_Test.Input
     }
 
     //-------------------------------------------------------------------------
+
+    [Test]
+    public void ConfigureStatesFromStore()
+    {
+      var store = new Mock<IValueStore>();
+
+      store.Setup( x => x.Exists( "States" ) ).Returns( true );
+
+      store.Setup( x =>
+        x.GetValue<Tuple<byte, string>[]>( It.IsAny<string>() ) )
+        .Returns( () =>
+        {
+          return new Tuple<byte, string>[]
+          {
+            new Tuple<byte, string>( 10, "ABC" ),
+            new Tuple<byte, string>( 11, "DEF" )
+          };
+        }
+      );
+        
+      TestObject.Configure( store.Object );
+
+      Assert.True( TestObject.StateNamesByValue.ContainsKey( 10 ) );
+      Assert.True( TestObject.StateNamesByValue.ContainsKey( 11 ) );
+
+      Assert.AreEqual( "ABC", TestObject.StateNamesByValue[ 10 ] );
+      Assert.AreEqual( "DEF", TestObject.StateNamesByValue[ 11 ] );
+    }
+
+    //-------------------------------------------------------------------------    
   }
 }

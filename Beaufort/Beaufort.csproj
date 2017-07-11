@@ -37,11 +37,13 @@
     <Compile Include="BaseComponent.cs" />
     <Compile Include="ComponentContainer.cs" />
     <Compile Include="ComponentUtils.cs" />
+    <Compile Include="Configuration\IConfiguredObject.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="IComponentContainer.cs" />
     <Compile Include="Input\DiscreteInput.cs" />
     <Compile Include="Input\IInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Configuration\IValueStore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
