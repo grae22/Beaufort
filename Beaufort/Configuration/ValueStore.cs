@@ -23,7 +23,7 @@ namespace Beaufort.Configuration
     {
       if( Exists( key ) )
       {
-        CheckProvidedTypeMatchesKeyValueType( key, typeof( T ) );
+        ThrowExceptionIfTypeConversionFails( value, ValuesByKey[ key ].GetType() );
 
         ValuesByKey[ key ] = value;
       }
@@ -43,9 +43,9 @@ namespace Beaufort.Configuration
         return defaultValue;
       }
 
-      CheckProvidedTypeMatchesKeyValueType( key, typeof( T ) );
+      ThrowExceptionIfTypeConversionFails( ValuesByKey[ key ], typeof( T ) );
 
-      return (T)ValuesByKey[ key ];
+      return (T)Convert.ChangeType( ValuesByKey[ key ], typeof( T ) );
     }
 
     //-------------------------------------------------------------------------
@@ -55,28 +55,32 @@ namespace Beaufort.Configuration
       return JsonConvert.SerializeObject( ValuesByKey );
     }
 
+    //-------------------------------------------------------------------------
+
+    public void Deserialise( string serialisedStore )
+    {
+      ValuesByKey =
+        JsonConvert.DeserializeObject<Dictionary<string, object>>(
+          serialisedStore );
+    }
+
     //=========================================================================
 
-    void CheckProvidedTypeMatchesKeyValueType( string key, Type provided )
+    void ThrowExceptionIfTypeConversionFails( object value, Type required )
     {
-      if( Exists( key ) == false )
+      try
       {
-        return;
+        Convert.ChangeType( value, required );
       }
-
-      Type required = ValuesByKey[ key ].GetType();
-
-      if( provided == required )
+      catch( Exception ex )
       {
-        return;
+        throw new InvalidCastException(
+          string.Format(
+            "Cannot convert value '{0}' to required type '{1}'.",
+            value,
+            required.Name ),
+          ex );
       }
-
-      throw new InvalidCastException(
-        string.Format(
-          "Incorrect type provided '{0}' for key '{1}', required '{2}'.",
-          provided.Name,
-          key,
-          required.Name ) );
     }
 
     //-------------------------------------------------------------------------

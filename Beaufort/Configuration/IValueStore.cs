@@ -15,5 +15,8 @@
 
     // Serialises the store to a string.
     string Serialise();
+
+    // Deserialises the store from a string.
+    void Deserialise( string serialisedStore );
   }
 }

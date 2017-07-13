@@ -56,11 +56,11 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ExceptionOnGetValueWithIncorrectType()
     {
-      TestObject.SetValue( "TestValue", 123 );
+      TestObject.SetValue( "TestValue", "ABC" );
 
       try
       {
-        TestObject.GetValue<string>( "TestValue" );
+        TestObject.GetValue<int>( "TestValue" );
       }
       catch( InvalidCastException )
       {
@@ -79,7 +79,7 @@ namespace Beaufort_Test.Configuration
 
       try
       {
-        TestObject.SetValue( "TestValue", "" );
+        TestObject.SetValue( "TestValue", "ABC" );
       }
       catch( InvalidCastException )
       {
@@ -87,6 +87,28 @@ namespace Beaufort_Test.Configuration
       }
 
       Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void ConvertNumericToString()
+    {
+      TestObject.SetValue( "Test", 123 );
+      TestObject.SetValue( "Test", "456" );
+
+      Assert.AreEqual( 456, TestObject.GetValue<int>( "Test" ) );
+    }
+
+    //-------------------------------------------------------------------------
+    
+    [Test]
+    public void ConvertNumericStringToNumeric()
+    {
+      TestObject.SetValue( "Test", "456" );
+      TestObject.SetValue( "Test", 123 );
+
+      Assert.AreEqual( 123, TestObject.GetValue<int>( "Test" ) );
     }
 
     //-------------------------------------------------------------------------
@@ -102,6 +124,20 @@ namespace Beaufort_Test.Configuration
       Assert.AreEqual(
         "{\"TestInt\":123,\"TestString\":\"ABC\"}",
         serialisedStore );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void DeserialiseFromJson()
+    {
+      TestObject.Deserialise( "{\"TestInt\":123,\"TestString\":\"ABC\"}" );
+
+      Assert.True( TestObject.Exists( "TestInt" ) );
+      Assert.AreEqual( 123, TestObject.GetValue<int>( "TestInt" ) );
+
+      Assert.True( TestObject.Exists( "TestString" ) );
+      Assert.AreEqual( "ABC", TestObject.GetValue<string>( "TestString" ) );
     }
 
     //-------------------------------------------------------------------------
