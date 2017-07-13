@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Beaufort.Configuration
 {
@@ -45,6 +46,13 @@ namespace Beaufort.Configuration
       CheckProvidedTypeMatchesKeyValueType( key, typeof( T ) );
 
       return (T)ValuesByKey[ key ];
+    }
+
+    //-------------------------------------------------------------------------
+
+    public string Serialise()
+    {
+      return JsonConvert.SerializeObject( ValuesByKey );
     }
 
     //=========================================================================

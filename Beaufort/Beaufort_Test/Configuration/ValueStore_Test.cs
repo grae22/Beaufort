@@ -90,5 +90,20 @@ namespace Beaufort_Test.Configuration
     }
 
     //-------------------------------------------------------------------------
+
+    [Test]
+    public void SerialiseToJson()
+    {
+      TestObject.SetValue( "TestInt", 123 );
+      TestObject.SetValue( "TestString", "ABC" );
+
+      string serialisedStore = TestObject.Serialise();
+
+      Assert.AreEqual(
+        "{\"TestInt\":123,\"TestString\":\"ABC\"}",
+        serialisedStore );
+    }
+
+    //-------------------------------------------------------------------------
   }
 }

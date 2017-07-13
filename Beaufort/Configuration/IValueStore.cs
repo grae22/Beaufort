@@ -12,5 +12,8 @@
     // Retrieves the value, returns the default-value if key isn't found.
     // Throws exception if value is of a type other than the requested type.
     T GetValue<T>( string key, T defaultValue );
+
+    // Serialises the store to a string.
+    string Serialise();
   }
 }
