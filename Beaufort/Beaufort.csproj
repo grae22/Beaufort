@@ -39,6 +39,7 @@
     <Compile Include="ComponentUtils.cs" />
     <Compile Include="Configuration\ConfiguredObject.cs" />
     <Compile Include="Configuration\IConfiguredObject.cs" />
+    <Compile Include="Configuration\ValueStore.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="IComponentContainer.cs" />
     <Compile Include="Input\DiscreteInput.cs" />

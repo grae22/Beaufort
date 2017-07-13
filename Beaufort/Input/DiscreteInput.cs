@@ -33,7 +33,7 @@ namespace Beaufort.Input
     {
       if( valueStore.Exists( "States" ) )
       {
-        var states = valueStore.GetValue<Tuple<byte, string>[]>( "States" );
+        var states = valueStore.GetValue<Tuple<byte, string>[]>( "States", null );
 
         SetStates( states );
       }

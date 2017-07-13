@@ -181,7 +181,7 @@ namespace Beaufort_Test.Input
       store.Setup( x => x.Exists( "States" ) ).Returns( true );
 
       store.Setup( x =>
-        x.GetValue<Tuple<byte, string>[]>( It.IsAny<string>() ) )
+        x.GetValue<Tuple<byte, string>[]>( It.IsAny<string>(), null ) )
         .Returns( () =>
         {
           return new Tuple<byte, string>[]

@@ -50,6 +50,7 @@
     <Compile Include="ComponentContainer_Test.cs" />
     <Compile Include="ComponentUtils_Test.cs" />
     <Compile Include="Configuration\ConfiguredObject_Test.cs" />
+    <Compile Include="Configuration\ValueStore_Test.cs" />
     <Compile Include="Input\DiscreteInput_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

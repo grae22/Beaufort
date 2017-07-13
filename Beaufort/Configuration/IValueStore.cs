@@ -5,8 +5,12 @@
     // Returns true if the value exists.
     bool Exists( string key );
 
-    // Retrieves the value.
-    // Throws exception if type conversion (to passed in object's type) fails.
-    T GetValue<T>( string key );
+    // Sets a value.
+    // Throws exception if value key already exists for value of a different type.
+    void SetValue<T>( string key, T value );
+
+    // Retrieves the value, returns the default-value if key isn't found.
+    // Throws exception if value is of a type other than the requested type.
+    T GetValue<T>( string key, T defaultValue );
   }
 }
