@@ -191,8 +191,10 @@ namespace Beaufort_Test.Input
           };
         }
       );
+
+      TestObject.InjectValueStore( store.Object );
         
-      TestObject.Configure( store.Object );
+      TestObject.Configure();
 
       Assert.True( TestObject.StateNamesByValue.ContainsKey( 10 ) );
       Assert.True( TestObject.StateNamesByValue.ContainsKey( 11 ) );

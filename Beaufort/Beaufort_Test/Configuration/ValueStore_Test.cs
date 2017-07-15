@@ -23,6 +23,16 @@ namespace Beaufort_Test.Configuration
     //-------------------------------------------------------------------------
 
     [Test]
+    public void DefaultValueReturnedIfValueNotSet()
+    {
+      int value = TestObject.GetValue( "TestValue", 123 );
+
+      Assert.AreEqual( 123, value );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
     public void ValueExistsAfterBeingSet()
     {
       TestObject.SetValue( "TestValue", 123 );

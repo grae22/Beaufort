@@ -1,9 +1,14 @@
 ﻿using Beaufort.Configuration;
+using Beaufort.Exceptions;
 
 namespace Beaufort
 {
-  public abstract class BaseComponent : ConfiguredObject, IComponent
+  public abstract class BaseComponent : IComponent, IConfiguredObject
   {
+    //-------------------------------------------------------------------------
+    
+    protected IValueStore ValueStore { get; private set; }
+
     // IComponent =============================================================
 
     public string Name { get; private set; } = "Unnamed Component";
@@ -24,7 +29,44 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    public virtual void Update( ushort deltaTimeMs ) { }
+    // Default implementation does nothing.
+
+    public virtual void Update( ushort deltaTimeMs )
+    {
+    }
+
+    // IConfiguredObject ======================================================
+
+    public void InjectValueStore( IValueStore valueStore )
+    {
+      ValueStore = valueStore;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public virtual string GetConfigurationData()
+    {
+      return string.Empty;
+    }
+
+    //-------------------------------------------------------------------------
+
+    // Default implementation does nothing.
+
+    public virtual void Configure()
+    {
+      ThrowExceptionIfNoValueStore();
+    }
+
+    //=========================================================================
+
+    void ThrowExceptionIfNoValueStore()
+    {
+      if( ValueStore == null )
+      {
+        throw new NullValueStoreException( this );
+      }
+    }
 
     //-------------------------------------------------------------------------
   }

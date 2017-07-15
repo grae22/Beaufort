@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Beaufort.Configuration;
 
 namespace Beaufort.Input
 {
@@ -29,11 +28,11 @@ namespace Beaufort.Input
 
     // BaseComponent ==========================================================
 
-    public override void Configure( IValueStore valueStore )
+    public override void Configure()
     {
-      if( valueStore.Exists( "States" ) )
+      if( ValueStore.Exists( "States" ) )
       {
-        var states = valueStore.GetValue<Tuple<byte, string>[]>( "States", null );
+        var states = ValueStore.GetValue<Tuple<byte, string>[]>( "States", null );
 
         SetStates( states );
       }
