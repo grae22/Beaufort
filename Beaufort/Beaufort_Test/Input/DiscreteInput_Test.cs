@@ -46,6 +46,8 @@ namespace Beaufort_Test.Input
     {
       try
       {
+        TestObject.RemoveAllStates();
+
         TestObject.AddState( 0, "State1" );
         TestObject.AddState( 0, "State2" );
       }
@@ -64,6 +66,8 @@ namespace Beaufort_Test.Input
     {
       try
       {
+        TestObject.RemoveAllStates();
+
         TestObject.AddState( 0, "State" );
         TestObject.AddState( 1, "State" );
       }
@@ -164,5 +168,26 @@ namespace Beaufort_Test.Input
     }
 
     //-------------------------------------------------------------------------    
+    
+    [Test]
+    public void RemoveOneState()
+    {
+      TestObject.RemoveState( 0 );
+
+      Assert.AreEqual( 1, TestObject.GetStates().Count );
+      Assert.True( TestObject.GetStates().ContainsKey( 1 ) );
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void RemoveAllStates()
+    {
+      TestObject.RemoveAllStates();
+
+      Assert.AreEqual( 0, TestObject.GetStates().Count );
+    }
+
+    //-------------------------------------------------------------------------
   }
 }

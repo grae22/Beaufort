@@ -12,7 +12,6 @@ namespace Beaufort.Input
     public byte Value { get; private set; }
 
     Dictionary<byte, string> StateNamesByValue = new Dictionary<byte, string>();
-    byte DefaultValue;
 
     // BaseComponent ==========================================================
 
@@ -132,20 +131,6 @@ namespace Beaufort.Input
             "Value '{0}' does not represent a known state.",
             value ) );
       }
-    }
-
-    //-------------------------------------------------------------------------
-
-    void PopulateValues( Tuple<byte, string>[] stateNamesByValue )
-    {
-      StateNamesByValue.Clear();
-
-      foreach( var value in stateNamesByValue )
-      {
-        StateNamesByValue.Add( value.Item1, value.Item2 );
-      }
-
-      DefaultValue = stateNamesByValue[ 0 ].Item1;
     }
 
     //-------------------------------------------------------------------------
