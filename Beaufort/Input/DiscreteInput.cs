@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Beaufort.Input
 {
@@ -12,17 +11,8 @@ namespace Beaufort.Input
 
     public byte Value { get; private set; }
 
-    public IReadOnlyDictionary<byte, string> StateNamesByValue { get; private set; }
-
-    Dictionary<byte, string> _StateNamesByValue = new Dictionary<byte, string>();
+    Dictionary<byte, string> StateNamesByValue = new Dictionary<byte, string>();
     byte DefaultValue;
-
-    //-------------------------------------------------------------------------
-
-    public DiscreteInput()
-    {
-      StateNamesByValue = new ReadOnlyDictionary<byte, string>( _StateNamesByValue );
-    }
 
     // BaseComponent ==========================================================
 
@@ -54,7 +44,7 @@ namespace Beaufort.Input
     {
       ValidateState( value, name );
 
-      _StateNamesByValue.Add( value, name );
+      StateNamesByValue.Add( value, name );
 
       ApplyFirstValueIfCurrentValueIsInvalid();
     }
@@ -63,14 +53,14 @@ namespace Beaufort.Input
 
     public void RemoveState( byte value )
     {
-      _StateNamesByValue.Remove( value );
+      StateNamesByValue.Remove( value );
     }
 
     //-------------------------------------------------------------------------
 
     public void RemoveAllStates()
     {
-      _StateNamesByValue.Clear();
+      StateNamesByValue.Clear();
     }
 
     //-------------------------------------------------------------------------
@@ -92,7 +82,7 @@ namespace Beaufort.Input
 
     void ValidateStateValueIsUnique( byte value )
     {
-      if( _StateNamesByValue.ContainsKey( value ) )
+      if( StateNamesByValue.ContainsKey( value ) )
       {
         throw new ArgumentException(
           string.Format(
@@ -106,7 +96,7 @@ namespace Beaufort.Input
 
     void ValidateStateNameIsUnique( string name )
     {
-      if( _StateNamesByValue.ContainsValue( name ) )
+      if( StateNamesByValue.ContainsValue( name ) )
       {
         throw new ArgumentException(
           string.Format(
@@ -148,11 +138,11 @@ namespace Beaufort.Input
 
     void PopulateValues( Tuple<byte, string>[] stateNamesByValue )
     {
-      _StateNamesByValue.Clear();
+      StateNamesByValue.Clear();
 
       foreach( var value in stateNamesByValue )
       {
-        _StateNamesByValue.Add( value.Item1, value.Item2 );
+        StateNamesByValue.Add( value.Item1, value.Item2 );
       }
 
       DefaultValue = stateNamesByValue[ 0 ].Item1;
@@ -162,12 +152,12 @@ namespace Beaufort.Input
 
     void ApplyFirstValueIfCurrentValueIsInvalid()
     {
-      if( _StateNamesByValue.ContainsKey( Value ) )
+      if( StateNamesByValue.ContainsKey( Value ) )
       {
         return;
       }
 
-      var enumerator = _StateNamesByValue.Keys.GetEnumerator();
+      var enumerator = StateNamesByValue.Keys.GetEnumerator();
 
       while( enumerator.MoveNext() )
       {

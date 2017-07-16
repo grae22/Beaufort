@@ -66,7 +66,7 @@ namespace FritzTheDog
           return;
         }
 
-        foreach( var state in input.StateNamesByValue )
+        foreach( var state in input.GetStates() )
         {
           byte value = state.Key;
           string name = state.Value;

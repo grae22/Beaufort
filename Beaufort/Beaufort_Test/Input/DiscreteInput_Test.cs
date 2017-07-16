@@ -80,11 +80,11 @@ namespace Beaufort_Test.Input
     [Test]
     public void PossibleValuesAreCorrect()
     {
-      Assert.True( TestObject.StateNamesByValue.ContainsKey( 0 ) );
-      Assert.AreEqual( "Off", TestObject.StateNamesByValue[ 0 ] );
+      Assert.True( TestObject.GetStates().ContainsKey( 0 ) );
+      Assert.AreEqual( "Off", TestObject.GetStates()[ 0 ] );
 
-      Assert.True( TestObject.StateNamesByValue.ContainsKey( 1 ) );
-      Assert.AreEqual( "On", TestObject.StateNamesByValue[ 1 ] );
+      Assert.True( TestObject.GetStates().ContainsKey( 1 ) );
+      Assert.AreEqual( "On", TestObject.GetStates()[ 1 ] );
     }
 
     //-------------------------------------------------------------------------
@@ -156,11 +156,11 @@ namespace Beaufort_Test.Input
         
       TestObject.Configure();
 
-      Assert.True( TestObject.StateNamesByValue.ContainsKey( 10 ) );
-      Assert.True( TestObject.StateNamesByValue.ContainsKey( 11 ) );
+      Assert.True( TestObject.GetStates().ContainsKey( 10 ) );
+      Assert.True( TestObject.GetStates().ContainsKey( 11 ) );
 
-      Assert.AreEqual( "ABC", TestObject.StateNamesByValue[ 10 ] );
-      Assert.AreEqual( "DEF", TestObject.StateNamesByValue[ 11 ] );
+      Assert.AreEqual( "ABC", TestObject.GetStates()[ 10 ] );
+      Assert.AreEqual( "DEF", TestObject.GetStates()[ 11 ] );
     }
 
     //-------------------------------------------------------------------------    

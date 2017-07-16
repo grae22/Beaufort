@@ -24,8 +24,8 @@ namespace InputComponents_Test
     [Test]
     public void States()
     {
-      Assert.AreEqual( "Off", TestObject.StateNamesByValue[ 0 ] );
-      Assert.AreEqual( "On", TestObject.StateNamesByValue[ 1 ] );
+      Assert.AreEqual( "Off", TestObject.GetStates()[ 0 ] );
+      Assert.AreEqual( "On", TestObject.GetStates()[ 1 ] );
     }
 
     //-------------------------------------------------------------------------
