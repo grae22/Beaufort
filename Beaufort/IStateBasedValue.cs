@@ -4,7 +4,7 @@ namespace Beaufort
 {
   public interface IStateBasedValue<T>
   {
-    // Adds a state value/name. Value & name must be unique.
+    // Adds a state. Value & name must be unique.
     void AddState( T value, string name );
 
     // Removes a state using its value.
@@ -13,7 +13,7 @@ namespace Beaufort
     // Remove all states.
     void RemoveAllStates();
 
-    // Returns all states as value/name tuples.
+    // Returns all states.
     IReadOnlyDictionary<T, string> GetStates();
   }
 }
