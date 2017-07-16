@@ -48,6 +48,7 @@
     <Compile Include="IComponentContainer.cs" />
     <Compile Include="Input\DiscreteInput.cs" />
     <Compile Include="Input\IInput.cs" />
+    <Compile Include="IStateBasedValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\IValueStore.cs" />
   </ItemGroup>

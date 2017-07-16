@@ -1,5 +1,4 @@
-﻿using System;
-using Beaufort.Input;
+﻿using Beaufort.Input;
 
 namespace InputComponents
 {
@@ -9,13 +8,8 @@ namespace InputComponents
 
     public BinarySwitch()
     {
-      SetStates(
-        new Tuple<byte, string>[]
-        {
-          new Tuple<byte, string>( 0, "Off" ),
-          new Tuple<byte, string>( 1, "On" )
-        }
-      );
+      AddState( 0, "Off" );
+      AddState( 1, "On" );
     }
 
     //-------------------------------------------------------------------------

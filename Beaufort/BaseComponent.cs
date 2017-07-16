@@ -46,7 +46,7 @@ namespace Beaufort
 
     public virtual string GetConfigurationData()
     {
-      return string.Empty;
+      return ValueStore.Serialise();
     }
 
     //-------------------------------------------------------------------------

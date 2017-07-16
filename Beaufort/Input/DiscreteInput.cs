@@ -4,14 +4,12 @@ using System.Collections.ObjectModel;
 
 namespace Beaufort.Input
 {
-  public class DiscreteInput : BaseComponent, IInput<byte>
+  public class DiscreteInput : BaseComponent,
+                               IInput<byte>,
+                               IStateBasedValue<byte>
   {
     //-------------------------------------------------------------------------
 
-    const int MIN_STATE_COUNT = 2;
-
-    //-------------------------------------------------------------------------
-    
     public byte Value { get; private set; }
 
     public IReadOnlyDictionary<byte, string> StateNamesByValue { get; private set; }
@@ -32,9 +30,12 @@ namespace Beaufort.Input
     {
       if( ValueStore.Exists( "States" ) )
       {
-        var states = ValueStore.GetValue<Tuple<byte, string>[]>( "States", null );
+        var states = ValueStore.GetValue<Dictionary<byte, string>>( "States", null );
 
-        SetStates( states );
+        foreach( KeyValuePair<byte, string> state in states )
+        {
+          AddState( state.Key, state.Value );
+        }
       }
     }
 
@@ -47,82 +48,71 @@ namespace Beaufort.Input
       Value = (byte)value;
     }
 
+    // IStateBasedValue =======================================================
+
+    public void AddState( byte value, string name )
+    {
+      ValidateState( value, name );
+
+      _StateNamesByValue.Add( value, name );
+
+      ApplyFirstValueIfCurrentValueIsInvalid();
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void RemoveState( byte value )
+    {
+      _StateNamesByValue.Remove( value );
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void RemoveAllStates()
+    {
+      _StateNamesByValue.Clear();
+    }
+
+    //-------------------------------------------------------------------------
+
+    public IReadOnlyDictionary<byte, string> GetStates()
+    {
+      return StateNamesByValue;
+    }
+
     //=========================================================================
 
-    public void SetStates( Tuple<byte, string>[] stateNamesByValue )
+    void ValidateState( byte value, string name )
     {
-      ValidateStates( stateNamesByValue );
-      PopulateValues( stateNamesByValue );
-      ApplyDefaultState();
+      ValidateStateValueIsUnique( value );
+      ValidateStateNameIsUnique( name );
     }
 
     //-------------------------------------------------------------------------
 
-    void ValidateStates( Tuple<byte, string>[] stateNamesByValue )
+    void ValidateStateValueIsUnique( byte value )
     {
-      ValidateStateCount( stateNamesByValue.Length );
-      ValidateStateValuesAreUnique( stateNamesByValue );
-      ValidateStateNamesAreUnique( stateNamesByValue );
-    }
-
-    //-------------------------------------------------------------------------
-
-    void ValidateStateCount( int count )
-    {
-      if( count < MIN_STATE_COUNT )
+      if( _StateNamesByValue.ContainsKey( value ) )
       {
         throw new ArgumentException(
           string.Format(
-            "Too few states for input '{0}', at least 2 are required.",
-            Name ) );
+            "State value not unique for input '{0}', value '{1}' isn't unique.",
+            Name,
+            value ) );
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void ValidateStateValuesAreUnique( Tuple<byte, string>[] stateNamesByValue )
+    void ValidateStateNameIsUnique( string name )
     {
-      var values = new List<byte>();
-
-      foreach( var state in stateNamesByValue )
+      if( _StateNamesByValue.ContainsValue( name ) )
       {
-        byte value = state.Item1;
-
-        if( values.Contains( value ) )
-        {
-          throw new ArgumentException(
-            string.Format(
-              "State values not unique for input '{0}', value '{1}' isn't unique.",
-              Name,
-              value ),
-            nameof( stateNamesByValue ) );
-        }
-
-        values.Add( value );
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
-    void ValidateStateNamesAreUnique( Tuple<byte, string>[] stateNamesByValue )
-    {
-      var names = new List<string>();
-
-      foreach( var state in stateNamesByValue )
-      {
-        string name = state.Item2;
-
-        if( names.Contains( name ) )
-        {
-          throw new ArgumentException(
-            string.Format(
-              "State names not unique for input '{0}', name '{1}' isn't unique.",
-              Name,
-              name ),
-            nameof( stateNamesByValue ) );
-        }
-
-        names.Add( name );
+        throw new ArgumentException(
+          string.Format(
+            "State name is not unique for input '{0}', name '{1}' isn't unique.",
+            Name,
+            name ) );
       }
     }
 
@@ -170,9 +160,19 @@ namespace Beaufort.Input
 
     //-------------------------------------------------------------------------
 
-    void ApplyDefaultState()
+    void ApplyFirstValueIfCurrentValueIsInvalid()
     {
-      Value = DefaultValue;
+      if( _StateNamesByValue.ContainsKey( Value ) )
+      {
+        return;
+      }
+
+      var enumerator = _StateNamesByValue.Keys.GetEnumerator();
+
+      while( enumerator.MoveNext() )
+      {
+        Value = enumerator.Current;
+      }
     }
 
     //-------------------------------------------------------------------------

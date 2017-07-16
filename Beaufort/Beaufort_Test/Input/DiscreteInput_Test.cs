@@ -22,13 +22,8 @@ namespace Beaufort_Test.Input
     {
       TestObject = new DiscreteInput();
 
-      TestObject.SetStates(
-        new Tuple<byte, string>[]
-        {
-          new Tuple<byte, string>( 0, "Off" ),
-          new Tuple<byte, string>( 1, "On" )
-        }
-      );
+      TestObject.AddState( 0, "Off" );
+      TestObject.AddState( 1, "On" );
     }
 
     //-------------------------------------------------------------------------
@@ -36,13 +31,10 @@ namespace Beaufort_Test.Input
     [Test]
     public void InitialValueIsFirstInCollection()
     {
-      TestObject.SetStates(
-        new Tuple<byte, string>[]
-        {
-          new Tuple<byte, string>( 1, "On" ),
-          new Tuple<byte, string>( 0, "Off" )
-        }
-      );
+      TestObject.RemoveAllStates();
+
+      TestObject.AddState( 1, "On" );
+      TestObject.AddState( 0, "Off" );
 
       Assert.AreEqual( 1, TestObject.Value );
     }
@@ -50,39 +42,12 @@ namespace Beaufort_Test.Input
     //-------------------------------------------------------------------------
     
     [Test]
-    public void ExceptionWhenLessThanTwoStates()
-    {
-      try
-      {
-        TestObject.SetStates(
-          new Tuple<byte, string>[]
-          {
-            new Tuple<byte, string>( 0, "State1" )
-          }
-        );
-      }
-      catch( ArgumentException )
-      {
-        Assert.Pass();
-      }
-
-      Assert.Fail();
-    }
-
-    //-------------------------------------------------------------------------
-
-    [Test]
     public void ExceptionWhenStateValuesNotUnique()
     {
       try
       {
-        TestObject.SetStates(
-          new Tuple<byte, string>[]
-          {
-            new Tuple<byte, string>( 0, "State1" ),
-            new Tuple<byte, string>( 0, "State2" )
-          }
-        );
+        TestObject.AddState( 0, "State1" );
+        TestObject.AddState( 0, "State2" );
       }
       catch( ArgumentException )
       {
@@ -99,13 +64,8 @@ namespace Beaufort_Test.Input
     {
       try
       {
-        TestObject.SetStates(
-          new Tuple<byte, string>[]
-          {
-            new Tuple<byte, string>( 0, "State" ),
-            new Tuple<byte, string>( 1, "State" )
-          }
-        );
+        TestObject.AddState( 0, "State" );
+        TestObject.AddState( 1, "State" );
       }
       catch( ArgumentException )
       {
@@ -181,13 +141,13 @@ namespace Beaufort_Test.Input
       store.Setup( x => x.Exists( "States" ) ).Returns( true );
 
       store.Setup( x =>
-        x.GetValue<Tuple<byte, string>[]>( It.IsAny<string>(), null ) )
+        x.GetValue<Dictionary<byte, string>>( It.IsAny<string>(), null ) )
         .Returns( () =>
         {
-          return new Tuple<byte, string>[]
+          return new Dictionary<byte, string>
           {
-            new Tuple<byte, string>( 10, "ABC" ),
-            new Tuple<byte, string>( 11, "DEF" )
+            { 10, "ABC" },
+            { 11, "DEF" }
           };
         }
       );
