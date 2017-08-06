@@ -33,6 +33,7 @@
       this.uiType = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.uiName = new System.Windows.Forms.TextBox();
+      this.uiSettings = new System.Windows.Forms.Button();
       this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -93,15 +94,32 @@
       this.uiName.TabIndex = 2;
       this.uiName.TextChanged += new System.EventHandler(this.uiName_TextChanged);
       // 
-      // Component
+      // uiSettings
+      // 
+      this.uiSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+      this.uiSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+      this.uiSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.uiSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.uiSettings.ForeColor = System.Drawing.Color.Black;
+      this.uiSettings.Location = new System.Drawing.Point(0, 0);
+      this.uiSettings.Name = "uiSettings";
+      this.uiSettings.Size = new System.Drawing.Size(32, 14);
+      this.uiSettings.TabIndex = 1;
+      this.uiSettings.Text = "...";
+      this.uiSettings.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+      this.uiSettings.UseVisualStyleBackColor = false;
+      this.uiSettings.Click += new System.EventHandler(this.uiSettings_Click);
+      // 
+      // ComponentControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoSize = true;
       this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+      this.Controls.Add(this.uiSettings);
       this.Controls.Add(this.panel1);
-      this.Name = "Component";
+      this.Name = "ComponentControl";
       this.Padding = new System.Windows.Forms.Padding(0, 14, 0, 0);
       this.Size = new System.Drawing.Size(188, 77);
       this.Load += new System.EventHandler(this.Component_Load);
@@ -122,5 +140,6 @@
     private System.Windows.Forms.TextBox uiName;
     private System.Windows.Forms.Label uiType;
     private System.Windows.Forms.FlowLayoutPanel uiDependenciesContainer;
+    private System.Windows.Forms.Button uiSettings;
   }
 }

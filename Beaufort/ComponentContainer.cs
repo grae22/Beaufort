@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Beaufort.Configuration;
 
 namespace Beaufort
 {
@@ -51,17 +52,7 @@ namespace Beaufort
           ex );
       }
 
-      bool namedOk = newComponent.SetName( instanceName );
-
-      if( namedOk == false )
-      {
-        throw new ArgumentException(
-          string.Format(
-            "Failed to name object of type \"{0}\" with name \"{1}\".",
-            fullTypeName,
-            instanceName ),
-          nameof( instanceName ) );
-      }
+      InitialiseComponent( newComponent, instanceName );
 
       _Components.Add( newComponent );
 
@@ -113,6 +104,40 @@ namespace Beaufort
       }
 
       return newComponent;
+    }
+
+    //-------------------------------------------------------------------------
+
+    void InitialiseComponent( IComponent component, string componentName )
+    {
+      SetComponentName( component, componentName );
+      InitialiseComponentValueStore( component );
+    }
+
+    //-------------------------------------------------------------------------
+
+    void SetComponentName( IComponent component, string name )
+    {
+      bool namedOk = component.SetName( name );
+
+      if( namedOk == false )
+      {
+        throw new ArgumentException(
+          string.Format(
+            "Failed to name object of type \"{0}\" with name \"{1}\".",
+            component.GetType().FullName,
+            name ),
+          nameof( name ) );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    void InitialiseComponentValueStore( IComponent component )
+    {
+      var configuredObject = component as IConfiguredObject;
+
+      configuredObject?.InjectValueStore( new ValueStore() );
     }
 
     //-------------------------------------------------------------------------

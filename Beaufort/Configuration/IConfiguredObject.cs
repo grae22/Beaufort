@@ -1,6 +1,6 @@
 ﻿namespace Beaufort.Configuration
 {
-  interface IConfiguredObject
+  public interface IConfiguredObject
   {
     // Injects an IValueStore that can contain configuration data.
     void InjectValueStore( IValueStore valueStore );

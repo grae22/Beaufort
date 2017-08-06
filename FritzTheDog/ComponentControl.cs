@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
 using Beaufort;
+using Beaufort.Configuration;
 
 namespace FritzTheDog
 {
@@ -376,7 +377,23 @@ namespace FritzTheDog
     {
       label.Text = text;
     }
-    
+
+    //-------------------------------------------------------------------------
+
+    void uiSettings_Click(object sender, EventArgs e)
+    {
+      var configuredObject = TargetComponent as IConfiguredObject;
+
+      if( configuredObject == null )
+      {
+        return;
+      }
+
+      MessageBox.Show(
+        configuredObject.GetConfigurationData()
+      );
+    }
+
     //-------------------------------------------------------------------------
   }
 }
