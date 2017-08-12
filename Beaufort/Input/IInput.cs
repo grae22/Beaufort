@@ -2,7 +2,7 @@
 {
   public interface IInput : IComponent
   {
-    void UpdateValue( object value );
+    void UpdateValue(object value);
   }
 
   public interface IInput<T> : IInput

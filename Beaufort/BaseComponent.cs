@@ -6,7 +6,7 @@ namespace Beaufort
   public abstract class BaseComponent : IComponent, IConfiguredObject
   {
     //-------------------------------------------------------------------------
-    
+
     protected IValueStore ValueStore { get; private set; }
 
     // IComponent =============================================================
@@ -15,9 +15,9 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    public bool SetName( string name )
+    public bool SetName(string name)
     {
-      if( name.Length > 0 )
+      if (name.Length > 0)
       {
         Name = name;
 
@@ -31,13 +31,13 @@ namespace Beaufort
 
     // Default implementation does nothing.
 
-    public virtual void Update( ushort deltaTimeMs )
+    public virtual void Update(ushort deltaTimeMs)
     {
     }
 
     // IConfiguredObject ======================================================
 
-    public void InjectValueStore( IValueStore valueStore )
+    public void InjectValueStore(IValueStore valueStore)
     {
       ValueStore = valueStore;
     }
@@ -62,9 +62,9 @@ namespace Beaufort
 
     void ThrowExceptionIfNoValueStore()
     {
-      if( ValueStore == null )
+      if (ValueStore == null)
       {
-        throw new NullValueStoreException( this );
+        throw new NullValueStoreException(this);
       }
     }
 

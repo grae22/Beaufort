@@ -6,7 +6,7 @@ using Beaufort;
 namespace Beaufort_Test
 {
   [TestFixture]
-  [Category( "ComponentContainer" )]
+  [Category("ComponentContainer")]
   public class ComponentContainer_Test
   {
     //-------------------------------------------------------------------------
@@ -16,7 +16,7 @@ namespace Beaufort_Test
       public byte UpdateCount { get; private set; }
       public ushort DeltaTimeMs { get; private set; }
 
-      public override void Update( ushort deltaTimeMs )
+      public override void Update(ushort deltaTimeMs)
       {
         UpdateCount++;
         DeltaTimeMs = deltaTimeMs;
@@ -32,9 +32,8 @@ namespace Beaufort_Test
     [SetUp]
     public void SetUp()
     {
-      TestObject = new ComponentContainer( "TestObject" );
+      TestObject = new ComponentContainer("TestObject");
     }
-    
 
     //-------------------------------------------------------------------------
 
@@ -43,21 +42,21 @@ namespace Beaufort_Test
     {
       IComponent component =
         TestObject.AddComponent(
-          typeof( TestComponent ).AssemblyQualifiedName,
-          "TestComponent" );
+          typeof(TestComponent).AssemblyQualifiedName,
+          "TestComponent");
 
-      Assert.NotNull( component );
+      Assert.NotNull(component);
 
       IComponent retrievedComponent =
         TestObject
           .Components
-          .FirstOrDefault( c => c.Name == "TestComponent" );
+          .FirstOrDefault(c => c.Name == "TestComponent");
 
-      Assert.NotNull( retrievedComponent );
+      Assert.NotNull(retrievedComponent);
 
       Assert.AreEqual(
-        typeof( TestComponent ),
-        retrievedComponent.GetType() );
+        typeof(TestComponent),
+        retrievedComponent.GetType());
     }
 
     //-------------------------------------------------------------------------
@@ -67,9 +66,9 @@ namespace Beaufort_Test
     {
       try
       {
-        TestObject.AddComponent( "SomeNonExistentType", "Name" );
+        TestObject.AddComponent("SomeNonExistentType", "Name");
       }
-      catch( TypeLoadException )
+      catch (TypeLoadException)
       {
         Assert.Pass();
       }
@@ -85,10 +84,10 @@ namespace Beaufort_Test
       try
       {
         TestObject.AddComponent(
-          typeof( TestComponent ).AssemblyQualifiedName,
-          "" );
+          typeof(TestComponent).AssemblyQualifiedName,
+          "");
       }
-      catch( ArgumentException )
+      catch (ArgumentException)
       {
         Assert.Pass();
       }
@@ -103,9 +102,9 @@ namespace Beaufort_Test
     {
       try
       {
-        TestObject.AddComponent( "System.Int32", "Name" );
+        TestObject.AddComponent("System.Int32", "Name");
       }
-      catch( TypeLoadException )
+      catch (TypeLoadException)
       {
         Assert.Pass();
       }
@@ -120,12 +119,12 @@ namespace Beaufort_Test
     {
       IComponent component =
         TestObject.AddComponent(
-          typeof( TestComponent ).AssemblyQualifiedName,
-          "TestComponent" );
+          typeof(TestComponent).AssemblyQualifiedName,
+          "TestComponent");
 
-      TestObject.Update( 1 );
+      TestObject.Update(1);
 
-      Assert.AreEqual( 1, ((TestComponent)component).UpdateCount );
+      Assert.AreEqual(1, ((TestComponent) component).UpdateCount);
     }
 
     //-------------------------------------------------------------------------
@@ -135,12 +134,12 @@ namespace Beaufort_Test
     {
       IComponent component =
         TestObject.AddComponent(
-          typeof( TestComponent ).AssemblyQualifiedName,
-          "TestComponent" );
+          typeof(TestComponent).AssemblyQualifiedName,
+          "TestComponent");
 
-      TestObject.Update( 123 );
+      TestObject.Update(123);
 
-      Assert.AreEqual( 123, ((TestComponent)component).DeltaTimeMs );
+      Assert.AreEqual(123, ((TestComponent) component).DeltaTimeMs);
     }
 
     //-------------------------------------------------------------------------

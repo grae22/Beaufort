@@ -26,8 +26,8 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    public ComponentControl( IComponent targetComponent,
-                             IComponentContainer componentContainerInfo )
+    public ComponentControl(IComponent targetComponent,
+                            IComponentContainer componentContainerInfo)
     {
       try
       {
@@ -38,9 +38,9 @@ namespace FritzTheDog
 
         NormalBackColour = uiName.BackColor;
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
@@ -52,54 +52,54 @@ namespace FritzTheDog
       {
         UpdateOutputValues();
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    protected virtual void Component_Load( object sender, EventArgs e )
+    protected virtual void Component_Load(object sender, EventArgs e)
     {
       try
       {
         uiType.Text = TargetComponent.GetType().Name;
         uiName.Text = TargetComponent.Name;
 
-        CreateOutputsUi( uiDependenciesContainer );
+        CreateOutputsUi(uiDependenciesContainer);
         CreateDependenciesUi();
 
         uiName.Focus();
         uiName.SelectAll();
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    protected virtual void CreateOutputsUi( Panel panel )
+    protected virtual void CreateOutputsUi(Panel panel)
     {
       try
       {
         Dictionary<string, object> valuesByName;
 
-        ComponentUtils.GetOutputValues( TargetComponent, out valuesByName );
+        ComponentUtils.GetOutputValues(TargetComponent, out valuesByName);
 
-        foreach( var output in valuesByName )
+        foreach (var output in valuesByName)
         {
           string name = output.Key;
           object value = output.Value;
 
-          AddOutputValueLabels( name, value, panel );
+          AddOutputValueLabels(name, value, panel);
         }
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
@@ -115,36 +115,36 @@ namespace FritzTheDog
         ComponentUtils.GetDependencyDetails(
           TargetComponent,
           out dependencyTypesByName,
-          out dependenciesByName );
+          out dependenciesByName);
 
         dependenciesByName
           .ToList()
           .ForEach(
             dependency =>
-              {
-                string dependencyName = dependency.Key;
-                IComponent dependencyComponentInstance = dependency.Value;
+            {
+              string dependencyName = dependency.Key;
+              IComponent dependencyComponentInstance = dependency.Value;
 
-                AddDependencyNameLabel( dependencyName );
+              AddDependencyNameLabel(dependencyName);
 
-                AddDependencyDropdownList(
-                  dependencyName,
-                  dependencyTypesByName[ dependencyName ],
-                  dependencyComponentInstance );
-              }
-            );
+              AddDependencyDropdownList(
+                dependencyName,
+                dependencyTypesByName[dependencyName],
+                dependencyComponentInstance);
+            }
+          );
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
-    
-    void AddOutputValueLabels( string outputName,
-                               object value,
-                               Panel panel )
+
+    void AddOutputValueLabels(string outputName,
+                              object value,
+                              Panel panel)
     {
       var layout =
         new FlowLayoutPanel
@@ -158,7 +158,7 @@ namespace FritzTheDog
         {
           Text = outputName + ':',
           AutoSize = true,
-          Font = new Font( Font, FontStyle.Bold )
+          Font = new Font(Font, FontStyle.Bold)
         }
       );
 
@@ -168,30 +168,30 @@ namespace FritzTheDog
           Text = value.ToString(),
           AutoSize = true
         };
-      layout.Controls.Add( outputLabel );
+      layout.Controls.Add(outputLabel);
 
-      OutputLabelsByOutputName.Add( outputName, outputLabel );
-      panel.Controls.Add( layout );
+      OutputLabelsByOutputName.Add(outputName, outputLabel);
+      panel.Controls.Add(layout);
     }
 
     //-------------------------------------------------------------------------
 
-    void AddDependencyNameLabel( string dependencyComponentName )
+    void AddDependencyNameLabel(string dependencyComponentName)
     {
       uiDependenciesContainer.Controls.Add(
         new Label
         {
           Text = dependencyComponentName,
           AutoSize = true,
-          Font = new Font( Font, FontStyle.Bold )
-        } );
+          Font = new Font(Font, FontStyle.Bold)
+        });
     }
 
     //-------------------------------------------------------------------------
 
-    void AddDependencyDropdownList( string dependencyName,
-                                    Type dependencyType,
-                                    IComponent dependencyComponentInstance )
+    void AddDependencyDropdownList(string dependencyName,
+                                   Type dependencyType,
+                                   IComponent dependencyComponentInstance)
     {
       var dropDownList =
         new ComboBox
@@ -201,36 +201,36 @@ namespace FritzTheDog
           Tag = dependencyName
         };
 
-      if( dependencyComponentInstance != null )
+      if (dependencyComponentInstance != null)
       {
-        dropDownList.Items.Add( dependencyComponentInstance );
+        dropDownList.Items.Add(dependencyComponentInstance);
         dropDownList.SelectedItem = dependencyComponentInstance;
       }
 
-      PopulateDependencyDropdownList( dependencyType, dropDownList );
+      PopulateDependencyDropdownList(dependencyType, dropDownList);
 
-      dropDownList.SelectedValueChanged += ( object sender, EventArgs args ) =>
+      dropDownList.SelectedValueChanged += (object sender, EventArgs args) =>
       {
         // Get the selected component and update the target component to now
         // use the selected component.
-        ComboBox dropDownList2 = (ComboBox)sender;
-        string dependencyName2 = (string)dropDownList2.Tag;
+        ComboBox dropDownList2 = (ComboBox) sender;
+        string dependencyName2 = (string) dropDownList2.Tag;
 
-        PropertyInfo info = TargetComponent.GetType().GetProperty( dependencyName2 );
-        info.SetMethod.Invoke( TargetComponent, new object[] { dropDownList2.SelectedItem } );
+        PropertyInfo info = TargetComponent.GetType().GetProperty(dependencyName2);
+        info.SetMethod.Invoke(TargetComponent, new object[] {dropDownList2.SelectedItem});
       };
 
-      uiDependenciesContainer.Controls.Add( dropDownList );
+      uiDependenciesContainer.Controls.Add(dropDownList);
     }
 
     //-------------------------------------------------------------------------
 
-    void PopulateDependencyDropdownList( Type dependencyType,
-                                         ComboBox dropDownList )
+    void PopulateDependencyDropdownList(Type dependencyType,
+                                        ComboBox dropDownList)
     {
-      dropDownList.DropDown += ( object sender, EventArgs args ) =>
+      dropDownList.DropDown += (object sender, EventArgs args) =>
       {
-        var list = (ComboBox)sender;
+        var list = (ComboBox) sender;
 
         object selected = list.SelectedItem;
 
@@ -239,14 +239,14 @@ namespace FritzTheDog
         ComponentUtils.GetComponentsAssignableToType(
           dependencyType,
           ComponentContainer.Components,
-          out components );
+          out components);
 
         list.Items.Clear();
 
-        components.ForEach( c => list.Items.Add( c ) );
+        components.ForEach(c => list.Items.Add(c));
 
-        if( selected != null &&
-            list.Items.Contains( selected ) )
+        if (selected != null &&
+            list.Items.Contains(selected))
         {
           list.SelectedItem = selected;
         }
@@ -255,13 +255,13 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    void uiName_TextChanged( object sender, EventArgs e )
+    void uiName_TextChanged(object sender, EventArgs e)
     {
       try
       {
-        bool result = TargetComponent.SetName( uiName.Text );
+        bool result = TargetComponent.SetName(uiName.Text);
 
-        if( result )
+        if (result)
         {
           uiName.BackColor = NormalBackColour;
         }
@@ -270,19 +270,19 @@ namespace FritzTheDog
           uiName.BackColor = Color.Red;
         }
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
-    
-    void Component_MouseMove( object sender, MouseEventArgs e )
+
+    void Component_MouseMove(object sender, MouseEventArgs e)
     {
       try
       {
-        if( e.Button != MouseButtons.Left )
+        if (e.Button != MouseButtons.Left)
         {
           return;
         }
@@ -290,21 +290,21 @@ namespace FritzTheDog
         Location =
           new Point(
             Location.X + e.X - MouseClickPosition.X,
-            Location.Y + e.Y - MouseClickPosition.Y );
+            Location.Y + e.Y - MouseClickPosition.Y);
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void Component_MouseDown( object sender, MouseEventArgs e )
+    void Component_MouseDown(object sender, MouseEventArgs e)
     {
       try
       {
-        if( IsMoving == false )
+        if (IsMoving == false)
         {
           MouseClickPosition = e.Location;
         }
@@ -313,15 +313,15 @@ namespace FritzTheDog
 
         Cursor.Current = Cursors.SizeAll;
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void Component_MouseUp( object sender, MouseEventArgs e )
+    void Component_MouseUp(object sender, MouseEventArgs e)
     {
       try
       {
@@ -329,9 +329,9 @@ namespace FritzTheDog
 
         Cursor.Current = Cursors.Default;
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
@@ -341,29 +341,29 @@ namespace FritzTheDog
     {
       try
       {
-        foreach( var output in OutputLabelsByOutputName )
+        foreach (var output in OutputLabelsByOutputName)
         {
           string text =
             TargetComponent
               .GetType()
-              .GetProperty( output.Key )
+              .GetProperty(output.Key)
               .GetGetMethod()
-              .Invoke( TargetComponent, new object[] { } )
+              .Invoke(TargetComponent, new object[] { })
               .ToString();
 
-          if( output.Value.InvokeRequired )
+          if (output.Value.InvokeRequired)
           {
             output.Value.Invoke(
-              new UpdateLabelDelegate( UpdateLabel ),
-              new object[] { output.Value, text } );
+              new UpdateLabelDelegate(UpdateLabel),
+              new object[] {output.Value, text});
           }
           else
           {
-            UpdateLabel( output.Value, text );
+            UpdateLabel(output.Value, text);
           }
         }
       }
-      catch( Exception )
+      catch (Exception)
       {
         // Ignore.
       }
@@ -371,9 +371,9 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    delegate void UpdateLabelDelegate( Label label, string text );
-    
-    void UpdateLabel( Label label, string text )
+    delegate void UpdateLabelDelegate(Label label, string text);
+
+    void UpdateLabel(Label label, string text)
     {
       label.Text = text;
     }
@@ -384,7 +384,7 @@ namespace FritzTheDog
     {
       var configuredObject = TargetComponent as IConfiguredObject;
 
-      if( configuredObject == null )
+      if (configuredObject == null)
       {
         return;
       }

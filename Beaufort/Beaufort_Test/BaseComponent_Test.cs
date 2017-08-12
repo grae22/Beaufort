@@ -7,7 +7,7 @@ using Beaufort.Exceptions;
 namespace Beaufort_Test
 {
   [TestFixture]
-  [Category( "BaseComponent" )]
+  [Category("BaseComponent")]
   public class BaseComponent_Test
   {
     //-------------------------------------------------------------------------
@@ -21,16 +21,16 @@ namespace Beaufort_Test
     {
       TestObject = new Mock<BaseComponent>();
     }
-    
+
     //-------------------------------------------------------------------------
 
     [Test]
     public void SetValidName()
     {
-      bool result = TestObject.Object.SetName( "TestObject" );
+      bool result = TestObject.Object.SetName("TestObject");
 
-      Assert.True( result );
-      Assert.AreEqual( "TestObject", TestObject.Object.Name );
+      Assert.True(result);
+      Assert.AreEqual("TestObject", TestObject.Object.Name);
     }
 
     //-------------------------------------------------------------------------
@@ -38,10 +38,10 @@ namespace Beaufort_Test
     [Test]
     public void SetZeroLengthName()
     {
-      bool result = TestObject.Object.SetName( string.Empty );
+      bool result = TestObject.Object.SetName(string.Empty);
 
-      Assert.False( result );
-      Assert.AreEqual( "Unnamed Component", TestObject.Object.Name );
+      Assert.False(result);
+      Assert.AreEqual("Unnamed Component", TestObject.Object.Name);
     }
 
     //-------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace Beaufort_Test
       // We want the base Configure() method to be called.
       TestObject.CallBase = true;
 
-      TestObject.Object.InjectValueStore( new Mock<IValueStore>().Object );
+      TestObject.Object.InjectValueStore(new Mock<IValueStore>().Object);
       TestObject.Object.Configure();
     }
 
@@ -68,7 +68,7 @@ namespace Beaufort_Test
 
         TestObject.Object.Configure();
       }
-      catch( NullValueStoreException )
+      catch (NullValueStoreException)
       {
         Assert.Pass();
       }

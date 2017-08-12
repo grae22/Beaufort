@@ -8,8 +8,8 @@ namespace InputComponents
 
     public BinarySwitch()
     {
-      AddState( 0, "Off" );
-      AddState( 1, "On" );
+      AddState(0, "Off");
+      AddState(1, "On");
     }
 
     //-------------------------------------------------------------------------

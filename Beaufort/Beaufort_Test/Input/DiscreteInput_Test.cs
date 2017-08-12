@@ -8,7 +8,7 @@ using Beaufort.Configuration;
 namespace Beaufort_Test.Input
 {
   [TestFixture]
-  [Category( "DiscreteInput" )]
+  [Category("DiscreteInput")]
   class DiscreteInput_Test
   {
     //-------------------------------------------------------------------------
@@ -22,8 +22,8 @@ namespace Beaufort_Test.Input
     {
       TestObject = new DiscreteInput();
 
-      TestObject.AddState( 0, "Off" );
-      TestObject.AddState( 1, "On" );
+      TestObject.AddState(0, "Off");
+      TestObject.AddState(1, "On");
     }
 
     //-------------------------------------------------------------------------
@@ -33,14 +33,14 @@ namespace Beaufort_Test.Input
     {
       TestObject.RemoveAllStates();
 
-      TestObject.AddState( 1, "On" );
-      TestObject.AddState( 0, "Off" );
+      TestObject.AddState(1, "On");
+      TestObject.AddState(0, "Off");
 
-      Assert.AreEqual( 1, TestObject.Value );
+      Assert.AreEqual(1, TestObject.Value);
     }
 
     //-------------------------------------------------------------------------
-    
+
     [Test]
     public void ExceptionWhenStateValuesNotUnique()
     {
@@ -48,10 +48,10 @@ namespace Beaufort_Test.Input
       {
         TestObject.RemoveAllStates();
 
-        TestObject.AddState( 0, "State1" );
-        TestObject.AddState( 0, "State2" );
+        TestObject.AddState(0, "State1");
+        TestObject.AddState(0, "State2");
       }
-      catch( ArgumentException )
+      catch (ArgumentException)
       {
         Assert.Pass();
       }
@@ -68,10 +68,10 @@ namespace Beaufort_Test.Input
       {
         TestObject.RemoveAllStates();
 
-        TestObject.AddState( 0, "State" );
-        TestObject.AddState( 1, "State" );
+        TestObject.AddState(0, "State");
+        TestObject.AddState(1, "State");
       }
-      catch( ArgumentException )
+      catch (ArgumentException)
       {
         Assert.Pass();
       }
@@ -84,11 +84,11 @@ namespace Beaufort_Test.Input
     [Test]
     public void PossibleValuesAreCorrect()
     {
-      Assert.True( TestObject.GetStates().ContainsKey( 0 ) );
-      Assert.AreEqual( "Off", TestObject.GetStates()[ 0 ] );
+      Assert.True(TestObject.GetStates().ContainsKey(0));
+      Assert.AreEqual("Off", TestObject.GetStates()[0]);
 
-      Assert.True( TestObject.GetStates().ContainsKey( 1 ) );
-      Assert.AreEqual( "On", TestObject.GetStates()[ 1 ] );
+      Assert.True(TestObject.GetStates().ContainsKey(1));
+      Assert.AreEqual("On", TestObject.GetStates()[1]);
     }
 
     //-------------------------------------------------------------------------
@@ -98,9 +98,9 @@ namespace Beaufort_Test.Input
     {
       try
       {
-        TestObject.UpdateValue( "abc" );
+        TestObject.UpdateValue("abc");
       }
-      catch( ArgumentException )
+      catch (ArgumentException)
       {
         Assert.Pass();
       }
@@ -115,9 +115,9 @@ namespace Beaufort_Test.Input
     {
       try
       {
-        TestObject.UpdateValue( (byte)2 );
+        TestObject.UpdateValue((byte) 2);
       }
-      catch( ArgumentException )
+      catch (ArgumentException)
       {
         Assert.Pass();
       }
@@ -130,9 +130,9 @@ namespace Beaufort_Test.Input
     [Test]
     public void UpdateValue()
     {
-      TestObject.UpdateValue( (byte)1 );
+      TestObject.UpdateValue((byte) 1);
 
-      Assert.AreEqual( 1, TestObject.Value );
+      Assert.AreEqual(1, TestObject.Value);
     }
 
     //-------------------------------------------------------------------------
@@ -142,40 +142,40 @@ namespace Beaufort_Test.Input
     {
       var store = new Mock<IValueStore>();
 
-      store.Setup( x => x.Exists( "States" ) ).Returns( true );
+      store.Setup(x => x.Exists("States")).Returns(true);
 
-      store.Setup( x =>
-        x.GetValue<Dictionary<byte, string>>( It.IsAny<string>(), null ) )
-        .Returns( () =>
-        {
-          return new Dictionary<byte, string>
+      store.Setup(x =>
+          x.GetValue<Dictionary<byte, string>>(It.IsAny<string>(), null))
+        .Returns(() =>
           {
-            { 10, "ABC" },
-            { 11, "DEF" }
-          };
-        }
-      );
+            return new Dictionary<byte, string>
+            {
+              {10, "ABC"},
+              {11, "DEF"}
+            };
+          }
+        );
 
-      TestObject.InjectValueStore( store.Object );
-        
+      TestObject.InjectValueStore(store.Object);
+
       TestObject.Configure();
 
-      Assert.True( TestObject.GetStates().ContainsKey( 10 ) );
-      Assert.True( TestObject.GetStates().ContainsKey( 11 ) );
+      Assert.True(TestObject.GetStates().ContainsKey(10));
+      Assert.True(TestObject.GetStates().ContainsKey(11));
 
-      Assert.AreEqual( "ABC", TestObject.GetStates()[ 10 ] );
-      Assert.AreEqual( "DEF", TestObject.GetStates()[ 11 ] );
+      Assert.AreEqual("ABC", TestObject.GetStates()[10]);
+      Assert.AreEqual("DEF", TestObject.GetStates()[11]);
     }
 
     //-------------------------------------------------------------------------    
-    
+
     [Test]
     public void RemoveOneState()
     {
-      TestObject.RemoveState( 0 );
+      TestObject.RemoveState(0);
 
-      Assert.AreEqual( 1, TestObject.GetStates().Count );
-      Assert.True( TestObject.GetStates().ContainsKey( 1 ) );
+      Assert.AreEqual(1, TestObject.GetStates().Count);
+      Assert.True(TestObject.GetStates().ContainsKey(1));
     }
 
     //-------------------------------------------------------------------------
@@ -185,7 +185,7 @@ namespace Beaufort_Test.Input
     {
       TestObject.RemoveAllStates();
 
-      Assert.AreEqual( 0, TestObject.GetStates().Count );
+      Assert.AreEqual(0, TestObject.GetStates().Count);
     }
 
     //-------------------------------------------------------------------------

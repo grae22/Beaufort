@@ -8,15 +8,15 @@ namespace Beaufort
   {
     //-------------------------------------------------------------------------
 
-    public string Name { get; private set; }
+    public string Name { get; }
 
     //-------------------------------------------------------------------------
-    
+
     List<IComponent> _Components = new List<IComponent>();
 
     //-------------------------------------------------------------------------
 
-    public ComponentContainer( string name )
+    public ComponentContainer(string name)
     {
       Name = name;
     }
@@ -33,74 +33,64 @@ namespace Beaufort
 
     //=========================================================================
 
-    public IComponent AddComponent( string fullTypeName,
-                                    string instanceName )
+    public IComponent AddComponent(string fullTypeName,
+                                   string instanceName)
     {
       IComponent newComponent;
-      
+
       try
       {
-        newComponent = InstantiateComponent( fullTypeName, instanceName );
+        newComponent = InstantiateComponent(fullTypeName, instanceName);
       }
-      catch( ArgumentException ex )
+      catch (ArgumentException ex)
       {
         throw new TypeLoadException(
-          string.Format(
-            "Failed to instantiate component of type \"{0}\" with name \"{1}\".",
-            fullTypeName,
-            instanceName ),
-          ex );
+          $"Failed to instantiate component of type \"{fullTypeName}\" with name \"{instanceName}\".",
+          ex);
       }
 
-      InitialiseComponent( newComponent, instanceName );
+      InitialiseComponent(newComponent, instanceName);
 
-      _Components.Add( newComponent );
+      _Components.Add(newComponent);
 
       return newComponent;
     }
 
     //-------------------------------------------------------------------------
-    
-    public void Update( ushort deltaTimeMs )
+
+    public void Update(ushort deltaTimeMs)
     {
-      UpdateComponents( deltaTimeMs );
+      UpdateComponents(deltaTimeMs);
     }
 
     //-------------------------------------------------------------------------
 
-    IComponent InstantiateComponent( string fullTypeName,
-                                     string instanceName )
+    IComponent InstantiateComponent(string fullTypeName,
+                                    string instanceName)
     {
       object newObject;
 
       try
       {
-        Type type = Type.GetType( fullTypeName, true );
+        Type type = Type.GetType(fullTypeName, true);
 
-        newObject = Activator.CreateInstance( type );
+        newObject = Activator.CreateInstance(type);
       }
-      catch( TypeLoadException ex )
+      catch (TypeLoadException ex)
       {
         throw new ArgumentException(
-          string.Format(
-            "Failed to instantiate object of type \"{0}\" with name \"{1}\".",
-            fullTypeName,
-            instanceName ),
-          nameof( fullTypeName ),
-          ex );
+          $"Failed to instantiate object of type \"{fullTypeName}\" with name \"{instanceName}\".",
+          nameof(fullTypeName),
+          ex);
       }
 
       IComponent newComponent = newObject as IComponent;
 
-      if( newComponent == null )
+      if (newComponent == null)
       {
         throw new ArgumentException(
-          string.Format(
-            "Failed to cast object of type \"{0}\" with name \"{1}\" to \"{2}\".",
-            fullTypeName,
-            instanceName,
-            typeof( IComparable ).Name ),
-          nameof( fullTypeName ) );
+          $"Failed to cast object of type \"{fullTypeName}\" with name \"{instanceName}\" to \"{typeof(IComparable).Name}\".",
+          nameof(fullTypeName));
       }
 
       return newComponent;
@@ -108,43 +98,40 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    void InitialiseComponent( IComponent component, string componentName )
+    void InitialiseComponent(IComponent component, string componentName)
     {
-      SetComponentName( component, componentName );
-      InitialiseComponentValueStore( component );
+      SetComponentName(component, componentName);
+      InitialiseComponentValueStore(component);
     }
 
     //-------------------------------------------------------------------------
 
-    void SetComponentName( IComponent component, string name )
+    void SetComponentName(IComponent component, string name)
     {
-      bool namedOk = component.SetName( name );
+      bool namedOk = component.SetName(name);
 
-      if( namedOk == false )
+      if (namedOk == false)
       {
         throw new ArgumentException(
-          string.Format(
-            "Failed to name object of type \"{0}\" with name \"{1}\".",
-            component.GetType().FullName,
-            name ),
-          nameof( name ) );
+          $"Failed to name object of type \"{component.GetType().FullName}\" with name \"{name}\".",
+          nameof(name));
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void InitialiseComponentValueStore( IComponent component )
+    void InitialiseComponentValueStore(IComponent component)
     {
       var configuredObject = component as IConfiguredObject;
 
-      configuredObject?.InjectValueStore( new ValueStore() );
+      configuredObject?.InjectValueStore(new ValueStore());
     }
 
     //-------------------------------------------------------------------------
 
-    void UpdateComponents( ushort deltaTimeMs )
+    void UpdateComponents(ushort deltaTimeMs)
     {
-      _Components.ForEach( c => c.Update( deltaTimeMs ) );
+      _Components.ForEach(c => c.Update(deltaTimeMs));
     }
 
     //-------------------------------------------------------------------------

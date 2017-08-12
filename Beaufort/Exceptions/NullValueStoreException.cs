@@ -6,14 +6,13 @@ namespace Beaufort.Exceptions
   {
     //-------------------------------------------------------------------------
 
-    public NullValueStoreException( IComponent component )
-    :
+    public NullValueStoreException(IComponent component)
+      :
       base(
         string.Format(
           "Null value-store in component '{0}'.",
-          component.Name ) )
+          component.Name))
     {
-      
     }
 
     //-------------------------------------------------------------------------

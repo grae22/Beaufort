@@ -8,12 +8,14 @@ using Beaufort;
 namespace Beaufort_Test
 {
   [TestFixture]
-  [Category( "ComponentUtils" )]
+  [Category("ComponentUtils")]
   public class ComponentUtils_Test
   {
     //-------------------------------------------------------------------------
 
-    class TestComponent1 : BaseComponent { }
+    class TestComponent1 : BaseComponent
+    {
+    }
 
     class TestComponent2 : BaseComponent
     {
@@ -30,10 +32,10 @@ namespace Beaufort_Test
 
       ComponentUtils.GetComponents(
         Assembly.GetExecutingAssembly(),
-        out components );
+        out components);
 
-      Assert.True( components.ContainsKey( typeof( TestComponent1 ).AssemblyQualifiedName ) );
-      Assert.True( components.ContainsKey( typeof( TestComponent2 ).AssemblyQualifiedName ) );
+      Assert.True(components.ContainsKey(typeof(TestComponent1).AssemblyQualifiedName));
+      Assert.True(components.ContainsKey(typeof(TestComponent2).AssemblyQualifiedName));
     }
 
     //-------------------------------------------------------------------------
@@ -45,14 +47,14 @@ namespace Beaufort_Test
 
       ComponentUtils.GetComponents(
         Assembly.GetExecutingAssembly(),
-        out components );
+        out components);
 
       components.ToList().ForEach(
         x =>
         {
-          Assert.True( x.Value.IsClass );
-          Assert.False( x.Value.IsAbstract );
-          Assert.False( x.Value.IsInterface );
+          Assert.True(x.Value.IsClass);
+          Assert.False(x.Value.IsAbstract);
+          Assert.False(x.Value.IsInterface);
         });
     }
 
@@ -64,18 +66,18 @@ namespace Beaufort_Test
       Dictionary<string, Type> dependencyTypesByName;
 
       ComponentUtils.GetDependencyTypes(
-        typeof( TestComponent2 ),
-        out dependencyTypesByName );
+        typeof(TestComponent2),
+        out dependencyTypesByName);
 
-      Assert.AreEqual( 1, dependencyTypesByName.Count );
-
-      Assert.AreEqual(
-        nameof( TestComponent2.Dependency ),
-        dependencyTypesByName.Keys.First() );
+      Assert.AreEqual(1, dependencyTypesByName.Count);
 
       Assert.AreEqual(
-        typeof( TestComponent1 ),
-        dependencyTypesByName.Values.First() );
+        nameof(TestComponent2.Dependency),
+        dependencyTypesByName.Keys.First());
+
+      Assert.AreEqual(
+        typeof(TestComponent1),
+        dependencyTypesByName.Values.First());
     }
 
     //-------------------------------------------------------------------------
@@ -88,10 +90,10 @@ namespace Beaufort_Test
 
       ComponentUtils.GetDependencyInstances(
         component,
-        out dependenciesByName );
+        out dependenciesByName);
 
-      Assert.AreEqual( 1, dependenciesByName.Count );
-      Assert.IsNull( dependenciesByName.Values.First() );
+      Assert.AreEqual(1, dependenciesByName.Count);
+      Assert.IsNull(dependenciesByName.Values.First());
     }
 
     //-------------------------------------------------------------------------
@@ -110,10 +112,10 @@ namespace Beaufort_Test
 
       ComponentUtils.GetDependencyInstances(
         component,
-        out dependenciesByName );
+        out dependenciesByName);
 
-      Assert.AreEqual( 1, dependenciesByName.Count );
-      Assert.AreSame( dependency, dependenciesByName.Values.First() );
+      Assert.AreEqual(1, dependenciesByName.Count);
+      Assert.AreSame(dependency, dependenciesByName.Values.First());
     }
 
     //-------------------------------------------------------------------------
@@ -122,7 +124,7 @@ namespace Beaufort_Test
     public void DependencyDetails()
     {
       var dependency = new TestComponent1();
-      dependency.SetName( "Dependency" );
+      dependency.SetName("Dependency");
 
       TestComponent2 component = new TestComponent2
       {
@@ -135,13 +137,13 @@ namespace Beaufort_Test
       ComponentUtils.GetDependencyDetails(
         component,
         out dependencyTypesByName,
-        out dependenciesByName );
+        out dependenciesByName);
 
-      Assert.AreEqual( 1, dependencyTypesByName.Count );
-      Assert.AreEqual( 1, dependenciesByName.Count );
+      Assert.AreEqual(1, dependencyTypesByName.Count);
+      Assert.AreEqual(1, dependenciesByName.Count);
 
-      Assert.AreSame( dependency.GetType(), dependencyTypesByName.Values.First() );
-      Assert.AreSame( dependency, dependenciesByName.Values.First() );
+      Assert.AreSame(dependency.GetType(), dependencyTypesByName.Values.First());
+      Assert.AreSame(dependency, dependenciesByName.Values.First());
     }
 
     //-------------------------------------------------------------------------
@@ -158,12 +160,12 @@ namespace Beaufort_Test
       List<IComponent> outputComponents;
 
       ComponentUtils.GetComponentsAssignableToType(
-        typeof( TestComponent1 ),
+        typeof(TestComponent1),
         components,
-        out outputComponents );
+        out outputComponents);
 
-      Assert.AreEqual( 1, outputComponents.Count );
-      Assert.AreSame( components[ 0 ], outputComponents[ 0 ] );
+      Assert.AreEqual(1, outputComponents.Count);
+      Assert.AreSame(components[0], outputComponents[0]);
     }
 
     //-------------------------------------------------------------------------
@@ -178,13 +180,13 @@ namespace Beaufort_Test
 
       Dictionary<string, object> outputsByName;
 
-      ComponentUtils.GetOutputValues( component,
-                                      out outputsByName );
+      ComponentUtils.GetOutputValues(component,
+        out outputsByName);
 
-      Assert.AreEqual( 1, outputsByName.Count );
-      Assert.True( outputsByName.ContainsKey( "Output" ) );
-      Assert.AreEqual( typeof( double ), outputsByName[ "Output" ].GetType() );
-      Assert.AreEqual( 1.23, outputsByName[ "Output" ] );
+      Assert.AreEqual(1, outputsByName.Count);
+      Assert.True(outputsByName.ContainsKey("Output"));
+      Assert.AreEqual(typeof(double), outputsByName["Output"].GetType());
+      Assert.AreEqual(1.23, outputsByName["Output"]);
     }
 
     //-------------------------------------------------------------------------

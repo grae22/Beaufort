@@ -12,74 +12,74 @@ namespace Beaufort.Configuration
 
     // IValueStore ============================================================
 
-    public bool Exists( string key )
+    public bool Exists(string key)
     {
-      return ValuesByKey.ContainsKey( key );
+      return ValuesByKey.ContainsKey(key);
     }
 
     //-------------------------------------------------------------------------
 
-    public void SetValue<T>( string key, T value )
+    public void SetValue<T>(string key, T value)
     {
-      if( Exists( key ) )
+      if (Exists(key))
       {
-        ThrowExceptionIfTypeConversionFails( value, ValuesByKey[ key ].GetType() );
+        ThrowExceptionIfTypeConversionFails(value, ValuesByKey[key].GetType());
 
-        ValuesByKey[ key ] = value;
+        ValuesByKey[key] = value;
       }
       else
       {
-        ValuesByKey.Add( key, value );
+        ValuesByKey.Add(key, value);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    public T GetValue<T>( string key,
-                          T defaultValue = default( T ) )
+    public T GetValue<T>(string key,
+                         T defaultValue = default(T))
     {
-      if( Exists( key ) == false )
+      if (Exists(key) == false)
       {
         return defaultValue;
       }
 
-      ThrowExceptionIfTypeConversionFails( ValuesByKey[ key ], typeof( T ) );
+      ThrowExceptionIfTypeConversionFails(ValuesByKey[key], typeof(T));
 
-      return (T)Convert.ChangeType( ValuesByKey[ key ], typeof( T ) );
+      return (T) Convert.ChangeType(ValuesByKey[key], typeof(T));
     }
 
     //-------------------------------------------------------------------------
 
     public string Serialise()
     {
-      return JsonConvert.SerializeObject( ValuesByKey );
+      return JsonConvert.SerializeObject(ValuesByKey);
     }
 
     //-------------------------------------------------------------------------
 
-    public void Deserialise( string serialisedStore )
+    public void Deserialise(string serialisedStore)
     {
       ValuesByKey =
         JsonConvert.DeserializeObject<Dictionary<string, object>>(
-          serialisedStore );
+          serialisedStore);
     }
 
     //=========================================================================
 
-    void ThrowExceptionIfTypeConversionFails( object value, Type required )
+    void ThrowExceptionIfTypeConversionFails(object value, Type required)
     {
       try
       {
-        Convert.ChangeType( value, required );
+        Convert.ChangeType(value, required);
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
         throw new InvalidCastException(
           string.Format(
             "Cannot convert value '{0}' to required type '{1}'.",
             value,
-            required.Name ),
-          ex );
+            required.Name),
+          ex);
       }
     }
 

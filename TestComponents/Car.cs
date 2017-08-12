@@ -10,10 +10,10 @@ namespace TestComponents
 
     public double SpeedKph { get; private set; }
 
-    public override void Update( ushort deltaTimeMs )
+    public override void Update(ushort deltaTimeMs)
     {
-      if( Engine != null &&
-          Ignition?.Value > 0 )
+      if (Engine != null &&
+          Ignition?.Value > 0)
       {
         SpeedKph += deltaTimeMs * 0.0001 * Engine.Speed;
       }

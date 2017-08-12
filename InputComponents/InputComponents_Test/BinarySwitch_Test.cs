@@ -4,7 +4,7 @@ using InputComponents;
 namespace InputComponents_Test
 {
   [TestFixture]
-  [Category( "BinarySwitch" )]
+  [Category("BinarySwitch")]
   public class BinarySwitch_Test
   {
     //-------------------------------------------------------------------------
@@ -18,14 +18,14 @@ namespace InputComponents_Test
     {
       TestObject = new BinarySwitch();
     }
-    
+
     //-------------------------------------------------------------------------
 
     [Test]
     public void States()
     {
-      Assert.AreEqual( "Off", TestObject.GetStates()[ 0 ] );
-      Assert.AreEqual( "On", TestObject.GetStates()[ 1 ] );
+      Assert.AreEqual("Off", TestObject.GetStates()[0]);
+      Assert.AreEqual("On", TestObject.GetStates()[1]);
     }
 
     //-------------------------------------------------------------------------

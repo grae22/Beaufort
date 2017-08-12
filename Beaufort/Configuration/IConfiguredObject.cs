@@ -3,7 +3,7 @@
   public interface IConfiguredObject
   {
     // Injects an IValueStore that can contain configuration data.
-    void InjectValueStore( IValueStore valueStore );
+    void InjectValueStore(IValueStore valueStore);
 
     // Returns configuration data in string form.
     string GetConfigurationData();

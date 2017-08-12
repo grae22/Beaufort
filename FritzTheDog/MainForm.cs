@@ -15,14 +15,14 @@ namespace FritzTheDog
   {
     //-------------------------------------------------------------------------
 
-    public static void ErrorMsg( Exception ex )
+    public static void ErrorMsg(Exception ex)
     {
       string callingMethodName = "Unknown";
       var trace = new StackTrace();
 
-      if( trace.GetFrame( 1 ) != null )
+      if (trace.GetFrame(1) != null)
       {
-        callingMethodName = trace.GetFrame( 1 ).GetMethod().Name;
+        callingMethodName = trace.GetFrame(1).GetMethod().Name;
       }
 
       MessageBox.Show(
@@ -31,10 +31,10 @@ namespace FritzTheDog
           callingMethodName,
           Environment.NewLine,
           Environment.NewLine,
-          ex.Message ),
+          ex.Message),
         "Error",
         MessageBoxButtons.OK,
-        MessageBoxIcon.Error );
+        MessageBoxIcon.Error);
     }
 
     //-------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    ComponentContainer Components = new ComponentContainer( "Default" );
+    ComponentContainer Components = new ComponentContainer("Default");
     Thread UpdateThread;
     bool UpdateThreadIsAlive;
 
@@ -64,38 +64,38 @@ namespace FritzTheDog
       {
         InitializeComponent();
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void MainForm_Load( object sender, EventArgs e )
+    void MainForm_Load(object sender, EventArgs e)
     {
       try
       {
         PopulateComponentTypesListBox();
         InitialiseUpdateThread();
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void MainForm_FormClosing( object sender, FormClosingEventArgs e )
+    void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       try
       {
         ShutdownUpdateThread();
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
@@ -107,24 +107,24 @@ namespace FritzTheDog
       {
         uiComponentTypes.Items.Clear();
 
-        LoadComponentsFromAssembly( "InputComponents", uiComponentTypes );
-        LoadComponentsFromAssembly( "TestComponents", uiComponentTypes );
+        LoadComponentsFromAssembly("InputComponents", uiComponentTypes);
+        LoadComponentsFromAssembly("TestComponents", uiComponentTypes);
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void LoadComponentsFromAssembly( string assemblyName, ListBox listBox )
+    void LoadComponentsFromAssembly(string assemblyName, ListBox listBox)
     {
       Dictionary<string, Type> componentTypes;
 
       ComponentUtils.GetComponents(
-        Assembly.Load( assemblyName ),
-        out componentTypes );
+        Assembly.Load(assemblyName),
+        out componentTypes);
 
       componentTypes.ToList().ForEach(
         x =>
@@ -135,97 +135,97 @@ namespace FritzTheDog
             FullTypeName = x.Value.AssemblyQualifiedName
           };
 
-          listBox.Items.Add( info );
-        } );
+          listBox.Items.Add(info);
+        });
     }
 
     //-------------------------------------------------------------------------
 
-    void uiComponentTypes_MouseDown( object sender, MouseEventArgs e )
+    void uiComponentTypes_MouseDown(object sender, MouseEventArgs e)
     {
       try
       {
-        if( uiComponentTypes.Items.Count == 0 )
+        if (uiComponentTypes.Items.Count == 0)
         {
           return;
         }
 
-        int index = uiComponentTypes.IndexFromPoint( e.X, e.Y );
-        string componentTypeName = uiComponentTypes.Items[ index ].ToString();
+        int index = uiComponentTypes.IndexFromPoint(e.X, e.Y);
+        string componentTypeName = uiComponentTypes.Items[index].ToString();
 
-        DragDropEffects effects = DoDragDrop( componentTypeName, DragDropEffects.Copy );
+        DragDropEffects effects = DoDragDrop(componentTypeName, DragDropEffects.Copy);
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void uiCanvas_DragOver( object sender, DragEventArgs e )
+    void uiCanvas_DragOver(object sender, DragEventArgs e)
     {
       try
       {
         e.Effect = DragDropEffects.Copy;
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void uiCanvas_DragDrop( object sender, DragEventArgs e )
+    void uiCanvas_DragDrop(object sender, DragEventArgs e)
     {
       try
       {
-        if( e.Data.GetDataPresent( DataFormats.StringFormat ) )
+        if (e.Data.GetDataPresent(DataFormats.StringFormat))
         {
-          var info = (ComponentInfo)uiComponentTypes.SelectedItem;
+          var info = (ComponentInfo) uiComponentTypes.SelectedItem;
 
           ComponentControl componentControl =
             CreateComponent(
               info.FullTypeName,
-              info.FriendlyName );
+              info.FriendlyName);
 
-          if( componentControl == null )
+          if (componentControl == null)
           {
             return;
           }
 
-          componentControl.Location = uiCanvas.PointToClient( new Point( e.X, e.Y ) );
+          componentControl.Location = uiCanvas.PointToClient(new Point(e.X, e.Y));
 
-          uiCanvas.Controls.Add( componentControl );
+          uiCanvas.Controls.Add(componentControl);
         }
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    ComponentControl CreateComponent( string typeName, string name )
+    ComponentControl CreateComponent(string typeName, string name)
     {
       try
       {
-        IComponent newComponent = Components.AddComponent( typeName, name );
+        IComponent newComponent = Components.AddComponent(typeName, name);
 
-        if( typeof( IInput ).IsAssignableFrom( newComponent.GetType() ) )
+        if (typeof(IInput).IsAssignableFrom(newComponent.GetType()))
         {
-          return new InputComponentControl( newComponent, Components );
+          return new InputComponentControl(newComponent, Components);
         }
         else
         {
-          return new ComponentControl( newComponent, Components );
+          return new ComponentControl(newComponent, Components);
         }
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
 
       return null;
@@ -237,13 +237,13 @@ namespace FritzTheDog
     {
       try
       {
-        var threadStart = new ThreadStart( UpdateLoop );
-        UpdateThread = new Thread( threadStart );
+        var threadStart = new ThreadStart(UpdateLoop);
+        UpdateThread = new Thread(threadStart);
         UpdateThread.Start();
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
@@ -254,11 +254,11 @@ namespace FritzTheDog
       try
       {
         UpdateThreadIsAlive = false;
-        UpdateThread.Join( 1000 );
+        UpdateThread.Join(1000);
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
@@ -271,27 +271,27 @@ namespace FritzTheDog
         UpdateThreadIsAlive = true;
 
         var updateComponentControls =
-          new UpdateComponentControlsDelegate( UpdateComponentControls );
+          new UpdateComponentControlsDelegate(UpdateComponentControls);
 
-        while( UpdateThreadIsAlive )
+        while (UpdateThreadIsAlive)
         {
           try
           {
-            Components.Update( 100 );
+            Components.Update(100);
 
             updateComponentControls.Invoke();
 
-            Thread.Sleep( 100 );
+            Thread.Sleep(100);
           }
-          catch( ThreadInterruptedException )
+          catch (ThreadInterruptedException)
           {
             // Ignore.
           }
         }
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 
@@ -303,20 +303,20 @@ namespace FritzTheDog
     {
       try
       {
-        foreach( Control control in uiCanvas.Controls )
+        foreach (Control control in uiCanvas.Controls)
         {
-          if( control is ComponentControl == false )
+          if (control is ComponentControl == false)
           {
             continue;
           }
 
-          var componentControl = (ComponentControl)control;
+          var componentControl = (ComponentControl) control;
           componentControl.DoUpdate();
         }
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        ErrorMsg( ex );
+        ErrorMsg(ex);
       }
     }
 

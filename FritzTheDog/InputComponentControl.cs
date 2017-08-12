@@ -20,10 +20,10 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    public InputComponentControl( IComponent targetComponent,
-                                  IComponentContainer componentContainerInfo )
-    :
-      base( targetComponent, componentContainerInfo )
+    public InputComponentControl(IComponent targetComponent,
+                                 IComponentContainer componentContainerInfo)
+      :
+      base(targetComponent, componentContainerInfo)
     {
     }
 
@@ -35,24 +35,24 @@ namespace FritzTheDog
       {
         UpdateButtonColours();
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    protected override void Component_Load( object sender, EventArgs e )
+    protected override void Component_Load(object sender, EventArgs e)
     {
-      base.Component_Load( sender, e );
+      base.Component_Load(sender, e);
 
       BackColor = Color.Green;
     }
 
     //-------------------------------------------------------------------------
 
-    protected override void CreateOutputsUi( Panel panel )
+    protected override void CreateOutputsUi(Panel panel)
     {
       try
       {
@@ -61,30 +61,30 @@ namespace FritzTheDog
         // TODO: Support other iputs.
         var input = TargetComponent as DiscreteInput;
 
-        if( input == null )
+        if (input == null)
         {
           return;
         }
 
-        foreach( var state in input.GetStates() )
+        foreach (var state in input.GetStates())
         {
           byte value = state.Key;
           string name = state.Value;
 
-          AddOutputValueButton( name, value, panel );
+          AddOutputValueButton(name, value, panel);
         }
       }
-      catch( Exception ex )
+      catch (Exception ex)
       {
-        MainForm.ErrorMsg( ex );
+        MainForm.ErrorMsg(ex);
       }
     }
 
     //-------------------------------------------------------------------------
 
-    void AddOutputValueButton( string stateName,
-                               object stateValue,
-                               Panel panel )
+    void AddOutputValueButton(string stateName,
+                              object stateValue,
+                              Panel panel)
     {
       var button = new Button
       {
@@ -92,43 +92,43 @@ namespace FritzTheDog
         Tag = stateValue
       };
 
-      button.Click += ( object sender, EventArgs args ) =>
+      button.Click += (object sender, EventArgs args) =>
       {
         var component = TargetComponent as IInput;
 
-        if( component == null )
+        if (component == null)
         {
           return;
         }
 
-        component.UpdateValue( button.Tag );
+        component.UpdateValue(button.Tag);
       };
 
-      panel.Controls.Add( button );
+      panel.Controls.Add(button);
     }
 
     //-------------------------------------------------------------------------
 
     void UpdateButtonColours()
     {
-      if( TargetComponent is DiscreteInput == false )
+      if (TargetComponent is DiscreteInput == false)
       {
         return;
       }
 
-      foreach( Control c in ButtonsPanel.Controls )
+      foreach (Control c in ButtonsPanel.Controls)
       {
         var button = c as Button;
 
-        if( button == null )
+        if (button == null)
         {
           continue;
         }
 
         c.BackColor =
-          (byte)c.Tag == ((DiscreteInput)TargetComponent).Value
-          ?
-          Color.Green : Color.Transparent;
+          (byte) c.Tag == ((DiscreteInput) TargetComponent).Value
+            ? Color.Green
+            : Color.Transparent;
       }
     }
 

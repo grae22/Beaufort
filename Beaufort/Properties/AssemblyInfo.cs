@@ -36,4 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // Unit testing.
-[assembly: InternalsVisibleTo( "Beaufort_Test" )]
+[assembly: InternalsVisibleTo("Beaufort_Test")]
