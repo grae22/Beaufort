@@ -85,6 +85,8 @@ namespace FritzTheDog
     {
       try
       {
+        panel.Controls.Clear();
+
         Dictionary<string, object> valuesByName;
 
         ComponentUtils.GetOutputValues(TargetComponent, out valuesByName);
@@ -392,7 +394,16 @@ namespace FritzTheDog
 
       using (var dlg = new ComponentConfigurationForm(configuredObject))
       {
-        dlg.ShowDialog(this);
+        DialogResult result = dlg.ShowDialog(this);
+
+        if (result != DialogResult.OK)
+        {
+          return;
+        }
+
+        configuredObject.Configure();
+
+        CreateOutputsUi(uiDependenciesContainer);
       }
     }
 

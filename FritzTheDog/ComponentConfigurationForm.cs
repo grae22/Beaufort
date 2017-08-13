@@ -11,7 +11,7 @@ namespace FritzTheDog
 
     public string ConfigurationData { get; } = "";
 
-    private IConfiguredObject _component;
+    private readonly IConfiguredObject _component;
 
     //-------------------------------------------------------------------------
 
@@ -36,20 +36,17 @@ namespace FritzTheDog
     {
       try
       {
-        //_component.C
+        _component.GetValueStore().Deserialise(uiConfigData.Text);
+
+        DialogResult = DialogResult.OK;
+
+        Close();
       }
       catch (Exception exception)
       {
-        Console.WriteLine(exception);
+        MainForm.ErrorMsg(exception);
         throw;
       }
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void uiCancel_Click(object sender, EventArgs e)
-    {
-      Close();
     }
 
     //-------------------------------------------------------------------------

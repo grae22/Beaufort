@@ -44,6 +44,13 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
+    public IValueStore GetValueStore()
+    {
+      return Configuration;
+    }
+
+    //-------------------------------------------------------------------------
+
     public virtual string GetConfigurationData()
     {
       UpdateConfigurationData();

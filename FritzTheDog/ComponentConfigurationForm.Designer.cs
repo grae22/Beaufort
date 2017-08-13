@@ -51,7 +51,6 @@
       this.uiCancel.TabIndex = 1;
       this.uiCancel.Text = "Cancel";
       this.uiCancel.UseVisualStyleBackColor = true;
-      this.uiCancel.Click += new System.EventHandler(this.uiCancel_Click);
       // 
       // uiOK
       // 

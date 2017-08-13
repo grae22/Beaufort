@@ -4,17 +4,17 @@ using Newtonsoft.Json;
 
 namespace Beaufort.Configuration
 {
-  class ValueStore : IValueStore
+  internal class ValueStore : IValueStore
   {
     //-------------------------------------------------------------------------
 
-    Dictionary<string, object> ValuesByKey = new Dictionary<string, object>();
+    private Dictionary<string, object> _valuesByKey = new Dictionary<string, object>();
 
     // IValueStore ============================================================
 
     public bool Exists(string key)
     {
-      return ValuesByKey.ContainsKey(key);
+      return _valuesByKey.ContainsKey(key);
     }
 
     //-------------------------------------------------------------------------
@@ -23,13 +23,13 @@ namespace Beaufort.Configuration
     {
       if (Exists(key))
       {
-        ThrowExceptionIfTypeConversionFails(value, ValuesByKey[key].GetType());
+        ThrowExceptionIfTypeConversionFails(value, _valuesByKey[key].GetType());
 
-        ValuesByKey[key] = value;
+        _valuesByKey[key] = value;
       }
       else
       {
-        ValuesByKey.Add(key, value);
+        _valuesByKey.Add(key, value);
       }
     }
 
@@ -44,30 +44,30 @@ namespace Beaufort.Configuration
         return defaultValue;
       }
 
-      ThrowExceptionIfTypeConversionFails(ValuesByKey[key], typeof(T));
+      ThrowExceptionIfTypeConversionFails(_valuesByKey[key], typeof(T));
 
-      return (T)Convert.ChangeType(ValuesByKey[key], typeof(T));
+      return (T)Convert.ChangeType(_valuesByKey[key], typeof(T));
     }
 
     //-------------------------------------------------------------------------
 
     public string Serialise()
     {
-      return JsonConvert.SerializeObject(ValuesByKey);
+      return JsonConvert.SerializeObject(_valuesByKey);
     }
 
     //-------------------------------------------------------------------------
 
     public void Deserialise(string serialisedStore)
     {
-      ValuesByKey =
+      _valuesByKey =
         JsonConvert.DeserializeObject<Dictionary<string, object>>(
           serialisedStore);
     }
 
     //=========================================================================
 
-    void ThrowExceptionIfTypeConversionFails(object value, Type required)
+    private static void ThrowExceptionIfTypeConversionFails(object value, Type required)
     {
       try
       {
@@ -76,7 +76,7 @@ namespace Beaufort.Configuration
       catch (Exception ex)
       {
         throw new InvalidCastException(
-          $"Cannot convert value '{value}' to required type '{required.Name}'.",
+          $"Cannot convert value '{value}' of type '{value.GetType().Name}' to required type '{required.Name}'.",
           ex);
       }
     }
