@@ -401,9 +401,11 @@ namespace FritzTheDog
 
         configuredObject.Configure();
 
+        OutputLabelsByOutputName.Clear();
         uiDependenciesContainer.Controls.Clear();
 
         CreateOutputsUi(uiDependenciesContainer);
+        CreateDependenciesUi();
       }
     }
 
