@@ -77,5 +77,37 @@ namespace Beaufort_Test
     }
 
     //-------------------------------------------------------------------------
+
+    [Test]
+    public void NoExceptionOnGetConfigurationDataIfValueStoreInjected()
+    {
+      // We want the base Configure() method to be called.
+      TestObject.CallBase = true;
+
+      TestObject.Object.InjectValueStore(new Mock<IValueStore>().Object);
+      TestObject.Object.GetConfigurationData();
+    }
+
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void ExceptionGetConfigureDataWhenValueStoreNotInjected()
+    {
+      try
+      {
+        // We want the base Configure() method to be called.
+        TestObject.CallBase = true;
+
+        TestObject.Object.GetConfigurationData();
+      }
+      catch (NullValueStoreException)
+      {
+        Assert.Pass();
+      }
+
+      Assert.Fail();
+    }
+
+    //-------------------------------------------------------------------------
   }
 }

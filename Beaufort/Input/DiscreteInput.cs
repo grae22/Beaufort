@@ -17,28 +17,14 @@ namespace Beaufort.Input
 
     public override void Configure()
     {
-      if (Configuration.Exists("States"))
-      {
-        var states = Configuration.GetValue<Dictionary<byte, string>>("States", null);
-
-        foreach (KeyValuePair<byte, string> state in states)
-        {
-          AddState(state.Key, state.Value);
-        }
-      }
+      ApplyStatesFromConfiguartion();
     }
 
     //-------------------------------------------------------------------------
 
     protected override void UpdateConfigurationData()
     {
-      var states = Configuration.GetValue("States", new Dictionary<byte, string>());
-      states.Clear();
-
-      foreach (var state in _stateNamesByValue)
-      {
-        states.Add(state.Key, state.Value);
-      }
+      UpdateConfigurationWithStates();
     }
 
     // IInput =================================================================
@@ -150,6 +136,34 @@ namespace Beaufort.Input
       while (enumerator.MoveNext())
       {
         Value = enumerator.Current;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void ApplyStatesFromConfiguartion()
+    {
+      if (Configuration.Exists("States"))
+      {
+        var states = Configuration.GetValue<Dictionary<byte, string>>("States", null);
+
+        foreach (KeyValuePair<byte, string> state in states)
+        {
+          AddState(state.Key, state.Value);
+        }
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void UpdateConfigurationWithStates()
+    {
+      var states = Configuration.GetValue("States", new Dictionary<byte, string>());
+      states.Clear();
+
+      foreach (var state in _stateNamesByValue)
+      {
+        states.Add(state.Key, state.Value);
       }
     }
 
