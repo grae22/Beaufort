@@ -7,7 +7,7 @@ namespace Beaufort
   {
     //-------------------------------------------------------------------------
 
-    protected IValueStore ValueStore { get; private set; }
+    protected IValueStore Configuration { get; private set; }
 
     // IComponent =============================================================
 
@@ -17,14 +17,14 @@ namespace Beaufort
 
     public bool SetName(string name)
     {
-      if (name.Length > 0)
+      if (name.Length == 0)
       {
-        Name = name;
-
-        return true;
+        return false;
       }
 
-      return false;
+      Name = name;
+
+      return true;
     }
 
     //-------------------------------------------------------------------------
@@ -39,14 +39,16 @@ namespace Beaufort
 
     public void InjectValueStore(IValueStore valueStore)
     {
-      ValueStore = valueStore;
+      Configuration = valueStore;
     }
 
     //-------------------------------------------------------------------------
 
     public virtual string GetConfigurationData()
     {
-      return ValueStore.Serialise();
+      UpdateConfigurationData();
+
+      return Configuration.Serialise();
     }
 
     //-------------------------------------------------------------------------
@@ -60,9 +62,18 @@ namespace Beaufort
 
     //=========================================================================
 
-    void ThrowExceptionIfNoValueStore()
+    // Default implementation does nothing.
+
+    protected virtual void UpdateConfigurationData()
     {
-      if (ValueStore == null)
+      ThrowExceptionIfNoValueStore();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void ThrowExceptionIfNoValueStore()
+    {
+      if (Configuration == null)
       {
         throw new NullValueStoreException(this);
       }

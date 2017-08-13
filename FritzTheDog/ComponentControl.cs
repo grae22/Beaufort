@@ -355,7 +355,8 @@ namespace FritzTheDog
           {
             output.Value.Invoke(
               new UpdateLabelDelegate(UpdateLabel),
-              new object[] {output.Value, text});
+              output.Value,
+              text);
           }
           else
           {

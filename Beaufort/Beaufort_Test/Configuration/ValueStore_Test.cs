@@ -27,6 +27,7 @@ namespace Beaufort_Test.Configuration
     {
       int value = TestObject.GetValue("TestValue", 123);
 
+      Assert.True(TestObject.Exists("TestValue"));
       Assert.AreEqual(123, value);
     }
 

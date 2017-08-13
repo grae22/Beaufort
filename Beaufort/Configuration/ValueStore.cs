@@ -40,6 +40,7 @@ namespace Beaufort.Configuration
     {
       if (Exists(key) == false)
       {
+        SetValue(key, defaultValue);
         return defaultValue;
       }
 
