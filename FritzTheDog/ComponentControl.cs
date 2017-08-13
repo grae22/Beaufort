@@ -390,9 +390,10 @@ namespace FritzTheDog
         return;
       }
 
-      MessageBox.Show(
-        configuredObject.GetConfigurationData()
-      );
+      using (var dlg = new ComponentConfigurationForm(configuredObject))
+      {
+        dlg.ShowDialog(this);
+      }
     }
 
     //-------------------------------------------------------------------------
