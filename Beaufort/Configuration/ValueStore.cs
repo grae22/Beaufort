@@ -75,10 +75,7 @@ namespace Beaufort.Configuration
       catch (Exception ex)
       {
         throw new InvalidCastException(
-          string.Format(
-            "Cannot convert value '{0}' to required type '{1}'.",
-            value,
-            required.Name),
+          $"Cannot convert value '{value}' to required type '{required.Name}'.",
           ex);
       }
     }

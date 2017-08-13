@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace Beaufort.Input
 {
   public class DiscreteInput : BaseComponent,
-    IInput<byte>,
-    IStateBasedValue<byte>
+                               IInput<byte>,
+                               IStateBasedValue<byte>
   {
     //-------------------------------------------------------------------------
 
@@ -84,10 +84,7 @@ namespace Beaufort.Input
       if (StateNamesByValue.ContainsKey(value))
       {
         throw new ArgumentException(
-          string.Format(
-            "State value not unique for input '{0}', value '{1}' isn't unique.",
-            Name,
-            value));
+          $"State value not unique for input '{Name}', value '{value}' isn't unique.");
       }
     }
 
@@ -98,10 +95,7 @@ namespace Beaufort.Input
       if (StateNamesByValue.ContainsValue(name))
       {
         throw new ArgumentException(
-          string.Format(
-            "State name is not unique for input '{0}', name '{1}' isn't unique.",
-            Name,
-            name));
+          $"State name is not unique for input '{Name}', name '{name}' isn't unique.");
       }
     }
 
@@ -112,9 +106,7 @@ namespace Beaufort.Input
       if (value.GetType() != typeof(byte))
       {
         throw new ArgumentException(
-          string.Format(
-            "Value is of incorrect type '{0}'.",
-            value.GetType().FullName));
+          $"Value is of incorrect type '{value.GetType().FullName}'.");
       }
     }
 
@@ -127,9 +119,7 @@ namespace Beaufort.Input
       if (StateNamesByValue.ContainsKey((byte) value) == false)
       {
         throw new ArgumentException(
-          string.Format(
-            "Value '{0}' does not represent a known state.",
-            value));
+          $"Value '{value}' does not represent a known state.");
       }
     }
 

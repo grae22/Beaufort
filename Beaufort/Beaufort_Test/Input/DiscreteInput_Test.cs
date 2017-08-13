@@ -144,8 +144,8 @@ namespace Beaufort_Test.Input
 
       store.Setup(x => x.Exists("States")).Returns(true);
 
-      store.Setup(x =>
-          x.GetValue<Dictionary<byte, string>>(It.IsAny<string>(), null))
+      store.Setup(
+        x => x.GetValue<Dictionary<byte, string>>(It.IsAny<string>(), null))
         .Returns(() =>
           {
             return new Dictionary<byte, string>

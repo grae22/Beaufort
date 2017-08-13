@@ -181,7 +181,7 @@ namespace Beaufort_Test
       Dictionary<string, object> outputsByName;
 
       ComponentUtils.GetOutputValues(component,
-        out outputsByName);
+                                     out outputsByName);
 
       Assert.AreEqual(1, outputsByName.Count);
       Assert.True(outputsByName.ContainsKey("Output"));
