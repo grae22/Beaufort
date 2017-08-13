@@ -124,7 +124,7 @@ namespace Beaufort_Test
 
       TestObject.Update(1);
 
-      Assert.AreEqual(1, ((TestComponent) component).UpdateCount);
+      Assert.AreEqual(1, ((TestComponent)component).UpdateCount);
     }
 
     //-------------------------------------------------------------------------
@@ -139,7 +139,7 @@ namespace Beaufort_Test
 
       TestObject.Update(123);
 
-      Assert.AreEqual(123, ((TestComponent) component).DeltaTimeMs);
+      Assert.AreEqual(123, ((TestComponent)component).DeltaTimeMs);
     }
 
     //-------------------------------------------------------------------------

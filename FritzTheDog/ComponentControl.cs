@@ -213,8 +213,8 @@ namespace FritzTheDog
       {
         // Get the selected component and update the target component to now
         // use the selected component.
-        ComboBox dropDownList2 = (ComboBox) sender;
-        string dependencyName2 = (string) dropDownList2.Tag;
+        ComboBox dropDownList2 = (ComboBox)sender;
+        string dependencyName2 = (string)dropDownList2.Tag;
 
         PropertyInfo info = TargetComponent.GetType().GetProperty(dependencyName2);
         info.SetMethod.Invoke(TargetComponent, new object[] {dropDownList2.SelectedItem});
@@ -230,7 +230,7 @@ namespace FritzTheDog
     {
       dropDownList.DropDown += (object sender, EventArgs args) =>
       {
-        var list = (ComboBox) sender;
+        var list = (ComboBox)sender;
 
         object selected = list.SelectedItem;
 

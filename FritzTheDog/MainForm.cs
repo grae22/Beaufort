@@ -183,7 +183,7 @@ namespace FritzTheDog
       {
         if (e.Data.GetDataPresent(DataFormats.StringFormat))
         {
-          var info = (ComponentInfo) uiComponentTypes.SelectedItem;
+          var info = (ComponentInfo)uiComponentTypes.SelectedItem;
 
           ComponentControl componentControl =
             CreateComponent(
@@ -310,7 +310,7 @@ namespace FritzTheDog
             continue;
           }
 
-          var componentControl = (ComponentControl) control;
+          var componentControl = (ComponentControl)control;
           componentControl.DoUpdate();
         }
       }

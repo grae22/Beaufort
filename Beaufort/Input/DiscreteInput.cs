@@ -35,6 +35,7 @@ namespace Beaufort.Input
       ValidateValue(value);
 
       Value = (byte) value;
+      Value = (byte)value;
     }
 
     // IStateBasedValue =======================================================
@@ -117,6 +118,7 @@ namespace Beaufort.Input
       ValidateValueType(value);
 
       if (StateNamesByValue.ContainsKey((byte) value) == false)
+      if (_stateNamesByValue.ContainsKey((byte)value) == false)
       {
         throw new ArgumentException(
           $"Value '{value}' does not represent a known state.");

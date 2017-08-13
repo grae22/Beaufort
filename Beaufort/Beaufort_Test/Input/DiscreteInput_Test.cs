@@ -115,7 +115,7 @@ namespace Beaufort_Test.Input
     {
       try
       {
-        TestObject.UpdateValue((byte) 2);
+        TestObject.UpdateValue((byte)2);
       }
       catch (ArgumentException)
       {
@@ -130,7 +130,7 @@ namespace Beaufort_Test.Input
     [Test]
     public void UpdateValue()
     {
-      TestObject.UpdateValue((byte) 1);
+      TestObject.UpdateValue((byte)1);
 
       Assert.AreEqual(1, TestObject.Value);
     }
@@ -145,7 +145,7 @@ namespace Beaufort_Test.Input
       store.Setup(x => x.Exists("States")).Returns(true);
 
       store.Setup(
-        x => x.GetValue<Dictionary<byte, string>>(It.IsAny<string>(), null))
+          x => x.GetValue<Dictionary<byte, string>>(It.IsAny<string>(), null))
         .Returns(() =>
           {
             return new Dictionary<byte, string>

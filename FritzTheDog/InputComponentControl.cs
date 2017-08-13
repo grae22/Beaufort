@@ -126,7 +126,7 @@ namespace FritzTheDog
         }
 
         c.BackColor =
-          (byte) c.Tag == ((DiscreteInput) TargetComponent).Value
+          (byte)c.Tag == ((DiscreteInput)TargetComponent).Value
             ? Color.Green
             : Color.Transparent;
       }

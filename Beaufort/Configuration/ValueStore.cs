@@ -45,7 +45,7 @@ namespace Beaufort.Configuration
 
       ThrowExceptionIfTypeConversionFails(ValuesByKey[key], typeof(T));
 
-      return (T) Convert.ChangeType(ValuesByKey[key], typeof(T));
+      return (T)Convert.ChangeType(ValuesByKey[key], typeof(T));
     }
 
     //-------------------------------------------------------------------------
