@@ -35,17 +35,20 @@
       // 
       // uiConfigData
       // 
+      this.uiConfigData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.uiConfigData.Location = new System.Drawing.Point(12, 12);
       this.uiConfigData.Multiline = true;
       this.uiConfigData.Name = "uiConfigData";
-      this.uiConfigData.Size = new System.Drawing.Size(333, 232);
+      this.uiConfigData.Size = new System.Drawing.Size(699, 232);
       this.uiConfigData.TabIndex = 0;
       // 
       // uiCancel
       // 
       this.uiCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.uiCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.uiCancel.Location = new System.Drawing.Point(274, 260);
+      this.uiCancel.Location = new System.Drawing.Point(640, 260);
       this.uiCancel.Name = "uiCancel";
       this.uiCancel.Size = new System.Drawing.Size(71, 26);
       this.uiCancel.TabIndex = 1;
@@ -55,7 +58,7 @@
       // uiOK
       // 
       this.uiOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.uiOK.Location = new System.Drawing.Point(197, 260);
+      this.uiOK.Location = new System.Drawing.Point(563, 260);
       this.uiOK.Name = "uiOK";
       this.uiOK.Size = new System.Drawing.Size(71, 26);
       this.uiOK.TabIndex = 2;
@@ -68,7 +71,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.uiCancel;
-      this.ClientSize = new System.Drawing.Size(358, 299);
+      this.ClientSize = new System.Drawing.Size(724, 299);
       this.ControlBox = false;
       this.Controls.Add(this.uiOK);
       this.Controls.Add(this.uiCancel);

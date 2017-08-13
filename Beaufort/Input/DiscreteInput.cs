@@ -143,6 +143,8 @@ namespace Beaufort.Input
 
     private void ApplyStatesFromConfiguartion()
     {
+      _stateNamesByValue.Clear();
+
       if (Configuration.Exists("States"))
       {
         var states = Configuration.GetValue<Dictionary<byte, string>>("States", null);

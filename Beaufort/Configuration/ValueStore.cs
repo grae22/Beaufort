@@ -53,16 +53,28 @@ namespace Beaufort.Configuration
 
     public string Serialise()
     {
-      return JsonConvert.SerializeObject(_valuesByKey);
+      var settings = new JsonSerializerSettings
+      {
+        TypeNameHandling = TypeNameHandling.Auto,
+        Formatting = Formatting.Indented
+      };
+
+      return JsonConvert.SerializeObject(_valuesByKey, settings);
     }
 
     //-------------------------------------------------------------------------
 
     public void Deserialise(string serialisedStore)
     {
+      var settings = new JsonSerializerSettings
+      {
+        TypeNameHandling = TypeNameHandling.Auto
+      };
+
       _valuesByKey =
         JsonConvert.DeserializeObject<Dictionary<string, object>>(
-          serialisedStore);
+          serialisedStore,
+          settings);
     }
 
     //=========================================================================

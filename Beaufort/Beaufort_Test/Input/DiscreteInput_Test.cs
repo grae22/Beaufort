@@ -163,7 +163,32 @@ namespace Beaufort_Test.Input
       Assert.AreEqual("DEF", _testObject.GetStates()[11]);
     }
 
-    //-------------------------------------------------------------------------    
+    //-------------------------------------------------------------------------
+
+    [Test]
+    public void StatesDontAccumulateWhenConfigureStatesFromStoreMultipleTimes()
+    {
+      var store = new Mock<IValueStore>();
+
+      store.Setup(x => x.Exists("States")).Returns(true);
+
+      store.Setup(
+          x => x.GetValue<Dictionary<byte, string>>(It.IsAny<string>(), null))
+        .Returns(() => new Dictionary<byte, string>
+        {
+          {10, "ABC"},
+          {11, "DEF"}
+        });
+
+      _testObject.InjectValueStore(store.Object);
+
+      _testObject.Configure();
+      _testObject.Configure();
+
+      Assert.AreEqual(2, _testObject.GetStates().Count);
+    }
+
+    //-------------------------------------------------------------------------
 
     [Test]
     public void UpdateStoreWithStates()
