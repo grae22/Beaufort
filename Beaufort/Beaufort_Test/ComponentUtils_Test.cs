@@ -9,15 +9,15 @@ namespace Beaufort_Test
 {
   [TestFixture]
   [Category("ComponentUtils")]
-  public class ComponentUtils_Test
+  internal class ComponentUtils_Test
   {
     //-------------------------------------------------------------------------
 
-    class TestComponent1 : BaseComponent
+    internal class TestComponent1 : BaseComponent
     {
     }
 
-    class TestComponent2 : BaseComponent
+    internal class TestComponent2 : BaseComponent
     {
       public TestComponent1 Dependency { private get; set; }
       public double Output { get; set; }

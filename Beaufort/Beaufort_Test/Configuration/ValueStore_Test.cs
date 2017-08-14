@@ -6,18 +6,18 @@ namespace Beaufort_Test.Configuration
 {
   [TestFixture]
   [Category("ValueStore")]
-  class ValueStore_Test
+  internal class ValueStore_Test
   {
     //-------------------------------------------------------------------------
 
-    ValueStore TestObject;
+    private ValueStore _testObject;
 
     //-------------------------------------------------------------------------
 
     [SetUp]
     public void SetUp()
     {
-      TestObject = new ValueStore();
+      _testObject = new ValueStore();
     }
 
     //-------------------------------------------------------------------------
@@ -25,9 +25,9 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void DefaultValueReturnedIfValueNotSet()
     {
-      int value = TestObject.GetValue("TestValue", 123);
+      int value = _testObject.GetValue("TestValue", 123);
 
-      Assert.True(TestObject.Exists("TestValue"));
+      Assert.True(_testObject.Exists("TestValue"));
       Assert.AreEqual(123, value);
     }
 
@@ -36,9 +36,9 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ValueExistsAfterBeingSet()
     {
-      TestObject.SetValue("TestValue", 123);
+      _testObject.SetValue("TestValue", 123);
 
-      Assert.True(TestObject.Exists("TestValue"));
+      Assert.True(_testObject.Exists("TestValue"));
     }
 
     //-------------------------------------------------------------------------
@@ -46,9 +46,9 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ValueIsCorrectAfterBeingSet()
     {
-      TestObject.SetValue("TestValue", 123);
+      _testObject.SetValue("TestValue", 123);
 
-      Assert.AreEqual(123, TestObject.GetValue<int>("TestValue"));
+      Assert.AreEqual(123, _testObject.GetValue<int>("TestValue"));
     }
 
     //-------------------------------------------------------------------------
@@ -56,10 +56,10 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ValueUpdateAfterBeingChanged()
     {
-      TestObject.SetValue("TestValue", 123);
-      TestObject.SetValue("TestValue", 321);
+      _testObject.SetValue("TestValue", 123);
+      _testObject.SetValue("TestValue", 321);
 
-      Assert.True(TestObject.Exists("TestValue"));
+      Assert.True(_testObject.Exists("TestValue"));
     }
 
     //-------------------------------------------------------------------------
@@ -67,11 +67,11 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ExceptionOnGetValueWithIncorrectType()
     {
-      TestObject.SetValue("TestValue", "ABC");
+      _testObject.SetValue("TestValue", "ABC");
 
       try
       {
-        TestObject.GetValue<int>("TestValue");
+        _testObject.GetValue<int>("TestValue");
       }
       catch (InvalidCastException)
       {
@@ -86,11 +86,11 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ExceptionOnSetExistingValueWithDifferentType()
     {
-      TestObject.SetValue("TestValue", 123);
+      _testObject.SetValue("TestValue", 123);
 
       try
       {
-        TestObject.SetValue("TestValue", "ABC");
+        _testObject.SetValue("TestValue", "ABC");
       }
       catch (InvalidCastException)
       {
@@ -105,10 +105,10 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ConvertNumericToString()
     {
-      TestObject.SetValue("Test", 123);
-      TestObject.SetValue("Test", "456");
+      _testObject.SetValue("Test", 123);
+      _testObject.SetValue("Test", "456");
 
-      Assert.AreEqual(456, TestObject.GetValue<int>("Test"));
+      Assert.AreEqual(456, _testObject.GetValue<int>("Test"));
     }
 
     //-------------------------------------------------------------------------
@@ -116,10 +116,10 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void ConvertNumericStringToNumeric()
     {
-      TestObject.SetValue("Test", "456");
-      TestObject.SetValue("Test", 123);
+      _testObject.SetValue("Test", "456");
+      _testObject.SetValue("Test", 123);
 
-      Assert.AreEqual(123, TestObject.GetValue<int>("Test"));
+      Assert.AreEqual(123, _testObject.GetValue<int>("Test"));
     }
 
     //-------------------------------------------------------------------------
@@ -127,13 +127,16 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void SerialiseToJson()
     {
-      TestObject.SetValue("TestInt", 123);
-      TestObject.SetValue("TestString", "ABC");
+      _testObject.SetValue("TestInt", 123);
+      _testObject.SetValue("TestString", "ABC");
 
-      string serialisedStore = TestObject.Serialise();
+      string serialisedStore = _testObject.Serialise();
 
       Assert.AreEqual(
-        "{\"TestInt\":123,\"TestString\":\"ABC\"}",
+        "{" + Environment.NewLine +
+        "  \"TestInt\": 123," + Environment.NewLine +
+        "  \"TestString\": \"ABC\"" + Environment.NewLine +
+        "}",
         serialisedStore);
     }
 
@@ -142,13 +145,13 @@ namespace Beaufort_Test.Configuration
     [Test]
     public void DeserialiseFromJson()
     {
-      TestObject.Deserialise("{\"TestInt\":123,\"TestString\":\"ABC\"}");
+      _testObject.Deserialise("{\"TestInt\":123,\"TestString\":\"ABC\"}");
 
-      Assert.True(TestObject.Exists("TestInt"));
-      Assert.AreEqual(123, TestObject.GetValue<int>("TestInt"));
+      Assert.True(_testObject.Exists("TestInt"));
+      Assert.AreEqual(123, _testObject.GetValue<int>("TestInt"));
 
-      Assert.True(TestObject.Exists("TestString"));
-      Assert.AreEqual("ABC", TestObject.GetValue<string>("TestString"));
+      Assert.True(_testObject.Exists("TestString"));
+      Assert.AreEqual("ABC", _testObject.GetValue<string>("TestString"));
     }
 
     //-------------------------------------------------------------------------

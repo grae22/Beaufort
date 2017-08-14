@@ -82,7 +82,7 @@ namespace Beaufort
       outputComponents =
         components
           .ToList()
-          .Where(c => type.IsAssignableFrom(c.GetType()))
+          .Where(c => type.IsInstanceOfType(c))
           .ToList();
     }
 
@@ -112,7 +112,7 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    static IEnumerable<PropertyInfo> GetDependenciesFromComponentProperties(Type componentType)
+    private static IEnumerable<PropertyInfo> GetDependenciesFromComponentProperties(Type componentType)
     {
       return
         componentType

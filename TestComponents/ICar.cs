@@ -2,7 +2,7 @@
 
 namespace TestComponents
 {
-  interface ICar
+  internal interface ICar
   {
     IEngine Engine { set; }
     IInput<byte> Ignition { set; }

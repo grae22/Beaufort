@@ -19,10 +19,10 @@ namespace FritzTheDog
     protected IComponent TargetComponent;
     protected IComponentContainer ComponentContainer;
 
-    Color NormalBackColour;
-    Point MouseClickPosition;
-    bool IsMoving;
-    Dictionary<string, Label> OutputLabelsByOutputName = new Dictionary<string, Label>();
+    readonly Color _normalBackColour;
+    private Point _mouseClickPosition;
+    private bool _isMoving;
+    private readonly Dictionary<string, Label> _outputLabelsByOutputName = new Dictionary<string, Label>();
 
     //-------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ namespace FritzTheDog
 
         InitializeComponent();
 
-        NormalBackColour = uiName.BackColor;
+        _normalBackColour = uiName.BackColor;
       }
       catch (Exception ex)
       {
@@ -170,7 +170,7 @@ namespace FritzTheDog
         };
       layout.Controls.Add(outputLabel);
 
-      OutputLabelsByOutputName.Add(outputName, outputLabel);
+      _outputLabelsByOutputName.Add(outputName, outputLabel);
       panel.Controls.Add(layout);
     }
 
@@ -263,7 +263,7 @@ namespace FritzTheDog
 
         if (result)
         {
-          uiName.BackColor = NormalBackColour;
+          uiName.BackColor = _normalBackColour;
         }
         else
         {
@@ -289,8 +289,8 @@ namespace FritzTheDog
 
         Location =
           new Point(
-            Location.X + e.X - MouseClickPosition.X,
-            Location.Y + e.Y - MouseClickPosition.Y);
+            Location.X + e.X - _mouseClickPosition.X,
+            Location.Y + e.Y - _mouseClickPosition.Y);
       }
       catch (Exception ex)
       {
@@ -304,12 +304,12 @@ namespace FritzTheDog
     {
       try
       {
-        if (IsMoving == false)
+        if (_isMoving == false)
         {
-          MouseClickPosition = e.Location;
+          _mouseClickPosition = e.Location;
         }
 
-        IsMoving = true;
+        _isMoving = true;
 
         Cursor.Current = Cursors.SizeAll;
       }
@@ -325,7 +325,7 @@ namespace FritzTheDog
     {
       try
       {
-        IsMoving = false;
+        _isMoving = false;
 
         Cursor.Current = Cursors.Default;
       }
@@ -341,7 +341,7 @@ namespace FritzTheDog
     {
       try
       {
-        foreach (var output in OutputLabelsByOutputName)
+        foreach (var output in _outputLabelsByOutputName)
         {
           string text =
             TargetComponent
@@ -401,7 +401,7 @@ namespace FritzTheDog
 
         configuredObject.Configure();
 
-        OutputLabelsByOutputName.Clear();
+        _outputLabelsByOutputName.Clear();
         uiDependenciesContainer.Controls.Clear();
 
         CreateOutputsUi(uiDependenciesContainer);

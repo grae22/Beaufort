@@ -3,12 +3,12 @@ using System.Windows.Forms;
 
 namespace FritzTheDog
 {
-  static class Program
+  internal static class Program
   {
     //-------------------------------------------------------------------------
 
     [STAThread]
-    static void Main()
+    internal static void Main()
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);

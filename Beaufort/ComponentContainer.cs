@@ -12,7 +12,7 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    List<IComponent> _Components = new List<IComponent>();
+    private readonly List<IComponent> _components = new List<IComponent>();
 
     //-------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ namespace Beaufort
     {
       get
       {
-        return _Components.AsReadOnly();
+        return _components.AsReadOnly();
       }
     }
 
@@ -51,7 +51,7 @@ namespace Beaufort
 
       InitialiseComponent(newComponent, instanceName);
 
-      _Components.Add(newComponent);
+      _components.Add(newComponent);
 
       return newComponent;
     }
@@ -65,8 +65,8 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    IComponent InstantiateComponent(string fullTypeName,
-                                    string instanceName)
+    private IComponent InstantiateComponent(string fullTypeName,
+                                            string instanceName)
     {
       object newObject;
 
@@ -98,7 +98,7 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    void InitialiseComponent(IComponent component, string componentName)
+    private void InitialiseComponent(IComponent component, string componentName)
     {
       SetComponentName(component, componentName);
       InitialiseComponentValueStore(component);
@@ -106,7 +106,7 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    void SetComponentName(IComponent component, string name)
+    private void SetComponentName(IComponent component, string name)
     {
       bool namedOk = component.SetName(name);
 
@@ -120,7 +120,7 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    void InitialiseComponentValueStore(IComponent component)
+    private static void InitialiseComponentValueStore(IComponent component)
     {
       var configuredObject = component as IConfiguredObject;
 
@@ -129,9 +129,9 @@ namespace Beaufort
 
     //-------------------------------------------------------------------------
 
-    void UpdateComponents(ushort deltaTimeMs)
+    private void UpdateComponents(ushort deltaTimeMs)
     {
-      _Components.ForEach(c => c.Update(deltaTimeMs));
+      _components.ForEach(c => c.Update(deltaTimeMs));
     }
 
     //-------------------------------------------------------------------------

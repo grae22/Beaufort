@@ -52,9 +52,9 @@ namespace FritzTheDog
 
     //-------------------------------------------------------------------------
 
-    ComponentContainer Components = new ComponentContainer("Default");
-    Thread UpdateThread;
-    bool UpdateThreadIsAlive;
+    private readonly ComponentContainer _components = new ComponentContainer("Default");
+    private Thread _updateThread;
+    private bool _updateThreadIsAlive;
 
     //-------------------------------------------------------------------------
 
@@ -212,15 +212,15 @@ namespace FritzTheDog
     {
       try
       {
-        IComponent newComponent = Components.AddComponent(typeName, name);
+        IComponent newComponent = _components.AddComponent(typeName, name);
 
         if (typeof(IInput).IsAssignableFrom(newComponent.GetType()))
         {
-          return new InputComponentControl(newComponent, Components);
+          return new InputComponentControl(newComponent, _components);
         }
         else
         {
-          return new ComponentControl(newComponent, Components);
+          return new ComponentControl(newComponent, _components);
         }
       }
       catch (Exception ex)
@@ -238,8 +238,8 @@ namespace FritzTheDog
       try
       {
         var threadStart = new ThreadStart(UpdateLoop);
-        UpdateThread = new Thread(threadStart);
-        UpdateThread.Start();
+        _updateThread = new Thread(threadStart);
+        _updateThread.Start();
       }
       catch (Exception ex)
       {
@@ -253,8 +253,8 @@ namespace FritzTheDog
     {
       try
       {
-        UpdateThreadIsAlive = false;
-        UpdateThread.Join(1000);
+        _updateThreadIsAlive = false;
+        _updateThread.Join(1000);
       }
       catch (Exception ex)
       {
@@ -268,16 +268,16 @@ namespace FritzTheDog
     {
       try
       {
-        UpdateThreadIsAlive = true;
+        _updateThreadIsAlive = true;
 
         var updateComponentControls =
           new UpdateComponentControlsDelegate(UpdateComponentControls);
 
-        while (UpdateThreadIsAlive)
+        while (_updateThreadIsAlive)
         {
           try
           {
-            Components.Update(100);
+            _components.Update(100);
 
             updateComponentControls.Invoke();
 

@@ -9,11 +9,11 @@ namespace Beaufort_Test.Input
 {
   [TestFixture]
   [Category("DiscreteInput")]
-  class DiscreteInput_Test
+  internal class DiscreteInput_Test
   {
     //-------------------------------------------------------------------------
 
-    DiscreteInput _testObject;
+    private DiscreteInput _testObject;
 
     //-------------------------------------------------------------------------
 

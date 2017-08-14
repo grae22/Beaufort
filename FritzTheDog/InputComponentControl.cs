@@ -12,11 +12,11 @@ using Beaufort.Input;
 
 namespace FritzTheDog
 {
-  class InputComponentControl : ComponentControl
+  internal class InputComponentControl : ComponentControl
   {
     //-------------------------------------------------------------------------
 
-    Panel ButtonsPanel;
+    private Panel _buttonsPanel;
 
     //-------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ namespace FritzTheDog
     {
       try
       {
-        ButtonsPanel = panel;
+        _buttonsPanel = panel;
 
         // TODO: Support other iputs.
         var input = TargetComponent as DiscreteInput;
@@ -116,7 +116,7 @@ namespace FritzTheDog
         return;
       }
 
-      foreach (Control c in ButtonsPanel.Controls)
+      foreach (Control c in _buttonsPanel.Controls)
       {
         var button = c as Button;
 

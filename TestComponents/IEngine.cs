@@ -2,7 +2,7 @@
 
 namespace TestComponents
 {
-  interface IEngine : IComponent
+  internal interface IEngine : IComponent
   {
     int Speed { get; }
   }

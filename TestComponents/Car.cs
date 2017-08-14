@@ -1,10 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-using Beaufort;
+﻿using Beaufort;
 using Beaufort.Input;
 
 namespace TestComponents
 {
-  class Car : BaseComponent, ICar
+  internal class Car : BaseComponent, ICar
   {
     public IEngine Engine { get; set; }
     public IInput<byte> Ignition { get; set; }

@@ -8,18 +8,18 @@ namespace Beaufort_Test
 {
   [TestFixture]
   [Category("BaseComponent")]
-  public class BaseComponent_Test
+  internal class BaseComponent_Test
   {
     //-------------------------------------------------------------------------
 
-    Mock<BaseComponent> TestObject;
+    private Mock<BaseComponent> _testObject;
 
     //-------------------------------------------------------------------------
 
     [SetUp]
     public void SetUp()
     {
-      TestObject = new Mock<BaseComponent>();
+      _testObject = new Mock<BaseComponent>();
     }
 
     //-------------------------------------------------------------------------
@@ -27,10 +27,10 @@ namespace Beaufort_Test
     [Test]
     public void SetValidName()
     {
-      bool result = TestObject.Object.SetName("TestObject");
+      bool result = _testObject.Object.SetName("TestObject");
 
       Assert.True(result);
-      Assert.AreEqual("TestObject", TestObject.Object.Name);
+      Assert.AreEqual("TestObject", _testObject.Object.Name);
     }
 
     //-------------------------------------------------------------------------
@@ -38,10 +38,10 @@ namespace Beaufort_Test
     [Test]
     public void SetZeroLengthName()
     {
-      bool result = TestObject.Object.SetName(string.Empty);
+      bool result = _testObject.Object.SetName(string.Empty);
 
       Assert.False(result);
-      Assert.AreEqual("Unnamed Component", TestObject.Object.Name);
+      Assert.AreEqual("Unnamed Component", _testObject.Object.Name);
     }
 
     //-------------------------------------------------------------------------
@@ -50,10 +50,10 @@ namespace Beaufort_Test
     public void NoExceptionOnConfigureIfValueStoreInjected()
     {
       // We want the base Configure() method to be called.
-      TestObject.CallBase = true;
+      _testObject.CallBase = true;
 
-      TestObject.Object.InjectValueStore(new Mock<IValueStore>().Object);
-      TestObject.Object.Configure();
+      _testObject.Object.InjectValueStore(new Mock<IValueStore>().Object);
+      _testObject.Object.Configure();
     }
 
     //-------------------------------------------------------------------------
@@ -64,9 +64,9 @@ namespace Beaufort_Test
       try
       {
         // We want the base Configure() method to be called.
-        TestObject.CallBase = true;
+        _testObject.CallBase = true;
 
-        TestObject.Object.Configure();
+        _testObject.Object.Configure();
       }
       catch (NullValueStoreException)
       {
@@ -82,10 +82,10 @@ namespace Beaufort_Test
     public void NoExceptionOnGetConfigurationDataIfValueStoreInjected()
     {
       // We want the base Configure() method to be called.
-      TestObject.CallBase = true;
+      _testObject.CallBase = true;
 
-      TestObject.Object.InjectValueStore(new Mock<IValueStore>().Object);
-      TestObject.Object.GetConfigurationData();
+      _testObject.Object.InjectValueStore(new Mock<IValueStore>().Object);
+      _testObject.Object.GetConfigurationData();
     }
 
     //-------------------------------------------------------------------------
@@ -96,9 +96,9 @@ namespace Beaufort_Test
       try
       {
         // We want the base Configure() method to be called.
-        TestObject.CallBase = true;
+        _testObject.CallBase = true;
 
-        TestObject.Object.GetConfigurationData();
+        _testObject.Object.GetConfigurationData();
       }
       catch (NullValueStoreException)
       {

@@ -7,11 +7,11 @@ namespace Beaufort_Test
 {
   [TestFixture]
   [Category("ComponentContainer")]
-  public class ComponentContainer_Test
+  internal class ComponentContainer_Test
   {
     //-------------------------------------------------------------------------
 
-    public class TestComponent : BaseComponent
+    internal class TestComponent : BaseComponent
     {
       public byte UpdateCount { get; private set; }
       public ushort DeltaTimeMs { get; private set; }
@@ -25,14 +25,14 @@ namespace Beaufort_Test
 
     //-------------------------------------------------------------------------
 
-    ComponentContainer TestObject;
+    private ComponentContainer _testObject;
 
     //-------------------------------------------------------------------------
 
     [SetUp]
     public void SetUp()
     {
-      TestObject = new ComponentContainer("TestObject");
+      _testObject = new ComponentContainer("TestObject");
     }
 
     //-------------------------------------------------------------------------
@@ -41,14 +41,14 @@ namespace Beaufort_Test
     public void AddComponent()
     {
       IComponent component =
-        TestObject.AddComponent(
+        _testObject.AddComponent(
           typeof(TestComponent).AssemblyQualifiedName,
           "TestComponent");
 
       Assert.NotNull(component);
 
       IComponent retrievedComponent =
-        TestObject
+        _testObject
           .Components
           .FirstOrDefault(c => c.Name == "TestComponent");
 
@@ -66,7 +66,7 @@ namespace Beaufort_Test
     {
       try
       {
-        TestObject.AddComponent("SomeNonExistentType", "Name");
+        _testObject.AddComponent("SomeNonExistentType", "Name");
       }
       catch (TypeLoadException)
       {
@@ -83,7 +83,7 @@ namespace Beaufort_Test
     {
       try
       {
-        TestObject.AddComponent(
+        _testObject.AddComponent(
           typeof(TestComponent).AssemblyQualifiedName,
           "");
       }
@@ -102,7 +102,7 @@ namespace Beaufort_Test
     {
       try
       {
-        TestObject.AddComponent("System.Int32", "Name");
+        _testObject.AddComponent("System.Int32", "Name");
       }
       catch (TypeLoadException)
       {
@@ -118,11 +118,11 @@ namespace Beaufort_Test
     public void ComponentUpdateIsCalledOnce()
     {
       IComponent component =
-        TestObject.AddComponent(
+        _testObject.AddComponent(
           typeof(TestComponent).AssemblyQualifiedName,
           "TestComponent");
 
-      TestObject.Update(1);
+      _testObject.Update(1);
 
       Assert.AreEqual(1, ((TestComponent)component).UpdateCount);
     }
@@ -133,11 +133,11 @@ namespace Beaufort_Test
     public void ComponentUpdateIsWithCorrectDeltaTime()
     {
       IComponent component =
-        TestObject.AddComponent(
+        _testObject.AddComponent(
           typeof(TestComponent).AssemblyQualifiedName,
           "TestComponent");
 
-      TestObject.Update(123);
+      _testObject.Update(123);
 
       Assert.AreEqual(123, ((TestComponent)component).DeltaTimeMs);
     }
