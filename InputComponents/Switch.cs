@@ -2,11 +2,11 @@
 
 namespace InputComponents
 {
-  public class BinarySwitch : DiscreteInput
+  public class Switch : DiscreteInput
   {
     //-------------------------------------------------------------------------
 
-    public BinarySwitch()
+    public Switch()
     {
       AddState(0, "Off");
       AddState(1, "On");

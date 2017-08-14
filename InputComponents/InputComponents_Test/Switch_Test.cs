@@ -4,19 +4,19 @@ using InputComponents;
 namespace InputComponents_Test
 {
   [TestFixture]
-  [Category("BinarySwitch")]
-  public class BinarySwitch_Test
+  [Category("Switch")]
+  internal class Switch_Test
   {
     //-------------------------------------------------------------------------
 
-    BinarySwitch TestObject;
+    private Switch _testObject;
 
     //-------------------------------------------------------------------------
 
     [SetUp]
     public void SetUp()
     {
-      TestObject = new BinarySwitch();
+      _testObject = new Switch();
     }
 
     //-------------------------------------------------------------------------
@@ -24,8 +24,8 @@ namespace InputComponents_Test
     [Test]
     public void States()
     {
-      Assert.AreEqual("Off", TestObject.GetStates()[0]);
-      Assert.AreEqual("On", TestObject.GetStates()[1]);
+      Assert.AreEqual("Off", _testObject.GetStates()[0]);
+      Assert.AreEqual("On", _testObject.GetStates()[1]);
     }
 
     //-------------------------------------------------------------------------
