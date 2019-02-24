@@ -1,31 +1,16 @@
 ﻿using Beaufort;
-using Beaufort.Input;
 
 namespace TestComponents
 {
   internal class Car : BaseComponent, ICar
   {
     public IEngine Engine { get; set; }
-    public IInput<byte> Ignition { get; set; }
+    public IIgnitionSwitch Ignition { get; set; }
 
     public double SpeedKph { get; private set; }
 
-    private byte _ignitionStateStart;
-    private byte _ignitionStateOn;
     private bool _isEngineRunning;
-
-    public override void Configure()
-    {
-      _ignitionStateStart = Configuration.GetValue("IgnitionStateStart", (byte)0);
-      _ignitionStateOn = Configuration.GetValue("IgnitionStateOn", (byte)0);
-    }
-
-    protected override void UpdateConfigurationData()
-    {
-      Configuration.SetValue("IgnitionStateStart", _ignitionStateStart);
-      Configuration.SetValue("IgnitionStateOn", _ignitionStateOn);
-    }
-
+    
     public override void Update(ushort deltaTimeMs)
     {
       if (Ignition == null)
@@ -33,17 +18,17 @@ namespace TestComponents
         return;
       }
 
-      if (Ignition.Value == 0)
+      if (Ignition.IsOffSelected)
       {
         _isEngineRunning = false;
       }
-      else if (Ignition.Value == _ignitionStateStart)
+      else if (Ignition.IsStartSelected)
       {
         _isEngineRunning = true;
       }
       else if (Engine != null &&
                _isEngineRunning &&
-               Ignition.Value == _ignitionStateOn)
+               Ignition.IsOnSelected)
       {
         SpeedKph += deltaTimeMs * 0.0001 * Engine.Speed;
       }
