@@ -38,6 +38,8 @@
     <Compile Include="HighRpmEngine.cs" />
     <Compile Include="ICar.cs" />
     <Compile Include="IEngine.cs" />
+    <Compile Include="IgnitionSwitch.cs" />
+    <Compile Include="IIgnitionSwitch.cs" />
     <Compile Include="LowRpmEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
